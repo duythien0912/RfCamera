@@ -29,7 +29,7 @@ void showAppToast(
         side: const BorderSide(color: Color(0x33FFFFFF)),
       ),
       margin: EdgeInsets.only(
-        bottom: h - topOffset - 52,
+        bottom: h - topOffset - 52 - 68,
         left: 16,
         right: 16,
       ),

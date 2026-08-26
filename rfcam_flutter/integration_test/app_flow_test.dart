@@ -143,6 +143,7 @@ void main() {
       expect(state.camera.id, 'vhs');
       expect(state.effect.matrix, isNot(equals(before.matrix)));
       expect(state.effect.scanlines, greaterThan(0));
+      await tap(tester, 'config_toggle_button');
       await shot(tester, '03-color-config');
       expect(find.byKey(const Key('color_config')), findsOneWidget);
       expect(find.text('Cấu Hình Màu'), findsOneWidget);
@@ -152,6 +153,7 @@ void main() {
       await pumpApp(tester);
       await tap(tester, 'open_selector');
       await tap(tester, 'cam_eightmm');
+      await tap(tester, 'config_toggle_button');
 
       // Every camera exposes the full ratio strip.
       await tap(tester, 'ratio_1:1');
@@ -454,6 +456,7 @@ void main() {
       await pumpApp(tester);
       await tap(tester, 'open_selector');
       await tap(tester, 'cam_glow');
+      await tap(tester, 'config_toggle_button');
       await reveal(tester, 'ratio_2.35:1', 'ratio_strip');
       await tap(tester, 'ratio_2.35:1');
       await tap(tester, 'selector_close');

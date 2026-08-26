@@ -127,8 +127,6 @@ class _CreditHeader extends StatelessWidget {
                 height: 34,
                 child: CustomPaint(painter: _DazzMarkPainter()),
               ),
-              const SizedBox(width: 10),
-              Text('Dazz', style: P.t(17, w: FontWeight.w600)),
               const SizedBox(width: 14),
               Container(
                 width: 4,
@@ -256,10 +254,10 @@ class _DazzMarkPainter extends CustomPainter {
   const _DazzMarkPainter();
 
   static const _stripes = <Color>[
-    Color(0xFF2E7BFF),
+    ui.Color.fromARGB(255, 11, 175, 161),
+    ui.Color.fromARGB(255, 211, 14, 0),
     Color(0xFF25D07A),
-    Color(0xFFFF3B30),
-    Color(0xFFFFFFFF),
+    ui.Color.fromARGB(255, 252, 162, 246),
   ];
 
   @override

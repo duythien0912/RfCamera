@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ficonsax/ficonsax.dart';
+import 'package:morphnext/morphnext.dart';
 
 import '../core/app_state.dart';
 import '../core/camera_catalog.dart';
@@ -44,11 +45,37 @@ class _SelectorSheetState extends State<SelectorSheet>
     duration: const Duration(milliseconds: 260),
   )..forward();
 
+  late final ScrollController _strip1Controller = ScrollController();
+  late final ScrollController _strip2Controller = ScrollController();
+  late final ScrollController _accessoryController = ScrollController();
+
   bool _showConfig = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (_strip1Controller.hasClients) {
+        _strip1Controller.jumpTo(_strip1Controller.position.maxScrollExtent);
+      }
+      if (_strip2Controller.hasClients) {
+        _strip2Controller.jumpTo(_strip2Controller.position.maxScrollExtent);
+      }
+      if (_accessoryController.hasClients) {
+        _accessoryController.jumpTo(
+          _accessoryController.position.maxScrollExtent,
+        );
+      }
+    });
+  }
 
   @override
   void dispose() {
     _c.dispose();
+    _strip1Controller.dispose();
+    _strip2Controller.dispose();
+    _accessoryController.dispose();
     super.dispose();
   }
 
@@ -112,6 +139,11 @@ class _SelectorSheetState extends State<SelectorSheet>
                       ),
                     ),
                   _TopActions(
+                    showConfig: _showConfig,
+                    onToggleConfig: () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _showConfig = !_showConfig);
+                    },
                     onSamples: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
@@ -125,12 +157,12 @@ class _SelectorSheetState extends State<SelectorSheet>
                           builder: (_) => const AllCamerasScreen(),
                         ),
                       );
-                      if (mounted) setState(() => _showConfig = true);
                     },
                   ),
                   const SizedBox(height: 10),
                   _CameraRow(
                     keyPrefix: 'strip1',
+                    controller: _strip1Controller,
                     cameras: row1,
                     state: state,
                     onPick: _pick,
@@ -138,12 +170,16 @@ class _SelectorSheetState extends State<SelectorSheet>
                   const _Hairline(),
                   _CameraRow(
                     keyPrefix: 'strip2',
+                    controller: _strip2Controller,
                     cameras: row2,
                     state: state,
                     onPick: _pick,
                   ),
                   const _Hairline(),
-                  _AccessoryRow(state: state),
+                  _AccessoryRow(
+                    controller: _accessoryController,
+                    state: state,
+                  ),
                   const SizedBox(height: 18),
                   Align(
                     alignment: Alignment.centerRight,
@@ -181,15 +217,21 @@ class _SelectorSheetState extends State<SelectorSheet>
   void _pick(CameraProfile p) {
     HapticFeedback.selectionClick();
     AppScope.read(context).selectCamera(p);
-    setState(() => _showConfig = true);
   }
 }
 
 class _TopActions extends StatelessWidget {
-  const _TopActions({required this.onSamples, required this.onAll});
+  const _TopActions({
+    required this.onSamples,
+    required this.onAll,
+    required this.showConfig,
+    required this.onToggleConfig,
+  });
 
   final VoidCallback onSamples;
   final VoidCallback onAll;
+  final bool showConfig;
+  final VoidCallback onToggleConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +270,32 @@ class _TopActions extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           GestureDetector(
+            key: const Key('config_toggle_button'),
+            behavior: HitTestBehavior.opaque,
+            onTap: onToggleConfig,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              width: 36,
+              height: 36,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: showConfig
+                    ? const Color(0xFF48484A)
+                    : const Color(0xFF2C2C2E),
+                shape: BoxShape.circle,
+              ),
+              child: AnimatedMorphIcon(
+                icon: showConfig
+                    ? IconsaxBold.setting_4
+                    : IconsaxOutline.setting_4,
+                color: showConfig ? P.green : P.white,
+                size: 19,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          GestureDetector(
             key: const Key('all_cameras_button'),
             behavior: HitTestBehavior.opaque,
             onTap: onAll,
@@ -258,12 +326,14 @@ class _CameraRow extends StatelessWidget {
     required this.cameras,
     required this.state,
     required this.onPick,
+    this.controller,
   });
 
   final String keyPrefix;
   final List<CameraProfile> cameras;
   final AppState state;
   final void Function(CameraProfile) onPick;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -271,6 +341,7 @@ class _CameraRow extends StatelessWidget {
       height: 122,
       child: ListView.builder(
         key: Key(keyPrefix),
+        controller: controller,
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -310,9 +381,10 @@ class _CameraRow extends StatelessWidget {
 }
 
 class _AccessoryRow extends StatelessWidget {
-  const _AccessoryRow({required this.state});
+  const _AccessoryRow({required this.state, this.controller});
 
   final AppState state;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -320,6 +392,7 @@ class _AccessoryRow extends StatelessWidget {
     return SizedBox(
       height: 54,
       child: ListView.builder(
+        controller: controller,
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
