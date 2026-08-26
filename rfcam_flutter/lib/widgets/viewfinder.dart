@@ -7,6 +7,7 @@ import 'package:ficonsax/ficonsax.dart';
 import '../core/app_state.dart';
 import '../core/palette.dart';
 import 'film_view.dart';
+import 'focus_reticle.dart';
 
 /// The rangefinder card: a dim, blurred view of everything the sensor sees,
 /// with a crisp, framed crop of what will actually be captured.
@@ -25,6 +26,17 @@ class Viewfinder extends StatelessWidget {
     this.focalExpanded = false,
     this.exposureExpanded = false,
     this.frameKey,
+    this.focusPos,
+    this.focusVisible = false,
+    this.focusScale = 1.0,
+    this.focusOpacity = 1.0,
+    this.zoomLevel = 1.0,
+    this.zoomBadgeVisible = false,
+    this.onTapFocus,
+    this.onDoubleTapZoom,
+    this.onScaleStart,
+    this.onScaleUpdate,
+    this.onScaleEnd,
   });
 
   final Widget preview;
@@ -36,6 +48,18 @@ class Viewfinder extends StatelessWidget {
   final bool focalExpanded;
   final bool exposureExpanded;
   final GlobalKey? frameKey;
+
+  final Offset? focusPos;
+  final bool focusVisible;
+  final double focusScale;
+  final double focusOpacity;
+  final double zoomLevel;
+  final bool zoomBadgeVisible;
+  final void Function(Offset localPos, Size size)? onTapFocus;
+  final VoidCallback? onDoubleTapZoom;
+  final void Function(ScaleStartDetails details)? onScaleStart;
+  final void Function(ScaleUpdateDetails details)? onScaleUpdate;
+  final void Function(ScaleEndDetails details)? onScaleEnd;
 
   /// Width of the inner frame as a fraction of the card, derived from the
   /// focal length. 26mm fills the card (1x); longer lenses crop into it.
@@ -70,93 +94,141 @@ class Viewfinder extends StatelessWidget {
 
         return ClipRRect(
           borderRadius: BorderRadius.circular(P.rCard),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // Outside the frame: blurred and knocked back, the way a real
-              // rangefinder shows you what is just out of shot.
-              ImageFiltered(
-                imageFilter: ui.ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                child: preview,
-              ),
-              const ColoredBox(color: Color(0x6B000000)),
-
-              if (state.frameOn)
-                ClipRRect(
-                  clipper: _RRectClipper(
-                    frame,
-                    const Radius.circular(P.rInner),
-                  ),
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapUp: (details) {
+              onTapFocus?.call(details.localPosition, Size(w, h));
+            },
+            onDoubleTap: onDoubleTapZoom,
+            onScaleStart: onScaleStart,
+            onScaleUpdate: onScaleUpdate,
+            onScaleEnd: onScaleEnd,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Outside the frame: blurred and knocked back, the way a real
+                // rangefinder shows you what is just out of shot.
+                ImageFiltered(
+                  imageFilter: ui.ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                   child: preview,
-                )
-              else
-                preview,
+                ),
+                const ColoredBox(color: Color(0x6B000000)),
 
-              if (state.frameOn)
-                Positioned.fromRect(
-                  rect: frame,
-                  child: Container(
-                    key: frameKey,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: P.white, width: 2),
-                      borderRadius: BorderRadius.circular(P.rInner),
+                if (state.frameOn)
+                  ClipRRect(
+                    clipper: _RRectClipper(
+                      frame,
+                      const Radius.circular(P.rInner),
                     ),
-                    child: state.gridOn
-                        ? CustomPaint(painter: _GridPainter())
-                        : null,
-                  ),
-                )
-              else if (state.gridOn)
-                CustomPaint(painter: _GridPainter()),
+                    child: preview,
+                  )
+                else
+                  preview,
 
-              // "35mm" sits just above the frame, centred on the card.
-              if (state.frameOn)
+                if (state.frameOn)
+                  Positioned.fromRect(
+                    rect: frame,
+                    child: Container(
+                      key: frameKey,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: P.white, width: 2),
+                        borderRadius: BorderRadius.circular(P.rInner),
+                      ),
+                      child: state.gridOn
+                          ? CustomPaint(painter: _GridPainter())
+                          : null,
+                    ),
+                  )
+                else if (state.gridOn)
+                  CustomPaint(painter: _GridPainter()),
+
+                // Focus reticle with exposure slider & sun
+                if (focusPos != null)
+                  FocusReticle(
+                    position: focusPos!,
+                    ev: state.ev,
+                    visible: focusVisible,
+                    scale: focusScale,
+                    opacity: focusOpacity,
+                  ),
+
+                // "35mm" sits just above the frame, centred on the card.
+                if (state.frameOn)
+                  Positioned(
+                    top: h * 0.072,
+                    left: 0,
+                    right: 0,
+                    child: Text(
+                      '${state.focal}mm',
+                      textAlign: TextAlign.center,
+                      style: P
+                          .t(17, w: FontWeight.w700)
+                          .copyWith(
+                            shadows: const [
+                              Shadow(color: Colors.black54, blurRadius: 4),
+                            ],
+                          ),
+                    ),
+                  ),
+
+                // Floating Zoom Badge
+                if (zoomBadgeVisible)
+                  Positioned(
+                    top: 24,
+                    left: 16,
+                    // right: 0,
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xCC2C2C2E),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: const Color(0x44FFFFFF),
+                            width: 0.8,
+                          ),
+                        ),
+                        child: Text(
+                          '${zoomLevel.toStringAsFixed(1)}x',
+                          style: P.t(13, w: FontWeight.w700, c: P.white),
+                        ),
+                      ),
+                    ),
+                  ),
+
                 Positioned(
-                  top: h * 0.072,
+                  top: 12,
+                  right: 10,
+                  child: _TapTarget(
+                    key: const Key('vf_dots'),
+                    onTap: onTapDots,
+                    size: 44,
+                    child: const Icon(
+                      IconsaxOutline.more,
+                      color: P.white,
+                      size: 26,
+                    ),
+                  ),
+                ),
+
+                Positioned(
                   left: 0,
                   right: 0,
-                  child: Text(
-                    '${state.focal}mm',
-                    textAlign: TextAlign.center,
-                    style: P
-                        .t(17, w: FontWeight.w700)
-                        .copyWith(
-                          shadows: const [
-                            Shadow(color: Colors.black54, blurRadius: 4),
-                          ],
-                        ),
+                  bottom: h * 0.045,
+                  child: _ChipRow(
+                    state: state,
+                    focalExpanded: focalExpanded,
+                    exposureExpanded: exposureExpanded,
+                    onTapWhiteBalance: onTapWhiteBalance,
+                    onTapFocal: onTapFocal,
+                    onTapExposure: onTapExposure,
                   ),
                 ),
-
-              Positioned(
-                top: 12,
-                right: 10,
-                child: _TapTarget(
-                  key: const Key('vf_dots'),
-                  onTap: onTapDots,
-                  size: 44,
-                  child: const Icon(
-                    IconsaxOutline.more,
-                    color: P.white,
-                    size: 26,
-                  ),
-                ),
-              ),
-
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: h * 0.045,
-                child: _ChipRow(
-                  state: state,
-                  focalExpanded: focalExpanded,
-                  exposureExpanded: exposureExpanded,
-                  onTapWhiteBalance: onTapWhiteBalance,
-                  onTapFocal: onTapFocal,
-                  onTapExposure: onTapExposure,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
