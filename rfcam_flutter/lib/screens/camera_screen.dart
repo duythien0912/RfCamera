@@ -15,6 +15,7 @@ import '../core/app_state.dart';
 import '../core/bake.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
+import '../core/toast.dart';
 import '../widgets/quick_panel.dart';
 import '../widgets/viewfinder.dart';
 import 'gallery_screen.dart';
@@ -57,8 +58,19 @@ class _CameraScreenState extends State<CameraScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // Fire and forget: the UI is usable before the sensor is.
     unawaited(_initCamera());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final state = AppScope.of(context);
+    final c = _controller;
+    if (_cameraReady && c != null && c.value.isInitialized) {
+      try {
+        c.setFlashMode(state.flashOn ? FlashMode.always : FlashMode.off);
+      } catch (_) {}
+    }
   }
 
   @override
@@ -72,12 +84,11 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState s) {
-    final c = _controller;
-    if (c == null || !c.value.isInitialized) return;
-    if (s == AppLifecycleState.inactive) {
+    if (s == AppLifecycleState.inactive || s == AppLifecycleState.paused) {
+      final c = _controller;
       _controller = null;
       if (mounted) setState(() => _cameraReady = false);
-      c.dispose();
+      c?.dispose();
     } else if (s == AppLifecycleState.resumed) {
       unawaited(_initCamera());
     }
@@ -133,6 +144,15 @@ class _CameraScreenState extends State<CameraScreen>
         return;
       }
       _controller = c;
+      if (state.flashOn) {
+        try {
+          await c.setFlashMode(FlashMode.always);
+        } catch (_) {}
+      } else {
+        try {
+          await c.setFlashMode(FlashMode.off);
+        } catch (_) {}
+      }
       setState(() => _cameraReady = true);
     } catch (_) {
       if (mounted) setState(() => _cameraReady = false);
@@ -189,10 +209,16 @@ class _CameraScreenState extends State<CameraScreen>
       unawaited(SystemSound.play(SystemSoundType.click));
     }
     if (state.flashOn) {
-      setState(() => _flashing = true);
-      Timer(const Duration(milliseconds: 120), () {
-        if (mounted) setState(() => _flashing = false);
-      });
+      if (state.frontCamera) {
+        setState(() => _flashing = true);
+        Timer(const Duration(milliseconds: 120), () {
+          if (mounted) setState(() => _flashing = false);
+        });
+      } else {
+        try {
+          await _controller?.setFlashMode(FlashMode.always);
+        } catch (_) {}
+      }
     }
 
     try {
@@ -252,16 +278,16 @@ class _CameraScreenState extends State<CameraScreen>
     }
   }
 
-  /// Real sensor when there is one, otherwise the bundled stand-in so the
-  /// whole capture path stays exercisable without hardware.
+  /// Real sensor when there is one, otherwise a solid camera frame stand-in.
   Future<Uint8List?> _grabFrame() async {
     final c = _controller;
     if (_cameraReady && c != null && c.value.isInitialized) {
       final shot = await c.takePicture();
       return shot.readAsBytes();
     }
-    final data = await rootBundle.load('assets/samples/sample_street.jpg');
-    return data.buffer.asUint8List();
+    final image = img.Image(width: 1080, height: 1440);
+    img.fill(image, color: img.ColorRgb8(22, 22, 24));
+    return Uint8List.fromList(img.encodeJpg(image));
   }
 
   void _flyToThumbnail(CapturedPhoto photo) {
@@ -360,13 +386,10 @@ class _CameraScreenState extends State<CameraScreen>
                 onTapWhiteBalance: () {
                   HapticFeedback.selectionClick();
                   state.cycleWhiteBalance();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Cân bằng trắng: ${state.whiteBalance}'),
-                      duration: const Duration(seconds: 1),
-                      behavior: SnackBarBehavior.floating,
-                    ),
+                  showAppToast(
+                    context,
+                    'Cân bằng trắng: ${state.whiteBalance}',
+                    duration: const Duration(seconds: 1),
                   );
                 },
                 onTapFocal: () => setState(
@@ -412,7 +435,17 @@ class _CameraScreenState extends State<CameraScreen>
                 onImport: _pickFromGallery,
                 onDouble: state.toggleDoubleExposure,
                 onTimer: state.toggleTimer,
-                onFlash: () => state.setFlash(!state.flashOn),
+                onFlash: () async {
+                  state.setFlash(!state.flashOn);
+                  final c = _controller;
+                  if (c != null && c.value.isInitialized) {
+                    try {
+                      await c.setFlashMode(
+                        state.flashOn ? FlashMode.always : FlashMode.off,
+                      );
+                    } catch (_) {}
+                  }
+                },
                 onFlip: () async {
                   state.flipCamera();
                   await _openDevice();
@@ -474,7 +507,11 @@ class _CameraScreenState extends State<CameraScreen>
             ),
 
           if (_countdown != null)
-            Positioned.fill(
+            Positioned(
+              left: (w - cardW) / 2,
+              top: cardTop,
+              width: cardW,
+              height: cardH,
               child: IgnorePointer(
                 child: Center(
                   child: Text(

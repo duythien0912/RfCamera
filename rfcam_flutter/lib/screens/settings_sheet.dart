@@ -5,6 +5,7 @@ import 'package:ficonsax/ficonsax.dart';
 
 import '../core/app_state.dart';
 import '../core/palette.dart';
+import '../core/toast.dart';
 
 /// The app settings modal sheet: camera permissions, shutter sound,
 /// haptic feedback, reset camera settings, and app info.
@@ -257,12 +258,9 @@ class _SettingsSheetState extends State<SettingsSheet>
                       onTap: () {
                         HapticFeedback.heavyImpact();
                         state.resetSettings();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Đã khôi phục cài đặt chụp mặc định'),
-                            duration: Duration(seconds: 2),
-                            behavior: SnackBarBehavior.floating,
-                          ),
+                        showAppToast(
+                          context,
+                          'Đã khôi phục cài đặt chụp mặc định',
                         );
                       },
                     ),

@@ -9,9 +9,9 @@ import 'package:morphnext/morphnext.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../core/app_state.dart';
-import '../core/camera_catalog.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
+import '../core/toast.dart';
 
 /// Full-screen viewer for the album. Swiping horizontally walks the roll.
 class PhotoDetailScreen extends StatefulWidget {
@@ -71,13 +71,16 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
   Future<void> _onShare(CapturedPhoto photo) async {
     HapticFeedback.selectionClick();
     final box = context.findRenderObject() as RenderBox?;
-    final origin =
-        box != null ? (box.localToGlobal(Offset.zero) & box.size) : null;
+    final origin = box != null
+        ? (box.localToGlobal(Offset.zero) & box.size)
+        : null;
     try {
-      await Share.shareXFiles(
-        [XFile(photo.path)],
-        text: 'RfCamera #${photo.cameraName}',
-        sharePositionOrigin: origin,
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(photo.path)],
+          subject: 'RfCamera #${photo.cameraName}',
+          sharePositionOrigin: origin,
+        ),
       );
     } catch (_) {}
   }
@@ -87,17 +90,12 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
     await AppScope.read(context).toggleNegative(photo.id);
     if (!mounted) return;
     setState(() {});
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          photo.negative
-              ? 'Đã chuyển về ảnh dương bản'
-              : 'Đã chuyển sang hiệu ứng phim âm bản',
-        ),
-        duration: const Duration(seconds: 1),
-        behavior: SnackBarBehavior.floating,
-      ),
+    showAppToast(
+      context,
+      photo.negative
+          ? 'Đã chuyển về ảnh dương bản'
+          : 'Đã chuyển sang hiệu ứng phim âm bản',
+      duration: const Duration(seconds: 1),
     );
   }
 
@@ -109,38 +107,22 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
         final request = await Gal.requestAccess();
         if (!request) {
           if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Vui lòng cấp quyền Thư viện ảnh trong Cài đặt để lưu ảnh.',
-              ),
-              duration: Duration(seconds: 2),
-              behavior: SnackBarBehavior.floating,
-            ),
+          showAppToast(
+            context,
+            'Vui lòng cấp quyền Thư viện ảnh trong Cài đặt để lưu ảnh.',
           );
           return;
         }
       }
       await Gal.putImage(photo.path, album: 'RfCamera');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Đã lưu ảnh #${photo.cameraName} vào Thư viện của máy',
-          ),
-          duration: const Duration(seconds: 2),
-          behavior: SnackBarBehavior.floating,
-        ),
+      showAppToast(
+        context,
+        'Đã lưu ảnh #${photo.cameraName} vào Thư viện của máy',
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Không thể lưu ảnh: $e'),
-          duration: const Duration(seconds: 2),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+      showAppToast(context, 'Không thể lưu ảnh: $e');
     }
   }
 

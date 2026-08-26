@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:morphnext/morphnext.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ficonsax/ficonsax.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/app_state.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
+import '../core/toast.dart';
 import 'settings_sheet.dart';
 
 /// The album. Folder dropdown, 3-up grid of captures, and a multi-select mode
@@ -342,12 +344,38 @@ class _GalleryScreenState extends State<GalleryScreen> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.file(
-            File(photo.path),
-            fit: BoxFit.cover,
-            cacheWidth: 400,
-            gaplessPlayback: true,
-            errorBuilder: (_, _, _) => const ColoredBox(color: P.tile),
+          ColorFiltered(
+            colorFilter: photo.negative
+                ? const ColorFilter.matrix(<double>[
+                    -1,
+                    0,
+                    0,
+                    0,
+                    255,
+                    0,
+                    -1,
+                    0,
+                    0,
+                    255,
+                    0,
+                    0,
+                    -1,
+                    0,
+                    255,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                  ])
+                : const ColorFilter.mode(Colors.transparent, BlendMode.dst),
+            child: Image.file(
+              File(photo.path),
+              fit: BoxFit.cover,
+              cacheWidth: 400,
+              gaplessPlayback: true,
+              errorBuilder: (_, _, _) => const ColoredBox(color: P.tile),
+            ),
           ),
           if (photo.favorite)
             const Positioned(
@@ -388,7 +416,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 child: selected
                     ? const Icon(
                         IconsaxBold.tick_circle,
-                        size: 22,
+                        size: 24,
                         color: P.white,
                       )
                     : null,
@@ -441,17 +469,25 @@ class _GalleryScreenState extends State<GalleryScreen> {
               _action(
                 IconsaxOutline.export,
                 any,
-                () {
+                () async {
                   HapticFeedback.selectionClick();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Đã sẵn sàng chia sẻ ${_selected.length} ảnh',
+                  final selPhotos = state.photos
+                      .where((p) => _selected.contains(p.id))
+                      .toList();
+                  if (selPhotos.isEmpty) return;
+                  final box = context.findRenderObject() as RenderBox?;
+                  final origin = box != null
+                      ? (box.localToGlobal(Offset.zero) & box.size)
+                      : null;
+                  try {
+                    await SharePlus.instance.share(
+                      ShareParams(
+                        files: selPhotos.map((p) => XFile(p.path)).toList(),
+                        subject: 'RfCamera Photos (${selPhotos.length})',
+                        sharePositionOrigin: origin,
                       ),
-                      duration: const Duration(seconds: 2),
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
+                    );
+                  } catch (_) {}
                 },
                 key: const Key('sel_share'),
               ),
@@ -462,14 +498,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   HapticFeedback.selectionClick();
                   await state.batchToggleNegative(_selected);
                   if (!mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Đã chuyển đổi hiệu ứng cho ${_selected.length} ảnh',
-                      ),
-                      duration: const Duration(seconds: 2),
-                      behavior: SnackBarBehavior.floating,
-                    ),
+                  showAppToast(
+                    context,
+                    'Đã chuyển đổi hiệu ứng cho ${_selected.length} ảnh',
                   );
                 },
                 key: const Key('sel_film'),

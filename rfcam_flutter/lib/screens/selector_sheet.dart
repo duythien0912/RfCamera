@@ -72,7 +72,7 @@ class _SelectorSheetState extends State<SelectorSheet>
         return Opacity(opacity: t, child: child);
       },
       child: Material(
-        color: P.black,
+        color: Colors.transparent,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -91,11 +91,11 @@ class _SelectorSheetState extends State<SelectorSheet>
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0x1F000000),
-                    Color(0x8A000000),
+                    Color(0x00000000),
+                    Color(0x7A000000),
                     Color(0xF2000000),
                   ],
-                  stops: [0.0, 0.52, 0.80],
+                  stops: [0.0, 0.45, 0.75],
                 ),
               ),
             ),
