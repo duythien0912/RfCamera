@@ -208,11 +208,69 @@ class _CapabilityGlyphs extends StatelessWidget {
 class _LegacyRow extends StatelessWidget {
   const _LegacyRow();
 
+  void _showLegacyInfo(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierColor: const Color(0x8C000000),
+      builder: (ctx) => Center(
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+            width: 290,
+            padding: const EdgeInsets.all(22),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1E1E20),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: const Color(0x22FFFFFF)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(IconsaxOutline.camera, size: 36, color: P.white),
+                const SizedBox(height: 14),
+                Text(
+                  'Camera Đời Cũ',
+                  style: P.t(17, w: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Tất cả 5 dòng máy ảnh cổ điển và phụ kiện đặc biệt đã được mở khóa đầy đủ trong danh mục bên trên.',
+                  textAlign: TextAlign.center,
+                  style: P.t(13, c: P.dim),
+                ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () => Navigator.of(ctx).pop(),
+                  child: Container(
+                    height: 40,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: P.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      'Đã hiểu',
+                      style: P.t(14, w: FontWeight.w700, c: P.black),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: HapticFeedback.selectionClick,
+      onTap: () {
+        HapticFeedback.selectionClick();
+        _showLegacyInfo(context);
+      },
       child: Container(
         height: 64,
         margin: const EdgeInsets.only(left: 16, right: 16, top: 28, bottom: 40),

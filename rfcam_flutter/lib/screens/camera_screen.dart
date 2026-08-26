@@ -82,16 +82,15 @@ class _CameraScreenState extends State<CameraScreen>
 
   Future<void> _initCamera() async {
     try {
-      // Enumerating cameras does not need the permission, so it runs
-      // alongside the prompt instead of after it — on a granted device that
-      // removes a whole round-trip from the time-to-first-preview.
-      final devices = availableCameras();
       final status = await Permission.camera.request();
       if (!status.isGranted) {
         if (mounted) setState(() => _permissionDenied = true);
         return;
       }
-      _devices = await devices;
+      if (mounted && _permissionDenied) {
+        setState(() => _permissionDenied = false);
+      }
+      _devices = await availableCameras();
       if (_devices.isEmpty) {
         if (mounted) setState(() => _cameraReady = false);
         return;
@@ -165,8 +164,12 @@ class _CameraScreenState extends State<CameraScreen>
     }
 
     setState(() => _capturing = true);
-    unawaited(HapticFeedback.heavyImpact());
-    unawaited(SystemSound.play(SystemSoundType.click));
+    if (state.hapticEnabled) {
+      unawaited(HapticFeedback.heavyImpact());
+    }
+    if (state.soundEnabled) {
+      unawaited(SystemSound.play(SystemSoundType.click));
+    }
     setState(() => _flashing = true);
     Timer(const Duration(milliseconds: 100), () {
       if (mounted) setState(() => _flashing = false);
@@ -271,9 +274,9 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Future<void> _pickFromGallery() async {
-    // Importing from the system library is deliberately out of scope: the app
-    // never asks for photo-library access. Tapping still gives feedback.
     await HapticFeedback.selectionClick();
+    if (!mounted) return;
+    _openGallery();
   }
 
   @override
@@ -319,7 +322,18 @@ class _CameraScreenState extends State<CameraScreen>
                 state: state,
                 preview: LivePreview(state: state, child: _rawPreview()),
                 onTapDots: () => setState(() => _quickPanel = !_quickPanel),
-                onTapWhiteBalance: () => HapticFeedback.selectionClick(),
+                onTapWhiteBalance: () {
+                  HapticFeedback.selectionClick();
+                  state.cycleWhiteBalance();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Cân bằng trắng: ${state.whiteBalance}'),
+                      duration: const Duration(seconds: 1),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
                 onTapFocal: () => setState(
                   () => _tray = _tray == _Tray.focal ? _Tray.none : _Tray.focal,
                 ),
@@ -443,12 +457,18 @@ class _CameraScreenState extends State<CameraScreen>
 
           if (_permissionDenied)
             Positioned(
-              left: 24,
-              right: 24,
-              bottom: h * 0.02,
+              left: 16,
+              right: 16,
+              top: media.padding.top + 8,
               child: _PermissionNote(
                 onRetry: () async {
-                  await openAppSettings();
+                  final status = await Permission.camera.request();
+                  if (status.isGranted) {
+                    if (mounted) setState(() => _permissionDenied = false);
+                    await _initCamera();
+                  } else {
+                    await openAppSettings();
+                  }
                 },
               ),
             ),
@@ -908,17 +928,49 @@ class _PermissionNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: const Key('permission_note_banner'),
       onTap: onRetry,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         decoration: BoxDecoration(
-          color: const Color(0xFF1C1C1E),
-          borderRadius: BorderRadius.circular(14),
+          color: const Color(0xE61C1C1E),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: const Color(0x33FF9500)),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x66000000),
+              blurRadius: 16,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
-        child: Text(
-          'Cần quyền truy cập Camera. Chạm để mở Cài đặt.',
-          textAlign: TextAlign.center,
-          style: P.t(13, c: P.dim),
+        child: Row(
+          children: [
+            const Icon(
+              IconsaxOutline.camera_slash,
+              color: Colors.orange,
+              size: 22,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Cần quyền truy cập Camera. Chạm để cấp quyền trong Cài đặt.',
+                style: P.t(13, w: FontWeight.w500, c: P.white),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: P.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                'Mở',
+                style: P.t(12, w: FontWeight.w700, c: P.black),
+              ),
+            ),
+          ],
         ),
       ),
     );

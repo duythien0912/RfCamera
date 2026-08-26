@@ -82,8 +82,11 @@ class Viewfinder extends StatelessWidget {
               const ColoredBox(color: Color(0x6B000000)),
 
               if (state.frameOn)
-                ClipRect(
-                  clipper: _RectClipper(frame),
+                ClipRRect(
+                  clipper: _RRectClipper(
+                    frame,
+                    const Radius.circular(P.rInner),
+                  ),
                   child: preview,
                 )
               else
@@ -161,13 +164,15 @@ class Viewfinder extends StatelessWidget {
   }
 }
 
-class _RectClipper extends CustomClipper<Rect> {
-  _RectClipper(this.rect);
+class _RRectClipper extends CustomClipper<RRect> {
+  _RRectClipper(this.rect, this.radius);
   final Rect rect;
+  final Radius radius;
   @override
-  Rect getClip(Size size) => rect;
+  RRect getClip(Size size) => RRect.fromRectAndRadius(rect, radius);
   @override
-  bool shouldReclip(_RectClipper old) => old.rect != rect;
+  bool shouldReclip(_RRectClipper old) =>
+      old.rect != rect || old.radius != radius;
 }
 
 class _GridPainter extends CustomPainter {
@@ -368,17 +373,16 @@ class _TapTarget extends StatelessWidget {
 class MockPreview extends StatelessWidget {
   const MockPreview({
     super.key,
-    this.asset = 'assets/samples/sample_street.jpg',
+    this.color = const Color(0xFF161618),
   });
 
-  final String asset;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      asset,
-      fit: BoxFit.cover,
+    return Container(
       key: const Key('mock_preview'),
+      color: color,
     );
   }
 }

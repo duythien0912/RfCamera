@@ -8,6 +8,7 @@ import 'package:ficonsax/ficonsax.dart';
 import '../core/app_state.dart';
 import '../core/camera_catalog.dart';
 import '../core/palette.dart';
+import '../screens/settings_sheet.dart';
 import 'camera_art.dart';
 
 /// The frosted tray that drops out of the "..." button: flash, frame, grid,
@@ -127,7 +128,10 @@ class QuickPanel extends StatelessWidget {
                     id: 'qp_settings',
                     icon: IconsaxOutline.setting_2,
                     active: false,
-                    onTap: HapticFeedback.selectionClick,
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      SettingsSheet.show(context);
+                    },
                   ),
                 ],
               ),

@@ -28,22 +28,29 @@ class SamplePhotosScreen extends StatelessWidget {
       backgroundColor: P.black,
       body: Column(
         children: [
-          SizedBox(height: pad.top),
+          SizedBox(height: pad.top + 4),
           const _SampleAppBar(),
           Expanded(
             child: ListView.builder(
-              padding: EdgeInsets.only(bottom: pad.bottom + 32),
-              // The credit and the submit call sit once, above the feed —
-              // repeating them under all seven shots was just noise.
+              padding: EdgeInsets.only(
+                top: 8,
+                bottom: pad.bottom + 32,
+              ),
               itemCount: _samples.length + 1,
               itemBuilder: (context, i) {
                 if (i == 0) return const _CreditHeader();
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Image.asset(
-                    _samples[i - 1],
-                    width: double.infinity,
-                    fit: BoxFit.fitWidth,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(
+                      _samples[i - 1],
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 );
               },
@@ -60,20 +67,25 @@ class _SampleAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 56,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
           GestureDetector(
             key: const Key('samples_back'),
             behavior: HitTestBehavior.opaque,
             onTap: () => Navigator.of(context).maybePop(),
-            child: const SizedBox(
-              width: 56,
-              height: 56,
-              child: Icon(
+            child: Container(
+              width: 44,
+              height: 44,
+              decoration: const BoxDecoration(
+                color: Color(0x332C2C2E),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
                 IconsaxOutline.arrow_left,
-                size: 24,
+                size: 22,
                 color: P.white,
               ),
             ),
@@ -82,11 +94,11 @@ class _SampleAppBar extends StatelessWidget {
             child: Text(
               'Ảnh Mẫu',
               textAlign: TextAlign.center,
-              style: P.t(17, w: FontWeight.w600),
+              style: P.t(18, w: FontWeight.w600),
             ),
           ),
           // Balances the back button so the title sits optically centred.
-          const SizedBox(width: 56),
+          const SizedBox(width: 44),
         ],
       ),
     );
@@ -99,7 +111,7 @@ class _CreditHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 4, 24, 24),
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -145,13 +157,75 @@ class _CreditHeader extends StatelessWidget {
 class _SubmitPill extends StatelessWidget {
   const _SubmitPill();
 
+  void _showSubmitInfo(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierColor: const Color(0x8C000000),
+      builder: (ctx) => Center(
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+            width: 290,
+            padding: const EdgeInsets.all(22),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1E1E20),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: const Color(0x22FFFFFF)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  IconsaxOutline.gallery_add,
+                  size: 36,
+                  color: P.white,
+                ),
+                const SizedBox(height: 14),
+                Text(
+                  'Gửi Tác Phẩm',
+                  style: P.t(17, w: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Tính năng gửi ảnh mẫu và cộng đồng sáng tạo sẽ ra mắt trong bản cập nhật tiếp theo.',
+                  textAlign: TextAlign.center,
+                  style: P.t(13, c: P.dim),
+                ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () => Navigator.of(ctx).pop(),
+                  child: Container(
+                    height: 40,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: P.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      'Đã hiểu',
+                      style: P.t(14, w: FontWeight.w700, c: P.black),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: HapticFeedback.selectionClick,
+        onTap: () {
+          HapticFeedback.selectionClick();
+          _showSubmitInfo(context);
+        },
         child: Container(
           height: 34,
           padding: const EdgeInsets.symmetric(horizontal: 13),

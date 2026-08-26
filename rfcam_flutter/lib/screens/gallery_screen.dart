@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:morphnext/morphnext.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ficonsax/ficonsax.dart';
@@ -9,6 +10,7 @@ import 'package:ficonsax/ficonsax.dart';
 import '../core/app_state.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
+import 'settings_sheet.dart';
 
 /// The album. Folder dropdown, 3-up grid of captures, and a multi-select mode
 /// with share / negative / delete actions along the bottom.
@@ -142,7 +144,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
             _round(
               key: const Key('gallery_settings'),
               icon: IconsaxOutline.setting_2,
-              onTap: () {},
+              onTap: () {
+                HapticFeedback.selectionClick();
+                SettingsSheet.show(context);
+              },
             ),
             Expanded(
               child: Center(
@@ -434,13 +439,37 @@ class _GalleryScreenState extends State<GalleryScreen> {
               _action(
                 IconsaxOutline.export,
                 any,
-                () {},
+                () {
+                  HapticFeedback.selectionClick();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Đã sẵn sàng chia sẻ ${_selected.length} ảnh',
+                      ),
+                      duration: const Duration(seconds: 2),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
                 key: const Key('sel_share'),
               ),
               _action(
                 IconsaxOutline.video_horizontal,
                 any,
-                () {},
+                () async {
+                  HapticFeedback.selectionClick();
+                  await state.batchToggleNegative(_selected);
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Đã chuyển đổi hiệu ứng cho ${_selected.length} ảnh',
+                      ),
+                      duration: const Duration(seconds: 2),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
                 key: const Key('sel_film'),
               ),
               _action(

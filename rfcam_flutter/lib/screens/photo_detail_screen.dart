@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:morphnext/morphnext.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:ficonsax/ficonsax.dart';
 
 import '../core/app_state.dart';
+import '../core/camera_catalog.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
 
@@ -65,6 +67,54 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
     if (remaining <= 1) Navigator.of(context).pop();
   }
 
+  void _onShare(CapturedPhoto photo) {
+    HapticFeedback.selectionClick();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Đã sẵn sàng chia sẻ ảnh #${photo.cameraName}'),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  Future<void> _onFire(CapturedPhoto photo) async {
+    HapticFeedback.selectionClick();
+    await AppScope.read(context).toggleNegative(photo.id);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          photo.negative
+              ? 'Đã chuyển về ảnh dương bản'
+              : 'Đã chuyển sang hiệu ứng phim âm bản',
+        ),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  Future<void> _onCopy(CapturedPhoto photo) async {
+    HapticFeedback.selectionClick();
+    final app = AppScope.read(context);
+    final cam = Cameras.tryById(photo.cameraId) ?? app.camera;
+    await app.addPhoto(
+      path: photo.path,
+      cam: cam,
+      negative: photo.negative,
+      at: DateTime.now(),
+    );
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Đã nhân bản ảnh #${photo.cameraName} vào album'),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = AppScope.of(context);
@@ -86,6 +136,9 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
                     chromeVisible: _chromeVisible,
                     onTapPhoto: () =>
                         setState(() => _chromeVisible = !_chromeVisible),
+                    onShare: () => _onShare(photos[i]),
+                    onFire: () => _onFire(photos[i]),
+                    onCopy: () => _onCopy(photos[i]),
                     onFavorite: () =>
                         AppScope.read(context).toggleFavorite(photos[i].id),
                     onDelete: () => _confirmDelete(photos[i], photos.length),
@@ -113,6 +166,9 @@ class _Page extends StatelessWidget {
     required this.photo,
     required this.chromeVisible,
     required this.onTapPhoto,
+    required this.onShare,
+    required this.onFire,
+    required this.onCopy,
     required this.onFavorite,
     required this.onDelete,
   });
@@ -120,6 +176,9 @@ class _Page extends StatelessWidget {
   final CapturedPhoto photo;
   final bool chromeVisible;
   final VoidCallback onTapPhoto;
+  final VoidCallback onShare;
+  final VoidCallback onFire;
+  final VoidCallback onCopy;
   final VoidCallback onFavorite;
   final VoidCallback onDelete;
 
@@ -141,17 +200,31 @@ class _Page extends StatelessWidget {
           // No stamp overlay here on purpose: the date is burned into the
           // JPEG at capture time, so drawing it again would double it up.
           Positioned(
-            top: pad.top + 20,
-            right: 20,
-            child: Text(
-              '#${photo.cameraName}',
-              style: P
-                  .t(13, w: FontWeight.w600)
-                  .copyWith(
-                    shadows: const [
-                      Shadow(color: Colors.black54, blurRadius: 4),
-                    ],
+            top: pad.top + 16,
+            right: 16,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 7,
                   ),
+                  decoration: BoxDecoration(
+                    color: const Color(0x6618181A),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: const Color(0x33FFFFFF),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    '#${photo.cameraName}',
+                    style: P.t(13, w: FontWeight.w600),
+                  ),
+                ),
+              ),
             ),
           ),
           Positioned(
@@ -169,23 +242,24 @@ class _Page extends StatelessWidget {
                     _ToolIcon(
                       key: const Key('detail_share'),
                       icon: IconsaxOutline.export,
-                      onTap: HapticFeedback.selectionClick,
+                      onTap: onShare,
                     ),
                     _ToolIcon(
                       key: const Key('detail_fire'),
                       icon: IconsaxOutline.magicpen,
-                      onTap: HapticFeedback.selectionClick,
+                      onTap: onFire,
                     ),
                     _ToolIcon(
                       key: const Key('detail_copy'),
                       icon: IconsaxOutline.copy,
-                      onTap: HapticFeedback.selectionClick,
+                      onTap: onCopy,
                     ),
                     _ToolIcon(
                       key: const Key('detail_favorite'),
                       icon: photo.favorite
                           ? IconsaxBold.heart
                           : IconsaxOutline.heart,
+                      color: photo.favorite ? P.red : null,
                       onTap: () {
                         HapticFeedback.selectionClick();
                         onFavorite();
@@ -213,23 +287,43 @@ class _Page extends StatelessWidget {
 /// The burned-in LED date, running bottom-to-top up the left edge.
 
 class _ToolIcon extends StatelessWidget {
-  const _ToolIcon({super.key, required this.icon, required this.onTap});
+  const _ToolIcon({
+    super.key,
+    required this.icon,
+    required this.onTap,
+    this.color,
+  });
 
   final IconData icon;
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-        child: AnimatedMorphIcon(
-          icon: icon,
-          size: 30,
-          color: P.white,
-          shadows: const [Shadow(color: Colors.black87, blurRadius: 2)],
+      child: ClipOval(
+        child: BackdropFilter(
+          filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+          child: Container(
+            width: 52,
+            height: 52,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: const Color(0x6618181A),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: const Color(0x33FFFFFF),
+                width: 1,
+              ),
+            ),
+            child: AnimatedMorphIcon(
+              icon: icon,
+              size: 24,
+              color: color ?? P.white,
+            ),
+          ),
         ),
       ),
     );
@@ -253,11 +347,28 @@ class _CloseButton extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: Container(
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(color: background, shape: BoxShape.circle),
-        child: Icon(IconsaxOutline.close_circle, size: 26, color: iconColor),
+      child: ClipOval(
+        child: BackdropFilter(
+          filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+          child: Container(
+            width: 50,
+            height: 50,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: const Color(0x9918181A),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: const Color(0x4DFFFFFF),
+                width: 1.2,
+              ),
+            ),
+            child: const Icon(
+              IconsaxOutline.close_circle,
+              size: 24,
+              color: P.white,
+            ),
+          ),
+        ),
       ),
     );
   }

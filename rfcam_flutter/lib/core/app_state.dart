@@ -68,6 +68,10 @@ class AppState extends ChangeNotifier {
   int timerSeconds = 3;
   bool doubleExposure = false;
   bool frontCamera = false;
+  bool soundEnabled = true;
+  bool hapticEnabled = true;
+  String whiteBalance = 'Auto';
+  static const wbOptions = ['Auto', 'Daylight', 'Cloudy', 'Tungsten'];
 
   // --- gallery -------------------------------------------------------------
   final List<CapturedPhoto> _photos = [];
@@ -234,6 +238,39 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void cycleWhiteBalance() {
+    final idx = wbOptions.indexOf(whiteBalance);
+    whiteBalance = wbOptions[(idx + 1) % wbOptions.length];
+    notifyListeners();
+  }
+
+  void setSound(bool v) {
+    soundEnabled = v;
+    notifyListeners();
+  }
+
+  void setHaptic(bool v) {
+    hapticEnabled = v;
+    notifyListeners();
+  }
+
+  void resetSettings() {
+    flashOn = false;
+    frameOn = true;
+    gridOn = true;
+    zoomMode = ZoomMode.frame;
+    focal = 35;
+    ev = 0.0;
+    evAuto = true;
+    timerOn = false;
+    timerSeconds = 3;
+    doubleExposure = false;
+    whiteBalance = 'Auto';
+    _accessories.clear();
+    _prefs?.remove(_kAccessories);
+    notifyListeners();
+  }
+
   Future<CapturedPhoto> addPhoto({
     required String path,
     required CameraProfile cam,
@@ -258,6 +295,25 @@ class AppState extends ChangeNotifier {
     final i = _photos.indexWhere((p) => p.id == id);
     if (i < 0) return;
     _photos[i] = _photos[i].copyWith(favorite: !_photos[i].favorite);
+    await _persistPhotos();
+    notifyListeners();
+  }
+
+  Future<void> toggleNegative(String id) async {
+    final i = _photos.indexWhere((p) => p.id == id);
+    if (i < 0) return;
+    _photos[i] = _photos[i].copyWith(negative: !_photos[i].negative);
+    await _persistPhotos();
+    notifyListeners();
+  }
+
+  Future<void> batchToggleNegative(Iterable<String> ids) async {
+    final set = ids.toSet();
+    for (var i = 0; i < _photos.length; i++) {
+      if (set.contains(_photos[i].id)) {
+        _photos[i] = _photos[i].copyWith(negative: !_photos[i].negative);
+      }
+    }
     await _persistPhotos();
     notifyListeners();
   }
