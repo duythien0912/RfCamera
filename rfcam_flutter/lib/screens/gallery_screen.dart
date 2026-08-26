@@ -138,7 +138,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return SizedBox(
       height: _barH,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ).copyWith(bottom: 12),
         child: Row(
           children: [
             _round(

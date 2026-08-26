@@ -30,6 +30,10 @@
 	<string>RfCamera cần truy cập máy ảnh để bạn chụp ảnh. Ảnh được lưu trong ứng dụng và không gửi đi đâu cả.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>RfCamera cần truy cập micro khi quay video hoặc ghi âm máy ảnh.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>RfCamera cần quyền lưu ảnh vào thư viện của bạn.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>RfCamera cần quyền truy cập thư viện để lưu ảnh đã chụp.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

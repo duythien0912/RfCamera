@@ -2,17 +2,18 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:morphnext/morphnext.dart';
 import 'package:flutter/services.dart';
 import 'package:ficonsax/ficonsax.dart';
+import 'package:gal/gal.dart';
+import 'package:morphnext/morphnext.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/app_state.dart';
 import '../core/camera_catalog.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
 
-/// Full-screen viewer for the album. Swiping vertically walks the roll, exactly
-/// like the reference app's photo feed.
+/// Full-screen viewer for the album. Swiping horizontally walks the roll.
 class PhotoDetailScreen extends StatefulWidget {
   const PhotoDetailScreen({
     super.key,
@@ -67,21 +68,26 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
     if (remaining <= 1) Navigator.of(context).pop();
   }
 
-  void _onShare(CapturedPhoto photo) {
+  Future<void> _onShare(CapturedPhoto photo) async {
     HapticFeedback.selectionClick();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Đã sẵn sàng chia sẻ ảnh #${photo.cameraName}'),
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    final box = context.findRenderObject() as RenderBox?;
+    final origin =
+        box != null ? (box.localToGlobal(Offset.zero) & box.size) : null;
+    try {
+      await Share.shareXFiles(
+        [XFile(photo.path)],
+        text: 'RfCamera #${photo.cameraName}',
+        sharePositionOrigin: origin,
+      );
+    } catch (_) {}
   }
 
   Future<void> _onFire(CapturedPhoto photo) async {
     HapticFeedback.selectionClick();
     await AppScope.read(context).toggleNegative(photo.id);
     if (!mounted) return;
+    setState(() {});
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -89,30 +95,53 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
               ? 'Đã chuyển về ảnh dương bản'
               : 'Đã chuyển sang hiệu ứng phim âm bản',
         ),
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 1),
         behavior: SnackBarBehavior.floating,
       ),
     );
   }
 
-  Future<void> _onCopy(CapturedPhoto photo) async {
+  Future<void> _onDownload(CapturedPhoto photo) async {
     HapticFeedback.selectionClick();
-    final app = AppScope.read(context);
-    final cam = Cameras.tryById(photo.cameraId) ?? app.camera;
-    await app.addPhoto(
-      path: photo.path,
-      cam: cam,
-      negative: photo.negative,
-      at: DateTime.now(),
-    );
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Đã nhân bản ảnh #${photo.cameraName} vào album'),
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    try {
+      final hasAccess = await Gal.hasAccess();
+      if (!hasAccess) {
+        final request = await Gal.requestAccess();
+        if (!request) {
+          if (!mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Vui lòng cấp quyền Thư viện ảnh trong Cài đặt để lưu ảnh.',
+              ),
+              duration: Duration(seconds: 2),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+          return;
+        }
+      }
+      await Gal.putImage(photo.path, album: 'RfCamera');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Đã lưu ảnh #${photo.cameraName} vào Thư viện của máy',
+          ),
+          duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Không thể lưu ảnh: $e'),
+          duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
   }
 
   @override
@@ -129,7 +158,7 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
                 PageView.builder(
                   key: const Key('detail_pager'),
                   controller: _pager,
-                  scrollDirection: Axis.vertical,
+                  scrollDirection: Axis.horizontal,
                   itemCount: photos.length,
                   itemBuilder: (context, i) => _Page(
                     photo: photos[i],
@@ -138,7 +167,7 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
                         setState(() => _chromeVisible = !_chromeVisible),
                     onShare: () => _onShare(photos[i]),
                     onFire: () => _onFire(photos[i]),
-                    onCopy: () => _onCopy(photos[i]),
+                    onDownload: () => _onDownload(photos[i]),
                     onFavorite: () =>
                         AppScope.read(context).toggleFavorite(photos[i].id),
                     onDelete: () => _confirmDelete(photos[i], photos.length),
@@ -168,7 +197,7 @@ class _Page extends StatelessWidget {
     required this.onTapPhoto,
     required this.onShare,
     required this.onFire,
-    required this.onCopy,
+    required this.onDownload,
     required this.onFavorite,
     required this.onDelete,
   });
@@ -178,7 +207,7 @@ class _Page extends StatelessWidget {
   final VoidCallback onTapPhoto;
   final VoidCallback onShare;
   final VoidCallback onFire;
-  final VoidCallback onCopy;
+  final VoidCallback onDownload;
   final VoidCallback onFavorite;
   final VoidCallback onDelete;
 
@@ -191,10 +220,39 @@ class _Page extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-            child: Image.file(
-              File(photo.path),
-              fit: BoxFit.contain,
-              errorBuilder: (_, _, _) => const SizedBox.shrink(),
+            child: ColorFiltered(
+              colorFilter: photo.negative
+                  ? const ColorFilter.matrix(<double>[
+                      -1,
+                      0,
+                      0,
+                      0,
+                      255,
+                      0,
+                      -1,
+                      0,
+                      0,
+                      255,
+                      0,
+                      0,
+                      -1,
+                      0,
+                      255,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                    ])
+                  : const ColorFilter.mode(
+                      Colors.transparent,
+                      BlendMode.dst,
+                    ),
+              child: Image.file(
+                File(photo.path),
+                fit: BoxFit.contain,
+                errorBuilder: (_, _, _) => const SizedBox.shrink(),
+              ),
             ),
           ),
           // No stamp overlay here on purpose: the date is burned into the
@@ -247,12 +305,13 @@ class _Page extends StatelessWidget {
                     _ToolIcon(
                       key: const Key('detail_fire'),
                       icon: IconsaxOutline.magicpen,
+                      color: photo.negative ? Colors.orange : null,
                       onTap: onFire,
                     ),
                     _ToolIcon(
                       key: const Key('detail_copy'),
-                      icon: IconsaxOutline.copy,
-                      onTap: onCopy,
+                      icon: IconsaxOutline.receive_square,
+                      onTap: onDownload,
                     ),
                     _ToolIcon(
                       key: const Key('detail_favorite'),

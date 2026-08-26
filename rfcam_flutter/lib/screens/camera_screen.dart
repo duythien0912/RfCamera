@@ -45,6 +45,7 @@ class _CameraScreenState extends State<CameraScreen>
   bool _flashing = false;
   bool _capturing = false;
   int? _countdown;
+  Uint8List? _frozenFrame;
 
   /// The first half of a double exposure, waiting for its partner.
   Uint8List? _pendingDouble;
@@ -63,7 +64,9 @@ class _CameraScreenState extends State<CameraScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _controller?.dispose();
+    final c = _controller;
+    _controller = null;
+    c?.dispose();
     super.dispose();
   }
 
@@ -72,9 +75,9 @@ class _CameraScreenState extends State<CameraScreen>
     final c = _controller;
     if (c == null || !c.value.isInitialized) return;
     if (s == AppLifecycleState.inactive) {
-      c.dispose();
       _controller = null;
       if (mounted) setState(() => _cameraReady = false);
+      c.dispose();
     } else if (s == AppLifecycleState.resumed) {
       unawaited(_initCamera());
     }
@@ -112,23 +115,38 @@ class _CameraScreenState extends State<CameraScreen>
       (d) => d.lensDirection == wanted,
       orElse: () => _devices.first,
     );
-    await _controller?.dispose();
+    final old = _controller;
+    _controller = null;
+    if (mounted) setState(() => _cameraReady = false);
+    await old?.dispose();
+
     final c = CameraController(
       device,
       ResolutionPreset.high,
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
-    _controller = c;
     try {
       await c.initialize();
-      if (mounted) setState(() => _cameraReady = true);
+      if (!mounted) {
+        await c.dispose();
+        return;
+      }
+      _controller = c;
+      setState(() => _cameraReady = true);
     } catch (_) {
       if (mounted) setState(() => _cameraReady = false);
     }
   }
 
   Widget _rawPreview() {
+    if (_frozenFrame != null) {
+      return Image.memory(
+        _frozenFrame!,
+        fit: BoxFit.cover,
+        gaplessPlayback: true,
+      );
+    }
     final c = _controller;
     if (!_cameraReady || c == null || !c.value.isInitialized) {
       return const MockPreview();
@@ -170,14 +188,23 @@ class _CameraScreenState extends State<CameraScreen>
     if (state.soundEnabled) {
       unawaited(SystemSound.play(SystemSoundType.click));
     }
-    setState(() => _flashing = true);
-    Timer(const Duration(milliseconds: 100), () {
-      if (mounted) setState(() => _flashing = false);
-    });
+    if (state.flashOn) {
+      setState(() => _flashing = true);
+      Timer(const Duration(milliseconds: 120), () {
+        if (mounted) setState(() => _flashing = false);
+      });
+    }
 
     try {
+      try {
+        await _controller?.pausePreview();
+      } catch (_) {}
+
       var bytes = await _grabFrame();
       if (bytes == null) return;
+      if (mounted) {
+        setState(() => _frozenFrame = bytes);
+      }
 
       // Double exposure: hold the first frame, then blend the second onto it
       // and develop the pair as one shot, the way winding twice would.
@@ -213,7 +240,15 @@ class _CameraScreenState extends State<CameraScreen>
     } catch (_) {
       // A failed frame should never leave the shutter stuck.
     } finally {
-      if (mounted) setState(() => _capturing = false);
+      if (mounted) {
+        setState(() {
+          _capturing = false;
+          _frozenFrame = null;
+        });
+      }
+      try {
+        await _controller?.resumePreview();
+      } catch (_) {}
     }
   }
 
