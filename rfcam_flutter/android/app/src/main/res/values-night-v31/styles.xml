@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+ replaces the windowBackground splash with the system
+         splash screen, so it needs its own black + centred camera icon. -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_icon</item>
+    </style>
+    <!-- The handoff to NormalTheme after the splash is done by Flutter's
+         `io.flutter.embedding.android.NormalTheme` meta-data in the manifest,
+         not by `postSplashScreenTheme` (that attribute belongs to the AndroidX
+         core-splashscreen library, which this app does not depend on). -->
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+</resources>

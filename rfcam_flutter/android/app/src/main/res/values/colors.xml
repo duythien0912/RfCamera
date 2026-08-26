@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Adaptive-icon background layer: the flat tone the supplied launcher
+         artwork sits on, so the cut-out camera reads as if it were never
+         separated from its square. -->
+    <color name="ic_launcher_background">#FF29292B</color>
+    <!-- The app is a pure-black camera UI: the splash and the window
+         background behind Flutter both use this, so there is never a white
+         flash on launch. -->
+    <color name="splash_background">#FF000000</color>
+</resources>

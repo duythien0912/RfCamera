@@ -1,0 +1,11 @@
+name: _
+publish_to: none
+
+environment:
+  sdk: '^3.10.3'
+
+workspace:
+  - rfcam_client
+  - rfcam_server
+  - rfcam_flutter
+
