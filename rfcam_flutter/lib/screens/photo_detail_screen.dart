@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ficonsax/ficonsax.dart';
@@ -143,44 +144,50 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
     final app = AppScope.of(context);
     final photos = _live(app);
 
-    return Scaffold(
+    return DismissiblePage(
+      onDismissed: () => Navigator.of(context).pop(),
+      direction: DismissiblePageDismissDirection.multi,
+      isFullScreen: true,
       backgroundColor: P.black,
-      body: photos.isEmpty
-          ? const SizedBox.shrink()
-          : Stack(
-              children: [
-                PageView.builder(
-                  key: const Key('detail_pager'),
-                  controller: _pager,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: photos.length,
-                  itemBuilder: (context, i) => _Page(
-                    photo: photos[i],
-                    chromeVisible: _chromeVisible,
-                    onTapPhoto: () =>
-                        setState(() => _chromeVisible = !_chromeVisible),
-                    onApplyCamera: () => _onApplyCamera(photos[i]),
-                    onShare: () => _onShare(photos[i]),
-                    onFire: () => _onFire(photos[i]),
-                    onDownload: () => _onDownload(photos[i]),
-                    onFavorite: () =>
-                        AppScope.read(context).toggleFavorite(photos[i].id),
-                    onDelete: () => _confirmDelete(photos[i], photos.length),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: photos.isEmpty
+            ? const SizedBox.shrink()
+            : Stack(
+                children: [
+                  PageView.builder(
+                    key: const Key('detail_pager'),
+                    controller: _pager,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: photos.length,
+                    itemBuilder: (context, i) => _Page(
+                      photo: photos[i],
+                      chromeVisible: _chromeVisible,
+                      onTapPhoto: () =>
+                          setState(() => _chromeVisible = !_chromeVisible),
+                      onApplyCamera: () => _onApplyCamera(photos[i]),
+                      onShare: () => _onShare(photos[i]),
+                      onFire: () => _onFire(photos[i]),
+                      onDownload: () => _onDownload(photos[i]),
+                      onFavorite: () =>
+                          AppScope.read(context).toggleFavorite(photos[i].id),
+                      onDelete: () => _confirmDelete(photos[i], photos.length),
+                    ),
                   ),
-                ),
-                // Stays put while the rest of the chrome fades.
-                Positioned(
-                  right: 24,
-                  bottom: MediaQuery.paddingOf(context).bottom + 24,
-                  child: _CloseButton(
-                    key: const Key('detail_close'),
-                    background: P.white,
-                    iconColor: P.black,
-                    onTap: () => Navigator.of(context).pop(),
+                  // Stays put while the rest of the chrome fades.
+                  Positioned(
+                    right: 24,
+                    bottom: MediaQuery.paddingOf(context).bottom + 24,
+                    child: _CloseButton(
+                      key: const Key('detail_close'),
+                      background: P.white,
+                      iconColor: P.black,
+                      onTap: () => Navigator.of(context).pop(),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 }
@@ -268,7 +275,7 @@ class _Page extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
-                      vertical: 3,
+                      vertical: 1,
                     ),
                     decoration: BoxDecoration(
                       color: const Color(0x6618181A),

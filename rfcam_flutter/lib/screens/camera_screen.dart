@@ -493,22 +493,22 @@ class _CameraScreenState extends State<CameraScreen>
   // --- navigation ----------------------------------------------------------
 
   void _openGallery() {
-    context.pushTransparentRoute(
-      GalleryScreen(
-        onBackToCamera: () => Navigator.of(context).maybePop(),
-        onOpenPhoto: (photo) {
-          final state = AppScope.read(context);
-          final all = state.photos;
-          final i = all.indexWhere((p) => p.id == photo.id);
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) => PhotoDetailScreen(
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => GalleryScreen(
+          onBackToCamera: () => Navigator.of(context).maybePop(),
+          onOpenPhoto: (photo) {
+            final state = AppScope.read(context);
+            final all = state.photos;
+            final i = all.indexWhere((p) => p.id == photo.id);
+            context.pushTransparentRoute(
+              PhotoDetailScreen(
                 photos: all,
                 initialIndex: i < 0 ? 0 : i,
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

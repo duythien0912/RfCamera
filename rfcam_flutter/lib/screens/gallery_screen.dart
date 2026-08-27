@@ -15,6 +15,7 @@ import '../core/palette.dart';
 import '../core/photo.dart';
 import '../core/toast.dart';
 import '../widgets/camera_art.dart';
+import 'photo_detail_screen.dart';
 import 'settings_sheet.dart';
 
 /// The album. Folder dropdown, 3-up grid of captures, and a multi-select mode
@@ -80,7 +81,19 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
   void _tapTile(CapturedPhoto photo) {
     if (!_selectMode) {
-      widget.onOpenPhoto?.call(photo);
+      if (widget.onOpenPhoto != null) {
+        widget.onOpenPhoto!(photo);
+      } else {
+        final state = AppScope.read(context);
+        final all = state.photos;
+        final i = all.indexWhere((p) => p.id == photo.id);
+        context.pushTransparentRoute(
+          PhotoDetailScreen(
+            photos: all,
+            initialIndex: i < 0 ? 0 : i,
+          ),
+        );
+      }
       return;
     }
     setState(() {
@@ -109,7 +122,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
         widget.onBackToCamera?.call();
         Navigator.of(context).pop();
       },
-      direction: DismissiblePageDismissDirection.vertical,
+      direction: DismissiblePageDismissDirection.down,
       isFullScreen: true,
       disabled: _dropdownOpen,
       backgroundColor: P.black,
@@ -367,6 +380,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
   Widget _tile(CapturedPhoto photo) {
     final selected = _selected.contains(photo.id);
+
     return GestureDetector(
       key: Key('tile_${photo.id}'),
       behavior: HitTestBehavior.opaque,
@@ -412,21 +426,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
               left: 8,
               bottom: 8,
               child: Icon(IconsaxBold.heart, size: 20, color: P.white),
-            )
-          else
-            Positioned(
-              left: 6,
-              bottom: 8,
-              child: Opacity(
-                opacity: 0.9,
-                child: RotatedBox(
-                  quarterTurns: 3,
-                  child: Text(
-                    photo.stampText,
-                    style: P.t(9, w: FontWeight.w700, c: P.stampRed, ls: 1),
-                  ),
-                ),
-              ),
             ),
           if (_selectMode)
             Positioned(
