@@ -684,7 +684,7 @@ class _GalleryPlaceholder extends StatelessWidget {
     final String body;
     if (permission) {
       title = 'Chưa có quyền Camera';
-      body = 'Dazz cần quyền Camera để chụp. Mở Cài đặt để cấp quyền.';
+      body = 'RfCamera cần quyền Camera để chụp. Mở Cài đặt để cấp quyền.';
     } else if (allEmpty) {
       title = 'Chưa có ảnh nào';
       body = 'Những tấm bạn chụp sẽ xuất hiện ở đây.';

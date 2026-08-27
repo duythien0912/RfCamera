@@ -48,7 +48,7 @@ void main() {
     await state.load();
     // Start every run from an empty album so counts are deterministic.
     await state.deletePhotos(state.photos.map((p) => p.id).toList());
-    await tester.pumpWidget(RfCameraApp(state: state));
+    await tester.pumpWidget(RfCamApp(state: state));
     await tester.pumpAndSettle(const Duration(seconds: 2));
   }
 
@@ -447,7 +447,7 @@ void main() {
       );
       expect(find.text('ACCESSORY'), findsWidgets);
       expect(find.byIcon(Icons.lock), findsNothing);
-      expect(find.textContaining('Dazz Pro'), findsNothing);
+      expect(find.textContaining('RfCamera Pro'), findsNothing);
     });
   });
 

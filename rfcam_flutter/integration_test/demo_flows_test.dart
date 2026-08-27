@@ -42,7 +42,7 @@ void main() {
     if (wipe) {
       await state.deletePhotos(state.photos.map((p) => p.id).toList());
     }
-    await tester.pumpWidget(RfCameraApp(state: state));
+    await tester.pumpWidget(RfCamApp(state: state));
     await beat(tester, 1800);
   }
 

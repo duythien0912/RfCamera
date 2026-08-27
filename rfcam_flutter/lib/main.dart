@@ -44,11 +44,11 @@ void main() {
     unawaited(FilmView.warmUp());
   });
 
-  runApp(RfCameraApp(state: state));
+  runApp(RfCamApp(state: state));
 }
 
-class RfCameraApp extends StatelessWidget {
-  const RfCameraApp({super.key, required this.state});
+class RfCamApp extends StatelessWidget {
+  const RfCamApp({super.key, required this.state});
 
   final AppState state;
 

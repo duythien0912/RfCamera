@@ -7,7 +7,7 @@ import 'package:ficonsax/ficonsax.dart';
 import '../core/palette.dart';
 
 /// The "Ảnh Mẫu" feed: a scroll of the shots that ship with the app, each with
-/// the Dazz credit block underneath. Everything here is bundled — no network.
+/// the RfCamera credit block underneath. Everything here is bundled — no network.
 class SamplePhotosScreen extends StatelessWidget {
   const SamplePhotosScreen({super.key});
 
@@ -248,7 +248,7 @@ class _SubmitPill extends StatelessWidget {
   }
 }
 
-/// The Dazz app mark: a black disc with three coloured stripes swooping across
+/// The RfCamera app mark: a black disc with three coloured stripes swooping across
 /// it, plus a white highlight.
 class _DazzMarkPainter extends CustomPainter {
   const _DazzMarkPainter();

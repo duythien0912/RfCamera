@@ -602,7 +602,7 @@ class _CameraArtPainter extends CustomPainter {
     c.restore();
   }
 
-  /// The signature Dazz red ball on a stalk above the top-left of the body.
+  /// The signature RfCamera red ball on a stalk above the top-left of the body.
   void _flashDot(Canvas c) {
     c.drawLine(
       const Offset(27, 33),

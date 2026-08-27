@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/palette.dart';
 
 /// The tap-to-focus reticle with vertical exposure slider and sun indicator,
-/// matching iOS Camera and Dazz Cam.
+/// matching iOS Camera and RfCamera Cam.
 class FocusReticle extends StatelessWidget {
   const FocusReticle({
     super.key,
