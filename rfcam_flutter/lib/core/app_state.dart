@@ -23,6 +23,7 @@ class AppState extends ChangeNotifier {
   static const _kVariant = 'dazz.variant';
   static const _kRatio = 'dazz.ratio';
   static const _kAccessories = 'dazz.accessories';
+  static const _kMirrorFront = 'dazz.mirror_front';
 
   SharedPreferences? _prefs;
   bool _ready = false;
@@ -68,6 +69,7 @@ class AppState extends ChangeNotifier {
   int timerSeconds = 3;
   bool doubleExposure = false;
   bool frontCamera = false;
+  bool mirrorFrontCamera = true;
   bool soundEnabled = true;
   bool hapticEnabled = true;
   String whiteBalance = 'Auto';
@@ -96,6 +98,7 @@ class AppState extends ChangeNotifier {
     }
     _variant = p.getString(_kVariant);
     _ratio = p.getString(_kRatio) ?? '4:3';
+    mirrorFrontCamera = p.getBool(_kMirrorFront) ?? true;
     _accessories
       ..clear()
       ..addAll(p.getStringList(_kAccessories) ?? const []);
@@ -254,6 +257,12 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setMirrorFrontCamera(bool v) {
+    mirrorFrontCamera = v;
+    _prefs?.setBool(_kMirrorFront, v);
+    notifyListeners();
+  }
+
   void resetSettings() {
     flashOn = false;
     frameOn = true;
@@ -266,6 +275,8 @@ class AppState extends ChangeNotifier {
     timerSeconds = 3;
     doubleExposure = false;
     whiteBalance = 'Auto';
+    mirrorFrontCamera = true;
+    _prefs?.setBool(_kMirrorFront, true);
     _accessories.clear();
     _prefs?.remove(_kAccessories);
     notifyListeners();

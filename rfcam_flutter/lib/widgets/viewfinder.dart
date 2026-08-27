@@ -78,8 +78,9 @@ class Viewfinder extends StatelessWidget {
         // exactly: whichever axis runs out first decides the size.
         const topBand = 0.135;
         const bottomBand = 0.165;
-        final maxW = w * frameWidthFraction(state.focal);
-        final maxH = h * (1 - topBand - bottomBand);
+        final frameZoom = state.zoomMode == ZoomMode.frame ? zoomLevel : 1.0;
+        final maxW = (w * frameWidthFraction(state.focal)) / frameZoom;
+        final maxH = (h * (1 - topBand - bottomBand)) / frameZoom;
         var fw = maxW;
         var fh = fw * state.ratioValue;
         if (fh > maxH) {

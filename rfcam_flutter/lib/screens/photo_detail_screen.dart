@@ -9,9 +9,11 @@ import 'package:morphnext/morphnext.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../core/app_state.dart';
+import '../core/camera_catalog.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
 import '../core/toast.dart';
+import '../widgets/camera_art.dart';
 
 /// Full-screen viewer for the album. Swiping horizontally walks the roll.
 class PhotoDetailScreen extends StatefulWidget {
@@ -66,6 +68,16 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
     await AppScope.read(context).deletePhotos([p.id]);
     if (!mounted) return;
     if (remaining <= 1) Navigator.of(context).pop();
+  }
+
+  void _onApplyCamera(CapturedPhoto photo) {
+    HapticFeedback.selectionClick();
+    final cam = Cameras.tryById(photo.cameraId);
+    if (cam != null) {
+      AppScope.read(context).selectCamera(cam);
+      showAppToast(context, 'Đã áp dụng máy ảnh #${cam.name}');
+    }
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   Future<void> _onShare(CapturedPhoto photo) async {
@@ -147,6 +159,7 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
                     chromeVisible: _chromeVisible,
                     onTapPhoto: () =>
                         setState(() => _chromeVisible = !_chromeVisible),
+                    onApplyCamera: () => _onApplyCamera(photos[i]),
                     onShare: () => _onShare(photos[i]),
                     onFire: () => _onFire(photos[i]),
                     onDownload: () => _onDownload(photos[i]),
@@ -177,6 +190,7 @@ class _Page extends StatelessWidget {
     required this.photo,
     required this.chromeVisible,
     required this.onTapPhoto,
+    required this.onApplyCamera,
     required this.onShare,
     required this.onFire,
     required this.onDownload,
@@ -187,6 +201,7 @@ class _Page extends StatelessWidget {
   final CapturedPhoto photo;
   final bool chromeVisible;
   final VoidCallback onTapPhoto;
+  final VoidCallback onApplyCamera;
   final VoidCallback onShare;
   final VoidCallback onFire;
   final VoidCallback onDownload;
@@ -242,26 +257,49 @@ class _Page extends StatelessWidget {
           Positioned(
             top: pad.top + 16,
             right: 16,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: BackdropFilter(
-                filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 7,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0x6618181A),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: const Color(0x33FFFFFF),
-                      width: 1,
+            child: GestureDetector(
+              key: const Key('detail_apply_camera'),
+              behavior: HitTestBehavior.opaque,
+              onTap: onApplyCamera,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
                     ),
-                  ),
-                  child: Text(
-                    '#${photo.cameraName}',
-                    style: P.t(13, w: FontWeight.w600),
+                    decoration: BoxDecoration(
+                      color: const Color(0x6618181A),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: const Color(0x33FFFFFF),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (Cameras.tryById(photo.cameraId) != null) ...[
+                          SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: Center(
+                              child: CameraArt(
+                                profile: Cameras.tryById(photo.cameraId)!,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                        ],
+                        Text(
+                          '#${photo.cameraName}',
+                          style: P.t(12, w: FontWeight.w600, c: P.white),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -36,6 +36,8 @@ class BakeRequest {
     required this.maxEdge,
     this.halation = 0,
     this.splitTone = 0,
+    this.flipHorizontal = false,
+    this.cropZoom = 1.0,
     this.grainPlate,
     this.grainPlateBlend = 0,
     this.grainPlateAlpha = 0,
@@ -55,6 +57,8 @@ class BakeRequest {
     int seed,
     String stampText, {
     int maxEdge = 2048,
+    bool flipHorizontal = false,
+    double cropZoom = 1.0,
   }) {
     final setId = Cameras.plateSetFor(e);
     final grainPlate = e.grain > 0
@@ -93,6 +97,8 @@ class BakeRequest {
       star: e.star,
       halation: e.halation,
       splitTone: e.splitTone,
+      flipHorizontal: flipHorizontal,
+      cropZoom: cropZoom,
       stamp: e.stamp.index,
       aspect: e.aspect,
       negative: e.negative,
@@ -119,6 +125,8 @@ class BakeRequest {
   final double star;
   final double halation;
   final double splitTone;
+  final bool flipHorizontal;
+  final double cropZoom;
   final int stamp;
   final double aspect;
   final bool negative;
@@ -150,7 +158,7 @@ class BakeRequest {
 Future<Uint8List> bakePhoto(BakeRequest r) => compute(_bake, r);
 
 Uint8List _bake(BakeRequest r) {
-  var src = img.decodeJpg(r.jpeg);
+  var src = img.decodeImage(r.jpeg);
   if (src == null) return r.jpeg;
 
   // Keep processing time predictable regardless of sensor resolution.
@@ -165,7 +173,11 @@ Uint8List _bake(BakeRequest r) {
     );
   }
 
-  src = _cropToAspect(_orientPortrait(src), r.aspect);
+  src = _orientPortrait(src);
+  if (r.flipHorizontal) {
+    src = img.flipHorizontal(src);
+  }
+  src = _cropToAspect(src, r.aspect, zoom: r.cropZoom);
 
   if (r.distort > 0.001 || r.chroma > 0.001) {
     src = _optics(src, r.distort, r.chroma);
@@ -291,12 +303,11 @@ Uint8List _bake(BakeRequest r) {
 /// lying on its side — shaped right, content wrong.
 img.Image _orientPortrait(img.Image src) => img.bakeOrientation(src);
 
-img.Image _cropToAspect(img.Image src, double aspect) {
+img.Image _cropToAspect(img.Image src, double aspect, {double zoom = 1.0}) {
   // [aspect] is the long:short ratio and the frame is portrait, so the target
   // width:height is its reciprocal — 4/3 means a 3:4 frame, not a 4:3 one.
   final target = 1 / aspect;
   final current = src.width / src.height;
-  if ((current - target).abs() < 0.005) return src;
   int w, h;
   if (current > target) {
     h = src.height;
@@ -305,6 +316,11 @@ img.Image _cropToAspect(img.Image src, double aspect) {
     w = src.width;
     h = (w / target).round();
   }
+  if (zoom > 1.001) {
+    w = (w / zoom).round();
+    h = (h / zoom).round();
+  }
+  if (w == src.width && h == src.height) return src;
   return img.copyCrop(
     src,
     x: ((src.width - w) / 2).round(),

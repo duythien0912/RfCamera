@@ -117,4 +117,82 @@ void main() {
     }
     expect(differing, greaterThan(200), reason: 'stamp pixels must be present');
   });
+
+  test('flipHorizontal mirrors image horizontally', () async {
+    // Build a frame with green on the left half and yellow on the right half
+    final im = img.Image(width: 400, height: 400);
+    for (final p in im) {
+      if (p.x < 200) {
+        p.setRgb(0, 220, 0); // Green left
+      } else {
+        p.setRgb(220, 220, 0); // Yellow right
+      }
+    }
+    final raw = Uint8List.fromList(img.encodeJpg(im, quality: 95));
+    final effect = Cameras.byId('original').effect;
+
+    final normalBaked = await bakePhoto(
+      BakeRequest.from(raw, effect, 1, '', maxEdge: 400, flipHorizontal: false),
+    );
+    final flippedBaked = await bakePhoto(
+      BakeRequest.from(raw, effect, 1, '', maxEdge: 400, flipHorizontal: true),
+    );
+
+    final normalImg = img.decodeJpg(normalBaked)!;
+    final flippedImg = img.decodeJpg(flippedBaked)!;
+
+    final normalLeftPixel = normalImg.getPixel(10, normalImg.height ~/ 2);
+    final flippedLeftPixel = flippedImg.getPixel(10, flippedImg.height ~/ 2);
+
+    // Normal left has high green, low red (green). Flipped left has high red (yellow).
+    expect(normalLeftPixel.g, greaterThan(normalLeftPixel.r + 50));
+    expect(flippedLeftPixel.r, greaterThan(150));
+  });
+
+  test('cropZoom tightens the framing in isolate bake', () async {
+    final effect = Cameras.byId('original').effect;
+    final normal = img.decodeJpg(
+      await bakePhoto(
+        BakeRequest.from(
+          _landscapeTestFrame(),
+          effect,
+          1,
+          '',
+          maxEdge: 600,
+          cropZoom: 1.0,
+        ),
+      ),
+    )!;
+    final zoomed = img.decodeJpg(
+      await bakePhoto(
+        BakeRequest.from(
+          _landscapeTestFrame(),
+          effect,
+          1,
+          '',
+          maxEdge: 600,
+          cropZoom: 2.0,
+        ),
+      ),
+    )!;
+
+    // Zoomed frame crops 2x tighter into center
+    expect(zoomed.width, lessThan(normal.width));
+    expect(zoomed.height, lessThan(normal.height));
+  });
+
+  test('bakePhoto successfully decodes PNG input frames', () async {
+    final im = img.Image(width: 300, height: 400);
+    img.fill(im, color: img.ColorRgb8(100, 150, 200));
+    final pngBytes = Uint8List.fromList(img.encodePng(im));
+
+    final effect = Cameras.byId('original').effect;
+    final baked = await bakePhoto(
+      BakeRequest.from(pngBytes, effect, 1, '', maxEdge: 400),
+    );
+
+    final out = img.decodeJpg(baked);
+    expect(out, isNotNull);
+    expect(out!.width, greaterThan(0));
+  });
 }

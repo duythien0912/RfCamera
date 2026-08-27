@@ -46,11 +46,13 @@ class CameraName extends StatelessWidget {
     required this.profile,
     this.fontSize = 11,
     this.pill = false,
+    this.selected = false,
   });
 
   final CameraProfile profile;
   final double fontSize;
   final bool pill;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +61,20 @@ class CameraName extends StatelessWidget {
         children: [
           TextSpan(
             text: profile.name,
-            style: P.t(fontSize, w: FontWeight.w700),
+            style: P.t(
+              fontSize,
+              w: selected ? FontWeight.w800 : FontWeight.w700,
+              c: selected && pill ? P.black : P.white,
+            ),
           ),
           if (profile.badge != null)
             TextSpan(
               text: ' ${profile.badge}',
-              style: P.t(fontSize, w: FontWeight.w800, c: P.badgeR),
+              style: P.t(
+                fontSize,
+                w: FontWeight.w800,
+                c: selected && pill ? const Color(0xFF2E1B8C) : P.badgeR,
+              ),
             ),
         ],
       ),
@@ -77,9 +87,12 @@ class CameraName extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: P.tile,
+        color: selected ? const Color(0xFF30D158) : P.tile,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: P.hairline, width: 0.6),
+        border: Border.all(
+          color: selected ? const Color(0xFF34C759) : P.hairline,
+          width: selected ? 1.0 : 0.6,
+        ),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(

@@ -244,6 +244,15 @@ class _SettingsSheetState extends State<SettingsSheet>
                       },
                     ),
                     const Divider(height: 1, color: Color(0xFF2C2C2E)),
+                    _toggleRow(
+                      title: 'Lật ảnh camera trước',
+                      value: state.mirrorFrontCamera,
+                      onChanged: (v) {
+                        HapticFeedback.selectionClick();
+                        state.setMirrorFrontCamera(v);
+                      },
+                    ),
+                    const Divider(height: 1, color: Color(0xFF2C2C2E)),
                     ListTile(
                       key: const Key('settings_reset'),
                       title: Text(

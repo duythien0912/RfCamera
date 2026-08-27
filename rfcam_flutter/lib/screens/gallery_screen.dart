@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:morphnext/morphnext.dart';
@@ -9,9 +10,11 @@ import 'package:ficonsax/ficonsax.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../core/app_state.dart';
+import '../core/camera_catalog.dart';
 import '../core/palette.dart';
 import '../core/photo.dart';
 import '../core/toast.dart';
+import '../widgets/camera_art.dart';
 import 'settings_sheet.dart';
 
 /// The album. Folder dropdown, 3-up grid of captures, and a multi-select mode
@@ -101,34 +104,42 @@ class _GalleryScreenState extends State<GalleryScreen> {
     final folder = _current(folders);
     final photos = state.photosIn(folder);
 
-    return Scaffold(
+    return DismissiblePage(
+      onDismissed: () {
+        widget.onBackToCamera?.call();
+        Navigator.of(context).pop();
+      },
+      direction: DismissiblePageDismissDirection.vertical,
+      isFullScreen: true,
+      disabled: _dropdownOpen,
       backgroundColor: P.black,
-      body: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                _topBar(folder),
-                Expanded(child: _grid(state, folder, photos)),
-              ],
-            ),
-            // The reference keeps the shutter button visible in select mode
-            // too — it just rides above the action bar.
-            Positioned(
-              left: 16,
-              bottom: _selectMode ? 132 : 40,
-              child: _cameraFab(),
-            ),
-            if (_selectMode)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 28,
-                child: _actionBar(state),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          bottom: false,
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  _topBar(folder),
+                  Expanded(child: _grid(state, folder, photos)),
+                ],
               ),
-            if (_dropdownOpen) ..._dropdown(folders),
-          ],
+              Positioned(
+                left: 16,
+                bottom: _selectMode ? 132 : 40,
+                child: _cameraFab(),
+              ),
+              if (_selectMode)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 28,
+                  child: _actionBar(state),
+                ),
+              if (_dropdownOpen) ..._dropdown(folders),
+            ],
+          ),
         ),
       ),
     );
@@ -266,7 +277,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              Icon(_folderIcon(f.kind), size: 26, color: P.white),
+              _folderLeading(f),
               const SizedBox(width: 18),
               Expanded(
                 child: Text(
@@ -286,6 +297,22 @@ class _GalleryScreenState extends State<GalleryScreen> {
         ),
       ),
     );
+  }
+
+  Widget _folderLeading(GalleryFolder f) {
+    if (f.kind == FolderKind.camera) {
+      final cam = Cameras.tryById(f.id);
+      if (cam != null) {
+        return SizedBox(
+          width: 32,
+          height: 32,
+          child: Center(
+            child: CameraArt(profile: cam, size: 30),
+          ),
+        );
+      }
+    }
+    return Icon(_folderIcon(f.kind), size: 26, color: P.white);
   }
 
   IconData _folderIcon(FolderKind kind) {
@@ -324,6 +351,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
   Widget _photoGrid(List<CapturedPhoto> photos) {
     return GridView.builder(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
       padding: const EdgeInsets.only(bottom: 200),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,

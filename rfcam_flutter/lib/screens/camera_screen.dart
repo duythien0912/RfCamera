@@ -1,10 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
+import 'package:dismissible_page/dismissible_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:gal/gal.dart';
 import 'package:image/image.dart' as img;
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:morphnext/morphnext.dart';
@@ -45,6 +50,7 @@ class _CameraScreenState extends State<CameraScreen>
 
   bool _flashing = false;
   bool _capturing = false;
+  bool _processingImport = false;
   int? _countdown;
   Uint8List? _frozenFrame;
 
@@ -209,7 +215,10 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Future<void> _setZoom(double zoom) async {
-    final clamped = zoom.clamp(_minZoom, _maxZoom);
+    final state = AppScope.read(context);
+    final clamped = state.zoomMode == ZoomMode.frame
+        ? zoom.clamp(1.0, 3.5)
+        : zoom.clamp(_minZoom, _maxZoom);
     setState(() {
       _currentZoom = clamped;
       _showZoomBadge = true;
@@ -221,7 +230,11 @@ class _CameraScreenState extends State<CameraScreen>
     final c = _controller;
     if (_cameraReady && c != null && c.value.isInitialized) {
       try {
-        await c.setZoomLevel(clamped);
+        if (state.zoomMode == ZoomMode.frame) {
+          await c.setZoomLevel(1.0);
+        } else {
+          await c.setZoomLevel(clamped);
+        }
       } catch (_) {}
     }
   }
@@ -315,11 +328,17 @@ class _CameraScreenState extends State<CameraScreen>
 
   Widget _rawPreview() {
     if (_frozenFrame != null) {
-      return Image.memory(
+      final state = AppScope.read(context);
+      final mirror = state.frontCamera && state.mirrorFrontCamera;
+      Widget imgWidget = Image.memory(
         _frozenFrame!,
         fit: BoxFit.cover,
         gaplessPlayback: true,
       );
+      if (mirror) {
+        imgWidget = Transform.flip(flipX: true, child: imgWidget);
+      }
+      return imgWidget;
     }
     final c = _controller;
     if (!_cameraReady || c == null || !c.value.isInitialized) {
@@ -403,12 +422,20 @@ class _CameraScreenState extends State<CameraScreen>
       final taken = DateTime.now();
       final stamp = '${taken.month} ${taken.day} ${taken.year % 100}';
       final baked = await bakePhoto(
-        BakeRequest.from(bytes, effect, state.seed, stamp),
+        BakeRequest.from(
+          bytes,
+          effect,
+          state.seed,
+          stamp,
+          flipHorizontal: state.frontCamera && state.mirrorFrontCamera,
+          cropZoom: state.zoomMode == ZoomMode.frame ? _currentZoom : 1.0,
+        ),
       );
 
       final dir = await state.albumDir();
       final file = File('${dir.path}/${taken.microsecondsSinceEpoch}.jpg');
       await file.writeAsBytes(baked, flush: true);
+      unawaited(_saveToSystemGallery(file.path));
 
       final photo = await state.addPhoto(
         path: file.path,
@@ -466,32 +493,93 @@ class _CameraScreenState extends State<CameraScreen>
   // --- navigation ----------------------------------------------------------
 
   void _openGallery() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => GalleryScreen(
-          onBackToCamera: () => Navigator.of(context).maybePop(),
-          onOpenPhoto: (photo) {
-            final state = AppScope.read(context);
-            final all = state.photos;
-            final i = all.indexWhere((p) => p.id == photo.id);
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (_) => PhotoDetailScreen(
-                  photos: all,
-                  initialIndex: i < 0 ? 0 : i,
-                ),
+    context.pushTransparentRoute(
+      GalleryScreen(
+        onBackToCamera: () => Navigator.of(context).maybePop(),
+        onOpenPhoto: (photo) {
+          final state = AppScope.read(context);
+          final all = state.photos;
+          final i = all.indexWhere((p) => p.id == photo.id);
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => PhotoDetailScreen(
+                photos: all,
+                initialIndex: i < 0 ? 0 : i,
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 
   Future<void> _pickFromGallery() async {
     await HapticFeedback.selectionClick();
-    if (!mounted) return;
-    _openGallery();
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+    if (picked == null || !mounted) return;
+
+    setState(() => _processingImport = true);
+    try {
+      await _controller?.pausePreview();
+    } catch (_) {}
+
+    try {
+      final bytes = await picked.readAsBytes();
+      if (!mounted) return;
+      final state = AppScope.read(context);
+      final cam = state.camera;
+      final effect = state.effect;
+      final taken = DateTime.now();
+      final stamp = '${taken.month} ${taken.day} ${taken.year % 100}';
+
+      final baked = await bakePhoto(
+        BakeRequest.from(
+          bytes,
+          effect,
+          state.seed,
+          stamp,
+          cropZoom: state.zoomMode == ZoomMode.frame ? _currentZoom : 1.0,
+        ),
+      );
+
+      final dir = await state.albumDir();
+      final file = File('${dir.path}/${taken.microsecondsSinceEpoch}.jpg');
+      await file.writeAsBytes(baked, flush: true);
+      unawaited(_saveToSystemGallery(file.path));
+
+      await state.addPhoto(
+        path: file.path,
+        cam: cam,
+        negative: effect.negative,
+        at: taken,
+      );
+
+      if (!mounted) return;
+      _openGallery();
+    } catch (e) {
+      if (mounted) {
+        showAppToast(context, 'Không thể xử lý ảnh: $e');
+      }
+    } finally {
+      try {
+        await _controller?.resumePreview();
+      } catch (_) {}
+      if (mounted) {
+        setState(() => _processingImport = false);
+      }
+    }
+  }
+
+  Future<void> _saveToSystemGallery(String filePath) async {
+    try {
+      final hasAccess = await Gal.hasAccess();
+      if (!hasAccess) {
+        final granted = await Gal.requestAccess();
+        if (!granted) return;
+      }
+      await Gal.putImage(filePath, album: 'RfCamera');
+    } catch (_) {}
   }
 
   @override
@@ -723,6 +811,54 @@ class _CameraScreenState extends State<CameraScreen>
               child: SelectorSheet(
                 onClose: () => setState(() => _selector = false),
                 background: (_) => _rawPreview(),
+              ),
+            ),
+
+          if (_processingImport)
+            Positioned.fill(
+              child: AbsorbPointer(
+                child: Container(
+                  color: const Color(0x66000000),
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(18),
+                      child: BackdropFilter(
+                        filter: ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 20,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xB31C1C1E),
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              color: const Color(0x26FFFFFF),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const CupertinoActivityIndicator(
+                                radius: 14,
+                                color: P.white,
+                              ),
+                              const SizedBox(height: 14),
+                              Text(
+                                'Đang xử lý ảnh...',
+                                style: P.t(
+                                  14,
+                                  w: FontWeight.w600,
+                                  c: P.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
         ],
@@ -1244,8 +1380,8 @@ class _PermissionNote extends StatelessWidget {
 /// Averages two exposures. Lighten-biased so highlights from either frame
 /// survive, which is what a real double exposure looks like.
 Uint8List _blendFrames(List<Uint8List> pair) {
-  final a = img.decodeJpg(pair[0]);
-  final b = img.decodeJpg(pair[1]);
+  final a = img.decodeImage(pair[0]);
+  final b = img.decodeImage(pair[1]);
   if (a == null || b == null) return pair[1];
   final top = (a.width == b.width && a.height == b.height)
       ? b

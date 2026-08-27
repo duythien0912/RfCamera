@@ -56,18 +56,52 @@ class _SelectorSheetState extends State<SelectorSheet>
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      if (_strip1Controller.hasClients) {
-        _strip1Controller.jumpTo(_strip1Controller.position.maxScrollExtent);
-      }
-      if (_strip2Controller.hasClients) {
-        _strip2Controller.jumpTo(_strip2Controller.position.maxScrollExtent);
-      }
-      if (_accessoryController.hasClients) {
-        _accessoryController.jumpTo(
-          _accessoryController.position.maxScrollExtent,
-        );
-      }
+      final state = AppScope.read(context);
+      _scrollToCamera(state.camera.id, animate: false);
     });
+  }
+
+  void _scrollToCamera(String camId, {bool animate = false}) {
+    if (!mounted) return;
+    final strip = Cameras.quickStrip;
+    final half = (strip.length / 2).ceil();
+    final row1 = strip.sublist(0, half);
+    final row2 = strip.sublist(half);
+    final screenW = MediaQuery.sizeOf(context).width;
+
+    final i1 = row1.indexWhere((c) => c.id == camId);
+    if (i1 >= 0 && _strip1Controller.hasClients) {
+      final target = ((12.0 + i1 * 82.0 + 41.0) - screenW / 2).clamp(
+        0.0,
+        _strip1Controller.position.maxScrollExtent,
+      );
+      if (animate) {
+        _strip1Controller.animateTo(
+          target,
+          duration: const Duration(milliseconds: 380),
+          curve: Curves.easeOutCubic,
+        );
+      } else {
+        _strip1Controller.jumpTo(target);
+      }
+    }
+
+    final i2 = row2.indexWhere((c) => c.id == camId);
+    if (i2 >= 0 && _strip2Controller.hasClients) {
+      final target = ((12.0 + i2 * 82.0 + 41.0) - screenW / 2).clamp(
+        0.0,
+        _strip2Controller.position.maxScrollExtent,
+      );
+      if (animate) {
+        _strip2Controller.animateTo(
+          target,
+          duration: const Duration(milliseconds: 380),
+          curve: Curves.easeOutCubic,
+        );
+      } else {
+        _strip2Controller.jumpTo(target);
+      }
+    }
   }
 
   @override
@@ -152,11 +186,19 @@ class _SelectorSheetState extends State<SelectorSheet>
                       );
                     },
                     onAll: () async {
-                      await Navigator.of(context).push(
-                        MaterialPageRoute<CameraProfile?>(
-                          builder: (_) => const AllCamerasScreen(),
-                        ),
-                      );
+                      final picked = await Navigator.of(context)
+                          .push<CameraProfile?>(
+                            MaterialPageRoute<CameraProfile?>(
+                              builder: (_) => const AllCamerasScreen(),
+                            ),
+                          );
+                      if (picked != null && mounted) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (mounted) {
+                            _scrollToCamera(picked.id, animate: true);
+                          }
+                        });
+                      }
                     },
                   ),
                   const SizedBox(height: 10),
@@ -367,7 +409,12 @@ class _CameraRow extends StatelessWidget {
                     children: [
                       CameraArt(profile: p, size: 72),
                       const SizedBox(height: 7),
-                      CameraName(profile: p, fontSize: 11, pill: true),
+                      CameraName(
+                        profile: p,
+                        fontSize: 11,
+                        pill: true,
+                        selected: selected,
+                      ),
                     ],
                   ),
                 ),
