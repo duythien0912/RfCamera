@@ -303,7 +303,7 @@ class _Page extends StatelessWidget {
           Positioned(
             left: 24,
             right: 24,
-            bottom: pad.bottom + 24,
+            bottom: pad.bottom + 96,
             child: AnimatedOpacity(
               opacity: chromeVisible ? 1 : 0,
               duration: const Duration(milliseconds: 180),
@@ -337,14 +337,16 @@ class _Page extends StatelessWidget {
                             children: [
                               _PillButton(
                                 key: const Key('detail_fire'),
-                                icon: IconsaxOutline.moon,
+                                icon: photo.negative
+                                    ? IconsaxBold.moon
+                                    : IconsaxOutline.moon,
                                 color: photo.negative ? Colors.orange : P.white,
                                 onTap: onFire,
                               ),
                               const SizedBox(width: 16),
                               _PillButton(
                                 key: const Key('detail_copy'),
-                                icon: IconsaxOutline.video_play,
+                                icon: IconsaxOutline.gallery_import,
                                 onTap: onDownload,
                               ),
                               const SizedBox(width: 16),
@@ -353,7 +355,7 @@ class _Page extends StatelessWidget {
                                 icon: photo.favorite
                                     ? IconsaxBold.heart
                                     : IconsaxOutline.heart,
-                                color: P.white,
+                                color: photo.favorite ? P.red : P.white,
                                 onTap: () {
                                   HapticFeedback.selectionClick();
                                   onFavorite();
@@ -375,6 +377,17 @@ class _Page extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+          // Stays put while the rest of the chrome fades.
+          Positioned(
+            right: 24,
+            bottom: MediaQuery.paddingOf(context).bottom + 24,
+            child: _CloseButton(
+              key: const Key('detail_close'),
+              background: P.white,
+              iconColor: P.black,
+              onTap: () => Navigator.of(context).pop(),
             ),
           ),
         ],
@@ -539,6 +552,50 @@ class _AlertAction extends StatelessWidget {
         child: Text(
           label,
           style: P.t(17, w: weight, c: color),
+        ),
+      ),
+    );
+  }
+}
+
+class _CloseButton extends StatelessWidget {
+  const _CloseButton({
+    super.key,
+    required this.background,
+    required this.iconColor,
+    required this.onTap,
+  });
+
+  final Color background;
+  final Color iconColor;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: ClipOval(
+        child: BackdropFilter(
+          filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+          child: Container(
+            width: 50,
+            height: 50,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: const Color(0x9918181A),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: const Color(0x4DFFFFFF),
+                width: 1.2,
+              ),
+            ),
+            child: const Icon(
+              IconsaxOutline.close_circle,
+              size: 24,
+              color: P.white,
+            ),
+          ),
         ),
       ),
     );
