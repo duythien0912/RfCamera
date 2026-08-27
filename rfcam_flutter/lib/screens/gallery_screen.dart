@@ -122,6 +122,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
         widget.onBackToCamera?.call();
         Navigator.of(context).pop();
       },
+      dragSensitivity: 0.9,
       direction: DismissiblePageDismissDirection.down,
       isFullScreen: true,
       disabled: _dropdownOpen,
@@ -365,7 +366,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   Widget _photoGrid(List<CapturedPhoto> photos) {
     return GridView.builder(
       physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
+        parent: ClampingScrollPhysics(),
       ),
       padding: const EdgeInsets.only(bottom: 200),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

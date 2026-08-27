@@ -63,10 +63,12 @@ class _CameraScreenState extends State<CameraScreen>
   // Focus & exposure reticle state
   Offset? _focusPos;
   bool _focusVisible = false;
-  double _focusScale = 1.0;
-  double _focusOpacity = 0.0;
   Timer? _focusHideTimer;
-  Timer? _focusAnimTimer;
+  double _minExposureOffset = -3.0;
+  double _maxExposureOffset = 3.0;
+  double _exposureOffsetStep = 0.0;
+  bool _isSettingExposure = false;
+  double? _pendingExposureEv;
 
   // Zoom state
   double _currentZoom = 1.0;
@@ -76,6 +78,7 @@ class _CameraScreenState extends State<CameraScreen>
   bool _showZoomBadge = false;
   Timer? _zoomBadgeTimer;
   bool _isPinching = false;
+  String? _lastCameraId;
 
   @override
   void initState() {
@@ -88,6 +91,11 @@ class _CameraScreenState extends State<CameraScreen>
   void didChangeDependencies() {
     super.didChangeDependencies();
     final state = AppScope.of(context);
+    if (_lastCameraId != null && _lastCameraId != state.camera.id) {
+      _currentZoom = 1.0;
+    }
+    _lastCameraId = state.camera.id;
+
     final c = _controller;
     if (_cameraReady && c != null && c.value.isInitialized) {
       try {
@@ -100,7 +108,6 @@ class _CameraScreenState extends State<CameraScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _focusHideTimer?.cancel();
-    _focusAnimTimer?.cancel();
     _zoomBadgeTimer?.cancel();
     final c = _controller;
     _controller = null;
@@ -178,6 +185,15 @@ class _CameraScreenState extends State<CameraScreen>
         _minZoom = 1.0;
         _maxZoom = 5.0;
       }
+      try {
+        _minExposureOffset = await c.getMinExposureOffset();
+        _maxExposureOffset = await c.getMaxExposureOffset();
+        _exposureOffsetStep = await c.getExposureOffsetStepSize();
+      } catch (_) {
+        _minExposureOffset = -3.0;
+        _maxExposureOffset = 3.0;
+        _exposureOffsetStep = 0.0;
+      }
       _currentZoom = 1.0;
 
       if (state.flashOn) {
@@ -202,15 +218,25 @@ class _CameraScreenState extends State<CameraScreen>
 
   Future<void> _updateCameraExposure(double ev) async {
     final c = _controller;
-    if (_cameraReady && c != null && c.value.isInitialized) {
-      try {
-        final minOffset = await c.getMinExposureOffset();
-        final maxOffset = await c.getMaxExposureOffset();
-        final step = await c.getExposureOffsetStepSize();
-        final clamped = ev.clamp(minOffset, maxOffset);
-        final adjusted = step > 0 ? (clamped / step).round() * step : clamped;
+    if (!_cameraReady || c == null || !c.value.isInitialized) return;
+
+    _pendingExposureEv = ev;
+    if (_isSettingExposure) return;
+    _isSettingExposure = true;
+
+    try {
+      while (_pendingExposureEv != null) {
+        final targetEv = _pendingExposureEv!;
+        _pendingExposureEv = null;
+        final clamped = targetEv.clamp(_minExposureOffset, _maxExposureOffset);
+        final adjusted = _exposureOffsetStep > 0
+            ? (clamped / _exposureOffsetStep).round() * _exposureOffsetStep
+            : clamped;
         await c.setExposureOffset(adjusted);
-      } catch (_) {}
+      }
+    } catch (_) {
+    } finally {
+      _isSettingExposure = false;
     }
   }
 
@@ -230,68 +256,51 @@ class _CameraScreenState extends State<CameraScreen>
     final c = _controller;
     if (_cameraReady && c != null && c.value.isInitialized) {
       try {
-        if (state.zoomMode == ZoomMode.frame) {
-          await c.setZoomLevel(1.0);
-        } else {
-          await c.setZoomLevel(clamped);
-        }
+        await c.setZoomLevel(clamped);
       } catch (_) {}
     }
   }
 
   void _handleTapFocus(Offset localPos, Size size) {
-    HapticFeedback.selectionClick();
-    final clampedX = localPos.dx.clamp(42.0, size.width - 76.0);
-    final clampedY = localPos.dy.clamp(
-      size.height * 0.14 + 56.0,
-      size.height * 0.85 - 56.0,
-    );
-    final clampedPos = Offset(clampedX, clampedY);
-
-    final normX = (localPos.dx / size.width).clamp(0.0, 1.0);
-    final normY = (localPos.dy / size.height).clamp(0.0, 1.0);
-    final normPoint = Offset(normX, normY);
-
+    setState(() {
+      _focusPos = localPos;
+      _focusVisible = true;
+    });
     final c = _controller;
     if (_cameraReady && c != null && c.value.isInitialized) {
+      final point = Offset(
+        (localPos.dx / size.width).clamp(0.0, 1.0),
+        (localPos.dy / size.height).clamp(0.0, 1.0),
+      );
       try {
-        c.setFocusPoint(normPoint);
-        c.setFocusMode(FocusMode.auto);
-        c.setExposurePoint(normPoint);
-        c.setExposureMode(ExposureMode.auto);
+        c.setFocusPoint(point);
+        c.setExposurePoint(point);
       } catch (_) {}
     }
-
     _focusHideTimer?.cancel();
-    _focusAnimTimer?.cancel();
-    setState(() {
-      _focusPos = clampedPos;
-      _focusVisible = true;
-      _focusOpacity = 1.0;
-      _focusScale = 1.25;
-    });
-
-    _focusAnimTimer = Timer(const Duration(milliseconds: 20), () {
-      if (mounted) setState(() => _focusScale = 1.0);
-    });
-
-    _focusHideTimer = Timer(const Duration(milliseconds: 3500), () {
-      if (mounted) setState(() => _focusOpacity = 0.0);
+    _focusHideTimer = Timer(const Duration(milliseconds: 2800), () {
+      if (mounted) setState(() => _focusVisible = false);
     });
   }
 
   void _handleDoubleTapZoom() {
     HapticFeedback.selectionClick();
-    final target = _currentZoom > 1.2 ? 1.0 : math.min(2.0, _maxZoom);
-    _setZoom(target);
+    final state = AppScope.read(context);
+    if (state.zoomMode == ZoomMode.frame) {
+      final target = _currentZoom > 1.2 ? 1.0 : 2.0;
+      _setZoom(target);
+    } else {
+      final target = _currentZoom > 1.2 ? 1.0 : math.min(2.0, _maxZoom);
+      _setZoom(target);
+    }
   }
 
   void _handleScaleStart(ScaleStartDetails details) {
     _isPinching = details.pointerCount >= 2;
     _baseZoom = _currentZoom;
     _focusHideTimer?.cancel();
-    if (_focusVisible) {
-      setState(() => _focusOpacity = 1.0);
+    if (!_focusVisible && _focusPos != null) {
+      setState(() => _focusVisible = true);
     }
   }
 
@@ -314,8 +323,8 @@ class _CameraScreenState extends State<CameraScreen>
     _isPinching = false;
     if (_focusVisible) {
       _focusHideTimer?.cancel();
-      _focusHideTimer = Timer(const Duration(milliseconds: 3500), () {
-        if (mounted) setState(() => _focusOpacity = 0.0);
+      _focusHideTimer = Timer(const Duration(milliseconds: 3000), () {
+        if (mounted) setState(() => _focusVisible = false);
       });
     }
     if (_showZoomBadge) {
@@ -492,10 +501,30 @@ class _CameraScreenState extends State<CameraScreen>
 
   // --- navigation ----------------------------------------------------------
 
-  void _openGallery() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => GalleryScreen(
+  Future<void> _disposeCamera() async {
+    final c = _controller;
+    _controller = null;
+    if (mounted) setState(() => _cameraReady = false);
+    try {
+      await c?.dispose();
+    } catch (_) {}
+  }
+
+  Future<void> _resumeCamera() async {
+    if (_controller == null || !_cameraReady) {
+      await _openDevice();
+    }
+  }
+
+  Future<void> _openGallery() async {
+    await _disposeCamera();
+    if (!mounted) return;
+    await Navigator.of(context).push(
+      PageRouteBuilder<void>(
+        opaque: false,
+        transitionDuration: const Duration(milliseconds: 320),
+        reverseTransitionDuration: const Duration(milliseconds: 280),
+        pageBuilder: (context, _, _) => GalleryScreen(
           onBackToCamera: () => Navigator.of(context).maybePop(),
           onOpenPhoto: (photo) {
             final state = AppScope.read(context);
@@ -509,20 +538,34 @@ class _CameraScreenState extends State<CameraScreen>
             );
           },
         ),
+        transitionsBuilder: (context, anim, secondaryAnim, child) {
+          final tween = Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).chain(CurveTween(curve: Curves.easeOutCubic));
+          return SlideTransition(
+            position: anim.drive(tween),
+            child: child,
+          );
+        },
       ),
     );
+    if (mounted) {
+      await _resumeCamera();
+    }
   }
 
   Future<void> _pickFromGallery() async {
     await HapticFeedback.selectionClick();
     final picker = ImagePicker();
+    await _disposeCamera();
     final picked = await picker.pickImage(source: ImageSource.gallery);
-    if (picked == null || !mounted) return;
+    if (picked == null || !mounted) {
+      if (mounted) await _resumeCamera();
+      return;
+    }
 
     setState(() => _processingImport = true);
-    try {
-      await _controller?.pausePreview();
-    } catch (_) {}
 
     try {
       final bytes = await picked.readAsBytes();
@@ -626,8 +669,6 @@ class _CameraScreenState extends State<CameraScreen>
                 preview: LivePreview(state: state, child: _rawPreview()),
                 focusPos: _focusPos,
                 focusVisible: _focusVisible,
-                focusScale: _focusScale,
-                focusOpacity: _focusOpacity,
                 zoomLevel: _currentZoom,
                 zoomBadgeVisible: _showZoomBadge,
                 onTapFocus: _handleTapFocus,
@@ -722,7 +763,7 @@ class _CameraScreenState extends State<CameraScreen>
               state: state,
               thumbKey: _thumbKey,
               onThumb: _openGallery,
-              onShutter: _shoot,
+              onShutterTap: _shoot,
               onSelector: () => setState(() => _selector = true),
             ),
           ),
@@ -811,6 +852,8 @@ class _CameraScreenState extends State<CameraScreen>
               child: SelectorSheet(
                 onClose: () => setState(() => _selector = false),
                 background: (_) => _rawPreview(),
+                onDisposeCamera: _disposeCamera,
+                onResumeCamera: _resumeCamera,
               ),
             ),
 
@@ -1204,14 +1247,14 @@ class _ActionRow extends StatelessWidget {
     required this.state,
     required this.thumbKey,
     required this.onThumb,
-    required this.onShutter,
+    required this.onShutterTap,
     required this.onSelector,
   });
 
   final AppState state;
   final GlobalKey thumbKey;
   final VoidCallback onThumb;
-  final VoidCallback onShutter;
+  final VoidCallback onShutterTap;
   final VoidCallback onSelector;
 
   @override
@@ -1228,8 +1271,8 @@ class _ActionRow extends StatelessWidget {
             onTap: onThumb,
             child: Container(
               key: thumbKey,
-              width: 65,
-              height: 65,
+              width: 70,
+              height: 70,
               decoration: BoxDecoration(
                 color: const Color(0xFF141414),
                 borderRadius: BorderRadius.circular(16),
@@ -1247,7 +1290,8 @@ class _ActionRow extends StatelessWidget {
           ),
           GestureDetector(
             key: const Key('shutter'),
-            onTap: onShutter,
+            behavior: HitTestBehavior.opaque,
+            onTap: onShutterTap,
             child: SizedBox(
               width: 82,
               height: 82,
@@ -1255,6 +1299,8 @@ class _ActionRow extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Container(
+                    width: 82,
+                    height: 82,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(color: P.white, width: 2.5),
@@ -1267,7 +1313,10 @@ class _ActionRow extends StatelessWidget {
                       color: P.white,
                       shape: BoxShape.circle,
                       boxShadow: [
-                        BoxShadow(color: Color(0x33FFFFFF), blurRadius: 18),
+                        BoxShadow(
+                          color: Color(0x33FFFFFF),
+                          blurRadius: 18,
+                        ),
                       ],
                     ),
                   ),
@@ -1279,8 +1328,8 @@ class _ActionRow extends StatelessWidget {
             key: const Key('open_selector'),
             onTap: onSelector,
             child: SizedBox(
-              width: 66,
-              height: 66,
+              width: 70,
+              height: 70,
               child: Center(
                 child: CameraBadge(profile: state.camera),
               ),

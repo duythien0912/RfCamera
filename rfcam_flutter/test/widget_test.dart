@@ -23,7 +23,67 @@ void main() {
     );
 
     expect(find.byType(FocusReticle), findsOneWidget);
-    expect(find.byType(CustomPaint), findsWidgets);
+    expect(
+      find.descendant(
+        of: find.byType(FocusReticle),
+        matching: find.byType(CustomPaint),
+      ),
+      findsOneWidget,
+    );
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('FocusReticle smoothly fades out when visible becomes false', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: Stack(
+            children: [
+              FocusReticle(
+                position: Offset(100, 100),
+                ev: 0.0,
+                visible: true,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byType(FocusReticle),
+        matching: find.byType(CustomPaint),
+      ),
+      findsOneWidget,
+    );
+
+    // Update to invisible
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: Stack(
+            children: [
+              FocusReticle(
+                position: Offset(100, 100),
+                ev: 0.0,
+                visible: false,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byType(FocusReticle),
+        matching: find.byType(CustomPaint),
+      ),
+      findsNothing,
+    );
   });
 
   testWidgets(
@@ -63,6 +123,7 @@ void main() {
 
       await tester.tap(find.byType(Viewfinder));
       expect(tappedPos, isNotNull);
+      await tester.pumpAndSettle();
     },
   );
 }

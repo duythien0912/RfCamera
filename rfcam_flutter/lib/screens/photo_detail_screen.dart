@@ -145,6 +145,7 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
     final photos = _live(app);
 
     return DismissiblePage(
+      dragSensitivity: 0.9,
       onDismissed: () => Navigator.of(context).pop(),
       direction: DismissiblePageDismissDirection.multi,
       isFullScreen: true,
@@ -172,17 +173,6 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
                       onFavorite: () =>
                           AppScope.read(context).toggleFavorite(photos[i].id),
                       onDelete: () => _confirmDelete(photos[i], photos.length),
-                    ),
-                  ),
-                  // Stays put while the rest of the chrome fades.
-                  Positioned(
-                    right: 24,
-                    bottom: MediaQuery.paddingOf(context).bottom + 24,
-                    child: _CloseButton(
-                      key: const Key('detail_close'),
-                      background: P.white,
-                      iconColor: P.black,
-                      onTap: () => Navigator.of(context).pop(),
                     ),
                   ),
                 ],
@@ -259,10 +249,8 @@ class _Page extends StatelessWidget {
               ),
             ),
           ),
-          // No stamp overlay here on purpose: the date is burned into the
-          // JPEG at capture time, so drawing it again would double it up.
           Positioned(
-            top: pad.top + 16,
+            top: 32,
             right: 16,
             child: GestureDetector(
               key: const Key('detail_apply_camera'),
@@ -313,45 +301,70 @@ class _Page extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 0,
-            right: 0,
-            bottom: pad.bottom + 24 + 56 + 18,
+            left: 24,
+            right: 24,
+            bottom: pad.bottom + 24,
             child: AnimatedOpacity(
               opacity: chromeVisible ? 1 : 0,
               duration: const Duration(milliseconds: 180),
               child: IgnorePointer(
                 ignoring: !chromeVisible,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _ToolIcon(
+                    _CircleAction(
                       key: const Key('detail_share'),
                       icon: IconsaxOutline.export,
                       onTap: onShare,
                     ),
-                    _ToolIcon(
-                      key: const Key('detail_fire'),
-                      icon: IconsaxOutline.magicpen,
-                      color: photo.negative ? Colors.orange : null,
-                      onTap: onFire,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(26),
+                      child: BackdropFilter(
+                        filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                        child: Container(
+                          height: 52,
+                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          decoration: BoxDecoration(
+                            color: const Color(0x6618181A),
+                            borderRadius: BorderRadius.circular(26),
+                            border: Border.all(
+                              color: const Color(0x33FFFFFF),
+                              width: 1,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _PillButton(
+                                key: const Key('detail_fire'),
+                                icon: IconsaxOutline.moon,
+                                color: photo.negative ? Colors.orange : P.white,
+                                onTap: onFire,
+                              ),
+                              const SizedBox(width: 16),
+                              _PillButton(
+                                key: const Key('detail_copy'),
+                                icon: IconsaxOutline.video_play,
+                                onTap: onDownload,
+                              ),
+                              const SizedBox(width: 16),
+                              _PillButton(
+                                key: const Key('detail_favorite'),
+                                icon: photo.favorite
+                                    ? IconsaxBold.heart
+                                    : IconsaxOutline.heart,
+                                color: P.white,
+                                onTap: () {
+                                  HapticFeedback.selectionClick();
+                                  onFavorite();
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    _ToolIcon(
-                      key: const Key('detail_copy'),
-                      icon: IconsaxOutline.receive_square,
-                      onTap: onDownload,
-                    ),
-                    _ToolIcon(
-                      key: const Key('detail_favorite'),
-                      icon: photo.favorite
-                          ? IconsaxBold.heart
-                          : IconsaxOutline.heart,
-                      color: photo.favorite ? P.red : null,
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        onFavorite();
-                      },
-                    ),
-                    _ToolIcon(
+                    _CircleAction(
                       key: const Key('detail_delete'),
                       icon: IconsaxOutline.trash,
                       onTap: () {
@@ -370,19 +383,11 @@ class _Page extends StatelessWidget {
   }
 }
 
-/// The burned-in LED date, running bottom-to-top up the left edge.
-
-class _ToolIcon extends StatelessWidget {
-  const _ToolIcon({
-    super.key,
-    required this.icon,
-    required this.onTap,
-    this.color,
-  });
+class _CircleAction extends StatelessWidget {
+  const _CircleAction({super.key, required this.icon, required this.onTap});
 
   final IconData icon;
   final VoidCallback onTap;
-  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -399,16 +404,9 @@ class _ToolIcon extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(0x6618181A),
               shape: BoxShape.circle,
-              border: Border.all(
-                color: const Color(0x33FFFFFF),
-                width: 1,
-              ),
+              border: Border.all(color: const Color(0x33FFFFFF), width: 1),
             ),
-            child: AnimatedMorphIcon(
-              icon: icon,
-              size: 24,
-              color: color ?? P.white,
-            ),
+            child: AnimatedMorphIcon(icon: icon, size: 24, color: P.white),
           ),
         ),
       ),
@@ -416,43 +414,31 @@ class _ToolIcon extends StatelessWidget {
   }
 }
 
-class _CloseButton extends StatelessWidget {
-  const _CloseButton({
+class _PillButton extends StatelessWidget {
+  const _PillButton({
     super.key,
-    required this.background,
-    required this.iconColor,
+    required this.icon,
     required this.onTap,
+    this.color,
   });
 
-  final Color background;
-  final Color iconColor;
+  final IconData icon;
   final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: ClipOval(
-        child: BackdropFilter(
-          filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
-          child: Container(
-            width: 50,
-            height: 50,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: const Color(0x9918181A),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: const Color(0x4DFFFFFF),
-                width: 1.2,
-              ),
-            ),
-            child: const Icon(
-              IconsaxOutline.close_circle,
-              size: 24,
-              color: P.white,
-            ),
+      child: SizedBox(
+        width: 36,
+        height: 52,
+        child: Center(
+          child: AnimatedMorphIcon(
+            icon: icon,
+            size: 24,
+            color: color ?? P.white,
           ),
         ),
       ),

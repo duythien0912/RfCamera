@@ -156,7 +156,7 @@ class Viewfinder extends StatelessWidget {
                 // "35mm" sits just above the frame, centred on the card.
                 if (state.frameOn)
                   Positioned(
-                    top: h * 0.072,
+                    top: 22,
                     left: 0,
                     right: 0,
                     child: Text(

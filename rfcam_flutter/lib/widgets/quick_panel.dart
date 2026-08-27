@@ -25,7 +25,7 @@ class QuickPanel extends StatelessWidget {
       child: BackdropFilter(
         filter: ui.ImageFilter.blur(sigmaX: 26, sigmaY: 26),
         child: Container(
-          width: 330,
+          width: 276,
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           decoration: BoxDecoration(
             color: const Color(0x8A6B6259),
@@ -36,7 +36,7 @@ class QuickPanel extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _CircleToggle(
                     id: 'qp_flash',
@@ -78,7 +78,7 @@ class QuickPanel extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        height: 74,
+                        height: 64,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         decoration: BoxDecoration(
                           color: const Color(
@@ -166,8 +166,8 @@ class _CircleToggle extends StatelessWidget {
         onTap();
       },
       child: Container(
-        width: 74,
-        height: 74,
+        width: 64,
+        height: 64,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: const Color(0x1AFFFFFF),
@@ -187,6 +187,6 @@ class CameraBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CameraArt(profile: profile, size: 60);
+    return CameraArt(profile: profile, size: 70);
   }
 }

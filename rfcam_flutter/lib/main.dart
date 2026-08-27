@@ -25,6 +25,9 @@ void main() {
   unawaited(
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
   );
+  unawaited(
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky),
+  );
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

@@ -30,7 +30,10 @@ class CapturedPhoto {
     return '${takenAt.month} ${takenAt.day} $y';
   }
 
-  CapturedPhoto copyWith({bool? favorite, bool? negative}) => CapturedPhoto(
+  CapturedPhoto copyWith({
+    bool? favorite,
+    bool? negative,
+  }) => CapturedPhoto(
     id: id,
     path: path,
     cameraId: cameraId,

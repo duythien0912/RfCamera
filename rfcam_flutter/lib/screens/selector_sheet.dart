@@ -25,9 +25,13 @@ class SelectorSheet extends StatefulWidget {
     super.key,
     required this.onClose,
     required this.background,
+    this.onDisposeCamera,
+    this.onResumeCamera,
   });
 
   final VoidCallback onClose;
+  final Future<void> Function()? onDisposeCamera;
+  final Future<void> Function()? onResumeCamera;
 
   /// The bare camera preview. The sheet renders it full-bleed behind the
   /// strip, graded with whichever camera is currently highlighted, so tapping
@@ -178,20 +182,30 @@ class _SelectorSheetState extends State<SelectorSheet>
                       HapticFeedback.selectionClick();
                       setState(() => _showConfig = !_showConfig);
                     },
-                    onSamples: () {
-                      Navigator.of(context).push(
+                    onSamples: () async {
+                      await widget.onDisposeCamera?.call();
+                      if (!context.mounted) return;
+                      await Navigator.of(context).push(
                         MaterialPageRoute<void>(
                           builder: (_) => const SamplePhotosScreen(),
                         ),
                       );
+                      if (mounted) {
+                        await widget.onResumeCamera?.call();
+                      }
                     },
                     onAll: () async {
+                      await widget.onDisposeCamera?.call();
+                      if (!context.mounted) return;
                       final picked = await Navigator.of(context)
                           .push<CameraProfile?>(
                             MaterialPageRoute<CameraProfile?>(
                               builder: (_) => const AllCamerasScreen(),
                             ),
                           );
+                      if (mounted) {
+                        await widget.onResumeCamera?.call();
+                      }
                       if (picked != null && mounted) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           if (mounted) {
