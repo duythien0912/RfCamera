@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares - RfCamera Guides</title>
+  <meta name="description" content="How cylindrical glass optical elements squeeze widescreen perspectives, generate horizontal blue streak lens flares, and produce oval out-of-focus bokeh." />
+  <meta name="keywords" content="anamorphic, horizontal, streak, flares, physics, rfcamera, analog film, 35mm photography" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/anamorphic-horizontal-streak-flares-physics.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/anamorphic-horizontal-streak-flares-physics.html" />
+  <meta property="og:title" content="Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares" />
+  <meta property="og:description" content="How cylindrical glass optical elements squeeze widescreen perspectives, generate horizontal blue streak lens flares, and produce oval out-of-focus bokeh." />
+  <meta property="og:image" content="https://rfcam.roycorp.xyz/assets/blog/anamorphic-night-flares.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares" />
+  <meta name="twitter:description" content="How cylindrical glass optical elements squeeze widescreen perspectives, generate horizontal blue streak lens flares, and produce oval out-of-focus bokeh." />
+  <meta name="twitter:image" content="https://rfcam.roycorp.xyz/assets/blog/anamorphic-night-flares.jpg" />
+
+  <!-- Schema.org Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares",
+    "description": "How cylindrical glass optical elements squeeze widescreen perspectives, generate horizontal blue streak lens flares, and produce oval out-of-focus bokeh.",
+    "image": "https://rfcam.roycorp.xyz/assets/blog/anamorphic-night-flares.jpg",
+    "datePublished": "2026-08-28",
+    "dateModified": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial Team",
+      "url": "https://rfcam.roycorp.xyz/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RfCamera",
+      "url": "https://rfcam.roycorp.xyz/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://rfcam.roycorp.xyz/assets/rfcam_icon.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rfcam.roycorp.xyz/blog/anamorphic-horizontal-streak-flares-physics.html"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0A0A0D;
+      --surface: #121217;
+      --surface-card: #181820;
+      --border: #262633;
+      --border-focus: #4F4F66;
+      --text: #F0F0F5;
+      --text-muted: #8E8EA0;
+      --text-dim: #5A5A6E;
+      --accent: #E05A47;
+      --accent-warm: #E5A93C;
+      --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px 80px;
+    }
+
+    .article-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding-top: 50px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      margin-bottom: 30px;
+      transition: color 0.15s ease;
+    }
+    .back-link:hover { color: var(--text); }
+
+    .article-header {
+      margin-bottom: 32px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .cat-badge {
+      background: rgba(224, 90, 71, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(224, 90, 71, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .mono { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted); }
+
+    h1 {
+      font-size: clamp(26px, 4.5vw, 36px);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .hero-img-box {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin-bottom: 40px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      max-height: 480px;
+    }
+    .img-caption {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .content-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-size: 16px;
+      color: #D6D6E0;
+    }
+
+    .content-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 24px;
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    .content-body p {
+      margin-bottom: 6px;
+      line-height: 1.75;
+    }
+
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 16px 0 24px;
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 420px;
+      object-fit: cover;
+    }
+
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-top: 40px;
+    }
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      background: #000;
+    }
+    .author-info h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .author-info p { font-size: 13px; color: var(--text-muted); }
+
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 22px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 520px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link"><- Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Optical Science</span>
+        <span>•</span>
+        <span class="mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/blog/anamorphic-night-flares.jpg" alt="Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares" />
+      <div class="img-caption mono">Cinematic nighttime streetscape characterized by prominent horizontal cyan flares across street lanterns.</div>
+    </div>
+
+    <div class="content-body">
+      <!-- Section 1 -->
+      <h2>The Geometry of Cylindrical Glass and 2:1 Optical Squeeze</h2>
+      <p>Standard photographic lenses employ rotationally symmetric spherical elements that treat light rays identically along both the horizontal and vertical axes. Anamorphic lenses break this symmetry by introducing cylindrical optical elements — glass surfaces curved along the horizontal plane while remaining completely flat along the vertical plane. This unique geometry bends incoming light rays horizontally by a factor of 2.0x, optically squeezing a broad panoramic view into a standard 35mm camera frame.</p>
+      <p>During theatrical projection or modern digital de-squeezing, the image is stretched back out to its native 2.39:1 aspect ratio. This process grants filmmakers an expansive field of view equivalent to a wide-angle lens along the horizontal axis, while preserving the shallow depth of field, natural perspective compression, and lack of facial distortion typical of a longer focal length along the vertical axis.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/blog/anamorphic-night-flares.jpg" alt="The Geometry of Cylindrical Glass and 2:1 Optical Squeeze" />
+        <div class="img-caption mono">Horizontal flare lines stretch completely across the 2.39:1 widescreen frame, providing high cinematic drama.</div>
+      </div>
+
+      <!-- Section 2 -->
+      <h2>Internal Reflections, Lens Coatings, and Streak Mechanics</h2>
+      <p>The iconic horizontal streak flares that have defined sci-fi cinema and prestige filmmaking are an inherent byproduct of cylindrical glass geometry. When an intense point source of light enters the front of the lens at an angle, light reflects back and forth between the air-glass boundaries of the curved cylindrical elements. Because the horizontal curvature acts as a continuous cylindrical mirror, the reflected light is focused into a razor-thin horizontal line stretching across the entire width of the frame.</p>
+      <p>The striking cobalt-blue hue of vintage anamorphic flares is determined by the anti-reflective chemical coatings applied to the glass elements. Vintage lenses from the 1960s used single-layer magnesium fluoride coatings designed to optimize transmission of warm light, causing unabsorbed high-frequency blue wavelengths to reflect internally and emerge as vibrant cyan streaks.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/samples/sample_traindoor.jpg" alt="Internal Reflections, Lens Coatings, and Streak Mechanics" />
+        <div class="img-caption mono">Light grazing train compartment glass mimics the internal reflections of vintage optical coatings.</div>
+      </div>
+
+      <!-- Section 3 -->
+      <h2>Shader-Based Optical Synthesis in RfCamera</h2>
+      <p>Real anamorphic lenses weigh several kilograms and require specialized follow-focus gears. RfCamera simulates this cinema magic entirely inside a custom GLSL fragment shader running in real time at 60 frames per second. The shader isolates specular highlight pixels exceeding luminance threshold 0.85 and applies a directional 1D Gaussian kernel along the horizontal scanline.</p>
+      <p>Coupled with barrel distortion at the frame perimeter and oval bokeh weighting, RfCamera delivers genuine Hollywood anamorphic atmosphere directly to your phone screen — entirely offline, completely subscription-free, and requiring zero bulky glass adapters.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/screenshots/06-quick-panel.png" alt="Shader-Based Optical Synthesis in RfCamera" />
+        <div class="img-caption mono">RfCamera's quick settings panel allows instant toggling between classic 35mm and widescreen aspect ratios.</div>
+      </div>
+    </div>
+
+    <!-- Author Card -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

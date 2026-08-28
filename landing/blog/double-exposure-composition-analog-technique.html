@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide - RfCamera Guides</title>
+  <meta name="description" content="Mastering analog double exposure photography: cumulative photon absorption, silhouette masking strategies, intentional underexposure, and surreal compositing." />
+  <meta name="keywords" content="double, exposure, composition, analog, technique, rfcamera, analog film, 35mm photography" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/double-exposure-composition-analog-technique.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/double-exposure-composition-analog-technique.html" />
+  <meta property="og:title" content="Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide" />
+  <meta property="og:description" content="Mastering analog double exposure photography: cumulative photon absorption, silhouette masking strategies, intentional underexposure, and surreal compositing." />
+  <meta property="og:image" content="https://rfcam.roycorp.xyz/assets/blog/double-exposure-portrait.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide" />
+  <meta name="twitter:description" content="Mastering analog double exposure photography: cumulative photon absorption, silhouette masking strategies, intentional underexposure, and surreal compositing." />
+  <meta name="twitter:image" content="https://rfcam.roycorp.xyz/assets/blog/double-exposure-portrait.jpg" />
+
+  <!-- Schema.org Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide",
+    "description": "Mastering analog double exposure photography: cumulative photon absorption, silhouette masking strategies, intentional underexposure, and surreal compositing.",
+    "image": "https://rfcam.roycorp.xyz/assets/blog/double-exposure-portrait.jpg",
+    "datePublished": "2026-08-28",
+    "dateModified": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial Team",
+      "url": "https://rfcam.roycorp.xyz/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RfCamera",
+      "url": "https://rfcam.roycorp.xyz/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://rfcam.roycorp.xyz/assets/rfcam_icon.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rfcam.roycorp.xyz/blog/double-exposure-composition-analog-technique.html"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0A0A0D;
+      --surface: #121217;
+      --surface-card: #181820;
+      --border: #262633;
+      --border-focus: #4F4F66;
+      --text: #F0F0F5;
+      --text-muted: #8E8EA0;
+      --text-dim: #5A5A6E;
+      --accent: #E05A47;
+      --accent-warm: #E5A93C;
+      --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px 80px;
+    }
+
+    .article-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding-top: 50px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      margin-bottom: 30px;
+      transition: color 0.15s ease;
+    }
+    .back-link:hover { color: var(--text); }
+
+    .article-header {
+      margin-bottom: 32px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .cat-badge {
+      background: rgba(224, 90, 71, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(224, 90, 71, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .mono { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted); }
+
+    h1 {
+      font-size: clamp(26px, 4.5vw, 36px);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .hero-img-box {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin-bottom: 40px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      max-height: 480px;
+    }
+    .img-caption {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .content-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-size: 16px;
+      color: #D6D6E0;
+    }
+
+    .content-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 24px;
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    .content-body p {
+      margin-bottom: 6px;
+      line-height: 1.75;
+    }
+
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 16px 0 24px;
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 420px;
+      object-fit: cover;
+    }
+
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-top: 40px;
+    }
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      background: #000;
+    }
+    .author-info h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .author-info p { font-size: 13px; color: var(--text-muted); }
+
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 22px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 520px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link"><- Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Creative Techniques</span>
+        <span>•</span>
+        <span class="mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/blog/double-exposure-portrait.jpg" alt="Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide" />
+      <div class="img-caption mono">Surreal in-camera double exposure combining a feminine silhouette with mountain pines and atmospheric mist.</div>
+    </div>
+
+    <div class="content-body">
+      <!-- Section 1 -->
+      <h2>The Additive Physics of Latent Image Formation</h2>
+      <p>In physical film photography, a double exposure is created by intentionally exposing the exact same 36x24mm rectangle of silver halide emulsion to light twice before advancing the roll. At the atomic scale, latent image formation is an irreversible additive process: photons striking silver bromide crystals release electrons that reduce silver ions (Ag+) into sub-microscopic clusters of metallic silver (Ag0). Each successive exposure can only add further silver nuclei; it can never subtract or erase what has already landed.</p>
+      <p>This fundamental law dictates that any section of the frame exposed to pure white in the first shot has exhausted its available silver halide. When the second shutter fires, no further latent density can form in those burned-out regions. Consequently, double exposure composition is not about stacking two complete pictures — it is about orchestrating light in one image to fill the darkness of another.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/blog/double-exposure-portrait.jpg" alt="The Additive Physics of Latent Image Formation" />
+        <div class="img-caption mono">The deep shadow values of the profile act as a clean photographic canvas for the secondary exposure.</div>
+      </div>
+
+      <!-- Section 2 -->
+      <h2>Silhouette Masking and Exposure Compensation Rules</h2>
+      <p>The most effective double exposure compositions utilize a stark silhouette as an organic stencil. Photographing a model directly against a bright sky or window casts their face and torso into deep shadow. These underexposed dark areas leave the underlying silver crystals untouched, creating a pristine canvas primed to record the textures, trees, or city architecture captured during the second shutter release.</p>
+      <p>To maintain correct overall density across the final negative, photographers apply the rule of exposure compensation: shooting both exposures at nominal box speed results in an overexposed negative (+1 EV total exposure). Setting your camera's exposure compensation dial to -1 EV for both shots ensures that when their respective photon counts combine, the resulting negative lands precisely on the linear portion of the film's characteristic curve.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/samples/sample_beach.jpg" alt="Silhouette Masking and Exposure Compensation Rules" />
+        <div class="img-caption mono">Sunlit sea foam and wave crests make excellent high-frequency textures for secondary overlapping.</div>
+      </div>
+
+      <!-- Section 3 -->
+      <h2>Real-Time Ghost Layering with RfCamera</h2>
+      <p>Executing double exposures on mechanical film cameras historically required delicate guesswork and nerve-wracking film rewinding tricks that often misaligned frame edges. RfCamera eliminates the blind trial-and-error while preserving the authentic physics of optical blend modes.</p>
+      <p>After taking your first frame, the app renders a subtle semi-transparent ghost preview over your live rangefinder viewfinder. You can leisurely pan, tilt, and frame your second subject — aligning a distant skyline into the hollow of a silhouette with pinpoint compositional precision before committing to the shot.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/blog/macro-film-dewdrop.jpg" alt="Real-Time Ghost Layering with RfCamera" />
+        <div class="img-caption mono">Macro botanical patterns can be layered over architecture to create dreamlike organic collages.</div>
+      </div>
+    </div>
+
+    <!-- Author Card -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

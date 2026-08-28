@@ -3,139 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RfCamera Guides — Master Analog Film Photography & Camera Emulations</title>
-  <meta name="description" content="Explore in-depth photography guides, analog film recipes, camera breakdowns, and privacy-first software architecture from the RfCamera team." />
+  <title>RfCamera Guides & Stories — 35mm Rangefinder & Analog Film Craft</title>
+  <meta name="description" content="Master analog film photography: rangefinder optics, 35mm recipes, shutter acoustics, and zero-permission offline camera architecture." />
   <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/" />
-
-  <!-- Open Graph -->
+  
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/" />
-  <meta property="og:title" content="RfCamera Guides — Master Analog Film Photography" />
-  <meta property="og:description" content="In-depth 35mm film guides, lighting setups, recipes, and camera mechanics." />
-  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
-
-  <!-- Schema.org Blog JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "RfCamera Guides & Stories",
-    "url": "https://rfcam.roycorp.xyz/blog/",
-    "description": "Comprehensive film photography guides, recipes, and camera breakdowns.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "RfCamera",
-      "url": "https://rfcam.roycorp.xyz"
-    }
-  }
-  </script>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta property="og:title" content="RfCamera Guides & Stories — Analog Photography & Optics" />
+  <meta property="og:description" content="Detailed guides on classic film stocks, optical physics, camera emulations, and 100% offline privacy." />
+  <meta property="og:image" content="https://rfcam.roycorp.xyz/assets/og_image.png" />
 
   <style>
     :root {
-      --bg: #000000;
-      --surface: #101014;
-      --surface-hover: #17171E;
-      --border: #222228;
-      --text: #FFFFFF;
-      --text-muted: #9E9EA8;
+      --bg: #0A0A0D;
+      --surface: #121217;
+      --surface-card: #181820;
+      --surface-hover: #22222D;
+      --border: #262633;
+      --text: #F0F0F5;
+      --text-muted: #8E8EA0;
+      --accent: #E05A47;
       --orange: #FF7A2F;
+      --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      line-height: 1.5;
-      padding: 60px 24px 80px;
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px 80px;
     }
-    .mono { font-family: 'JetBrains Mono', monospace; }
     .hub-wrap {
       max-width: 1200px;
       margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 36px;
-    }
-    .hub-header {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+      padding-top: 50px;
     }
     .back-home {
-      color: var(--orange);
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 13.5px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-    }
-    h1 {
-      font-size: 46px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-    }
-    h1 span { color: var(--orange); }
-    .hub-sub {
-      font-size: 17px;
       color: var(--text-muted);
-      max-width: 620px;
-      line-height: 1.5;
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      transition: color 0.15s ease;
+    }
+    .back-home:hover { color: var(--text); }
+    .hub-header {
+      margin-bottom: 40px;
+    }
+    .hub-header h1 {
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      color: #FFFFFF;
+    }
+    .hub-header h1 span {
+      color: var(--orange);
+    }
+    .hub-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin-bottom: 28px;
     }
     .category-pills-row {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 4px;
+      margin-top: 20px;
     }
     .cat-pill {
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text-muted);
       padding: 8px 16px;
-      border-radius: 100px;
-      font-weight: 700;
+      border-radius: 20px;
       font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
     .cat-pill:hover {
-      color: #fff;
       border-color: rgba(255, 255, 255, 0.3);
+      color: var(--text);
     }
     .cat-pill.active {
       background: var(--orange);
-      color: #000000;
       border-color: var(--orange);
+      color: #000;
       font-weight: 800;
     }
     .hub-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    @media (max-width: 1024px) {
-      .hub-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 640px) {
-      .hub-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 32px; }
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      margin-top: 36px;
     }
     .hub-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
-      text-decoration: none;
-      color: inherit;
       display: flex;
       flex-direction: column;
+      text-decoration: none;
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
     }
     .hub-card:hover {
@@ -195,12 +172,13 @@
       line-height: 1.5;
     }
     .hub-card-footer {
-      font-size: 11px;
-      color: #666670;
-      padding-top: 10px;
+      font-size: 11.5px;
+      color: #777785;
+      padding-top: 12px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       margin-top: auto;
     }
+    .mono { font-family: var(--font-mono); }
   </style>
 </head>
 <body>
@@ -211,744 +189,1083 @@
       <p class="hub-sub">Comprehensive guides on 35mm rangefinders, analog film recipes, optical physics, and privacy-first camera architecture.</p>
       
       <div class="category-pills-row">
-        <button class="cat-pill active" onclick="filterCategory('all')">All Guides</button><button class="cat-pill" onclick="filterCategory('Analog Culture')">Analog Culture</button><button class="cat-pill" onclick="filterCategory('Bảo mật & Công nghệ')">Bảo mật & Công nghệ</button><button class="cat-pill" onclick="filterCategory('Camera Guides')">Camera Guides</button><button class="cat-pill" onclick="filterCategory('Công thức chụp ảnh')">Công thức chụp ảnh</button><button class="cat-pill" onclick="filterCategory('Film Recipes')">Film Recipes</button><button class="cat-pill" onclick="filterCategory('Kỹ thuật nhiếp ảnh')">Kỹ thuật nhiếp ảnh</button><button class="cat-pill" onclick="filterCategory('Street & Technique')">Street & Technique</button><button class="cat-pill" onclick="filterCategory('Tech & Privacy')">Tech & Privacy</button><button class="cat-pill" onclick="filterCategory('Thân máy & Kỹ thuật')">Thân máy & Kỹ thuật</button><button class="cat-pill" onclick="filterCategory('Văn hóa Retro')">Văn hóa Retro</button>
+<button class="cat-pill active" onclick="filterCategory('all')">All Guides (81)</button>
+        <button class="cat-pill" onclick="filterCategory('Alternative Processes')">Alternative Processes (1)</button>
+        <button class="cat-pill" onclick="filterCategory('Analog Culture')">Analog Culture (6)</button>
+        <button class="cat-pill" onclick="filterCategory('Bảo mật & Công nghệ')">Bảo mật & Công nghệ (5)</button>
+        <button class="cat-pill" onclick="filterCategory('Camera Guides')">Camera Guides (13)</button>
+        <button class="cat-pill" onclick="filterCategory('Camera Lore')">Camera Lore (1)</button>
+        <button class="cat-pill" onclick="filterCategory('Creative Techniques')">Creative Techniques (2)</button>
+        <button class="cat-pill" onclick="filterCategory('Cuộn phim & Màu sắc')">Cuộn phim & Màu sắc (3)</button>
+        <button class="cat-pill" onclick="filterCategory('Công thức chụp ảnh')">Công thức chụp ảnh (5)</button>
+        <button class="cat-pill" onclick="filterCategory('Film Recipes')">Film Recipes (7)</button>
+        <button class="cat-pill" onclick="filterCategory('Film Stocks')">Film Stocks (3)</button>
+        <button class="cat-pill" onclick="filterCategory('Kỹ thuật nhiếp ảnh')">Kỹ thuật nhiếp ảnh (4)</button>
+        <button class="cat-pill" onclick="filterCategory('Kỹ thuật quang học')">Kỹ thuật quang học (2)</button>
+        <button class="cat-pill" onclick="filterCategory('Kỹ thuật sáng tạo')">Kỹ thuật sáng tạo (3)</button>
+        <button class="cat-pill" onclick="filterCategory('Optical Science')">Optical Science (3)</button>
+        <button class="cat-pill" onclick="filterCategory('Street & Technique')">Street & Technique (7)</button>
+        <button class="cat-pill" onclick="filterCategory('Tech & Privacy')">Tech & Privacy (8)</button>
+        <button class="cat-pill" onclick="filterCategory('Thân máy & Kỹ thuật')">Thân máy & Kỹ thuật (3)</button>
+        <button class="cat-pill" onclick="filterCategory('Thân máy & Lịch sử')">Thân máy & Lịch sử (2)</button>
+        <button class="cat-pill" onclick="filterCategory('Văn hóa Retro')">Văn hóa Retro (3)</button>
       </div>
     </div>
 
     <div class="hub-grid" id="hub-grid">
-      
-    <a href="/blog/best-free-dazz-cam-alternatives-android-ios.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/02-selector.png" alt="Top 7 Free Dazz Cam Alternatives for Android and iOS (No Subscriptions)" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Top 7 Free Dazz Cam Alternatives for Android and iOS (No Subscriptions)</h2>
-        <p class="hub-card-desc">Looking for the best free Dazz Cam alternative? Discover vintage film camera apps with authentic 35mm grain, light leaks, and zero subscription paywalls.</p>
-        <div class="hub-card-footer mono">7 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/fxn-35mm-rangefinder-camera-guide.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="FXN 35mm Rangefinder Guide: Warm Tones, Smooth Skin & Leica Leaf Shutter" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">FXN 35mm Rangefinder Guide: Warm Tones, Smooth Skin & Leica Leaf Shutter</h2>
-        <p class="hub-card-desc">Master the legendary FXN 35mm rangefinder camera emulation: optical characteristics, color matrix tuning, skin tone rendering, and golden hour setups.</p>
-        <div class="hub-card-footer mono">6 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/cpm35-disposable-camera-aesthetic-guide.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery</h2>
-        <p class="hub-card-desc">How the CPM35 single-use camera simulation creates punchy contrast, vibrant saturated primaries, and warm corner light leaks for vintage summer memories.</p>
-        <div class="hub-card-footer mono">6 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/gr-d-street-monochrome-photography-tips.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="GR D Black & White: Street Photography Tips with High-Contrast Film" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">GR D Black & White: Street Photography Tips with High-Contrast Film</h2>
-        <p class="hub-card-desc">Learn how to capture dramatic, timeless monochrome street photographs using the GR D camera profile with deep vignettes and micro grain.</p>
-        <div class="hub-card-footer mono">7 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/polaroid-70s-instant-film-aesthetic-ct2r.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_palm.jpg" alt="CT2R: 1970s Instant Polaroid Color Cast & Square Framing" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">CT2R: 1970s Instant Polaroid Color Cast & Square Framing</h2>
-        <p class="hub-card-desc">Recreate the dreamy, nostalgic pastel colors of 1970s instant film with the CT2R profile: cyan-green shadow casts, soft contrast, and square ratio.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/medium-format-6x7-depth-of-field-s67.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_field.jpg" alt="S 67 Medium Format: Unlocking Massive 6x7 Tonal Depth on Mobile" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">S 67 Medium Format: Unlocking Massive 6x7 Tonal Depth on Mobile</h2>
-        <p class="hub-card-desc">Experience the legendary Pentax 6x7 medium format camera look with ultra-smooth tonal transitions and sharp edge-to-edge resolution.</p>
-        <div class="hub-card-footer mono">6 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/half-frame-photography-72-frames-diptych-d-half.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_train.jpg" alt="D Half: 72-Frame Half-Frame Photography & Vertical Diptych Storytelling" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">D Half: 72-Frame Half-Frame Photography & Vertical Diptych Storytelling</h2>
-        <p class="hub-card-desc">Discover the creative power of half-frame 35mm cameras. Shoot paired vertical diptychs and tell cinematic dual-frame visual stories.</p>
-        <div class="hub-card-footer mono">6 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/ccd-vintage-digital-camera-trend.html" class="hub-card" data-category="Analog Culture">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="The Y2K CCD Camera Trend: Why Gen Z Loves Early 2000s Digicams" loading="lazy" />
-        <span class="hub-card-cat mono">Analog Culture</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">The Y2K CCD Camera Trend: Why Gen Z Loves Early 2000s Digicams</h2>
-        <p class="hub-card-desc">Explore why early CCD digital cameras are trending on TikTok and how the CCD profile in RfCamera delivers the authentic Y2K aesthetic.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/privacy-in-camera-apps-why-offline-matters.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Why Your Camera App Should Never Require Internet Permissions" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Why Your Camera App Should Never Require Internet Permissions</h2>
-        <p class="hub-card-desc">Explore the critical privacy risks of cloud-connected camera apps and why 100% offline image processing is the future of personal photography.</p>
-        <div class="hub-card-footer mono">6 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/how-gpu-shaders-simulate-analog-film-grain.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/03-color-config.png" alt="Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain</h2>
-        <p class="hub-card-desc">A deep dive into mobile computer graphics: how fragment shaders, chromatic aberration, and highlight shoulder curves create genuine analog warmth.</p>
-        <div class="hub-card-footer mono">7 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/golden-hour-film-recipes-warm-tones.html" class="hub-card" data-category="Film Recipes">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="Tokyo Golden Hour: The Ultimate Film Recipe for Warm Sunset Shots" loading="lazy" />
-        <span class="hub-card-cat mono">Film Recipes</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Tokyo Golden Hour: The Ultimate Film Recipe for Warm Sunset Shots</h2>
-        <p class="hub-card-desc">Recreate the golden glow of late afternoon sunlight with the FXN 35mm recipe: warm color shifts, fine silk grain, and amber date stamps.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/analog-camera-shutter-sound-design.html" class="hub-card" data-category="Analog Culture">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="The Psychology of Sound: Why Mechanical Shutter Clicks Make You Shoot Better" loading="lazy" />
-        <span class="hub-card-cat mono">Analog Culture</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">The Psychology of Sound: Why Mechanical Shutter Clicks Make You Shoot Better</h2>
-        <p class="hub-card-desc">How physical leaf shutters, winding gears, and tactile haptic feedback transform smartphone photography from a passive screen tap into an art form.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/vintage-flash-photography-portraits.html" class="hub-card" data-category="Street & Technique">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="Vintage Flash Photography: Achieving the 90s Editorial Party Look" loading="lazy" />
-        <span class="hub-card-cat mono">Street & Technique</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Vintage Flash Photography: Achieving the 90s Editorial Party Look</h2>
-        <p class="hub-card-desc">Direct flash photography is back. Learn how to balance hard light with warm film tones for striking party and fashion portraits.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/why-gen-z-prefers-imperfect-photos.html" class="hub-card" data-category="Analog Culture">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_palm.jpg" alt="The Anti-AI Aesthetic: Why Creators Prefer Imperfect Analog Photos" loading="lazy" />
-        <span class="hub-card-cat mono">Analog Culture</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">The Anti-AI Aesthetic: Why Creators Prefer Imperfect Analog Photos</h2>
-        <p class="hub-card-desc">In an era of hyper-filtered AI images, unedited film grain, light leaks, and honest optical flaws are the new definition of authenticity.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/travel-photography-with-film-camera-apps.html" class="hub-card" data-category="Street & Technique">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_train.jpg" alt="Travel Light: Document Your Entire Vacation with an Offline Film App" loading="lazy" />
-        <span class="hub-card-cat mono">Street & Technique</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Travel Light: Document Your Entire Vacation with an Offline Film App</h2>
-        <p class="hub-card-desc">Leave heavy gear and airport X-ray worries behind. Learn how to capture timeless vintage travel diaries with RfCamera.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/top-app-chup-anh-film-dep-nhat-mien-phi.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/02-selector.png" alt="Top App Chụp Ảnh Màu Film Đẹp Nhất 2026 (Miễn Phí, Không Thu Phí Thuê Bao)" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Top App Chụp Ảnh Màu Film Đẹp Nhất 2026 (Miễn Phí, Không Thu Phí Thuê Bao)</h2>
-        <p class="hub-card-desc">Đánh giá chi tiết các ứng dụng chụp ảnh máy film analog đẹp nhất: Khung ngắm 35mm sống động, hạt grain mịn màng, không quảng cáo và mở khóa sẵn toàn bộ máy.</p>
-        <div class="hub-card-footer mono">7 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/cong-thuc-chup-anh-tone-mau-film-hongkong.html" class="hub-card" data-category="Film Recipes">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="Công Thức Chụp Ảnh Tone Màu Film Hongkong Thập Niên 1980 Siêu Nghệ" loading="lazy" />
-        <span class="hub-card-cat mono">Film Recipes</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Công Thức Chụp Ảnh Tone Màu Film Hongkong Thập Niên 1980 Siêu Nghệ</h2>
-        <p class="hub-card-desc">Bí quyết chụp ảnh màu film Hongkong ấm áp, da sáng mịn màng và dải tương phản dịu bằng thân máy FXN trên RfCamera.</p>
-        <div class="hub-card-footer mono">6 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/cach-chup-anh-may-film-dung-1-lan-cpm35.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="Cách Chụp Ảnh Máy Film Dùng 1 Lần (Disposable Camera) Lóa Sáng Cực Đẹp" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Cách Chụp Ảnh Máy Film Dùng 1 Lần (Disposable Camera) Lóa Sáng Cực Đẹp</h2>
-        <p class="hub-card-desc">Hướng dẫn sử dụng máy CPM35 để tạo ra những bức ảnh mùa hè rực rỡ với vệt lóa sáng cam (light leak) đặc trưng của máy ảnh dùng một lần.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/chup-anh-den-trang-duong-pho-gr-d.html" class="hub-card" data-category="Street & Technique">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="Nghệ Thuật Chụp Ảnh Đen Trắng Đường Phố Sâu Thẳm Với GR D" loading="lazy" />
-        <span class="hub-card-cat mono">Street & Technique</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Nghệ Thuật Chụp Ảnh Đen Trắng Đường Phố Sâu Thẳm Với GR D</h2>
-        <p class="hub-card-desc">Khám phá phong cách nhiếp ảnh đường phố đen trắng tương phản cao, viền tối sắc nét và hạt grain đậm chất nghệ thuật.</p>
-        <div class="hub-card-footer mono">6 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/tai-sao-khong-nen-dung-app-chup-anh-doi-quyen-mang.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Bảo Vệ Quyền Riêng Tư: Tại Sao App Chụp Ảnh Không Nên Xin Quyền Internet?" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Bảo Vệ Quyền Riêng Tư: Tại Sao App Chụp Ảnh Không Nên Xin Quyền Internet?</h2>
-        <p class="hub-card-desc">Phân tích rủi ro bảo mật khi ứng dụng máy ảnh tải ảnh cá nhân lên máy chủ đám mây và lý do kiến trúc 100% Offline của RfCamera là an toàn tuyệt đối.</p>
-        <div class="hub-card-footer mono">6 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/chup-anh-half-frame-72-kieu-d-half.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_train.jpg" alt="D Half: Trải Nghiệm Chụp Máy Film Half-Frame Ghép Đôi 72 Kiểu" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">D Half: Trải Nghiệm Chụp Máy Film Half-Frame Ghép Đôi 72 Kiểu</h2>
-        <p class="hub-card-desc">Hướng dẫn sáng tạo câu chuyện ảnh đôi dọc (diptych) với thân máy D Half — nhân đôi số lượng ảnh và tạo cảm giác điện ảnh.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/polaroid-instant-film-creative-guide.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_palm.jpg" alt="Creative Polaroid Guide: 7 Tips for Shooting Dreamy Instant Film" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Creative Polaroid Guide: 7 Tips for Shooting Dreamy Instant Film</h2>
-        <p class="hub-card-desc">Explore creative techniques for instant film photography: composition, lighting, and square framing.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/pentax-67-medium-format-portrait-guide.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_field.jpg" alt="Pentax 67 Emulation: Mastering Editorial Medium Format Portraits" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Pentax 67 Emulation: Mastering Editorial Medium Format Portraits</h2>
-        <p class="hub-card-desc">How to achieve massive depth of field and creamy skin transitions with the S 67 camera.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/olympus-pen-half-frame-storytelling.html" class="hub-card" data-category="Camera Guides">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_train.jpg" alt="The Art of Half-Frame: Visual Storytelling with Paired Diptychs" loading="lazy" />
-        <span class="hub-card-cat mono">Camera Guides</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">The Art of Half-Frame: Visual Storytelling with Paired Diptychs</h2>
-        <p class="hub-card-desc">Learn how to compose two vertical frames to tell richer photographic narratives.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/y2k-ccd-digicam-renaissance.html" class="hub-card" data-category="Analog Culture">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="Why Early 2000s Digicams with CCD Sensors Are Dominating Feeds" loading="lazy" />
-        <span class="hub-card-cat mono">Analog Culture</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Why Early 2000s Digicams with CCD Sensors Are Dominating Feeds</h2>
-        <p class="hub-card-desc">The technical and cultural reasons behind the explosion of Y2K digital camera looks.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/cinestill-800t-night-halation-recipe.html" class="hub-card" data-category="Film Recipes">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="CineStill 800T Night Recipe: Capturing Glowing Red Neon Halation" loading="lazy" />
-        <span class="hub-card-cat mono">Film Recipes</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">CineStill 800T Night Recipe: Capturing Glowing Red Neon Halation</h2>
-        <p class="hub-card-desc">Step-by-step recipe for recreating cinema tungsten film halation and glowing lights at night.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/kodachrome-64-vintage-travel-recipe.html" class="hub-card" data-category="Film Recipes">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="Kodachrome 64 Travel Recipe: Bold Red-Yellows & Timeless Contrast" loading="lazy" />
-        <span class="hub-card-cat mono">Film Recipes</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Kodachrome 64 Travel Recipe: Bold Red-Yellows & Timeless Contrast</h2>
-        <p class="hub-card-desc">Recreate the iconic National Geographic travel look of the 1970s and 80s on your phone.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/ilford-hp5-push-processing-look.html" class="hub-card" data-category="Film Recipes">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="Ilford HP5 Plus: Pushed Grain Recipe for Moody Rainy Street Scenes" loading="lazy" />
-        <span class="hub-card-cat mono">Film Recipes</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Ilford HP5 Plus: Pushed Grain Recipe for Moody Rainy Street Scenes</h2>
-        <p class="hub-card-desc">How high-contrast pushed black and white film captures dramatic urban textures.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/fuji-superia-green-shadow-aesthetic.html" class="hub-card" data-category="Film Recipes">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_palm.jpg" alt="Fuji Superia 400: The Secret to Japanese Film Greens & Cool Shadows" loading="lazy" />
-        <span class="hub-card-cat mono">Film Recipes</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Fuji Superia 400: The Secret to Japanese Film Greens & Cool Shadows</h2>
-        <p class="hub-card-desc">Master the clean, breezy Japanese film photography aesthetic with soft emerald shadows.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/portra-400-pastel-editorial-look.html" class="hub-card" data-category="Film Recipes">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_field.jpg" alt="Kodak Portra 400: Achieving Flawless Skin Tones & Pastel Highlights" loading="lazy" />
-        <span class="hub-card-cat mono">Film Recipes</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Kodak Portra 400: Achieving Flawless Skin Tones & Pastel Highlights</h2>
-        <p class="hub-card-desc">The gold standard portrait film recipe: natural skin rendering and gentle highlight roll-off.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/mechanical-shutter-sound-synthesizer.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio</h2>
-        <p class="hub-card-desc">A sound engineering breakdown of mechanical camera acoustics, spring snaps, and gear clicks.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/optical-barrel-distortion-glsl-shader.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/03-color-config.png" alt="Simulating Lens Curvature: Radial Barrel Distortion in GLSL" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Simulating Lens Curvature: Radial Barrel Distortion in GLSL</h2>
-        <p class="hub-card-desc">How fragment shaders calculate non-linear optical distortion without blurring central sharpness.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/highlight-shoulder-compression-physics.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/03-color-config.png" alt="Highlight Shoulder Roll-off: Why Film Never Clips Like Digital" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Highlight Shoulder Roll-off: Why Film Never Clips Like Digital</h2>
-        <p class="hub-card-desc">An optical deep dive into S-curve shoulder compression and highlight preservation.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/dart-isolate-image-processing-performance.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking</h2>
-        <p class="hub-card-desc">How background worker isolates process heavy image matrices without dropping 60fps frames.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/android-zero-permission-security-audit.html" class="hub-card" data-category="Tech & Privacy">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Security Audit: Building a Production Camera App with 0 Internet Perms" loading="lazy" />
-        <span class="hub-card-cat mono">Tech & Privacy</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Security Audit: Building a Production Camera App with 0 Internet Perms</h2>
-        <p class="hub-card-desc">Why zero-permission architecture protects user privacy against data leaks and telemetry.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/the-anti-ai-photography-movement.html" class="hub-card" data-category="Analog Culture">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="The Anti-AI Movement: Why Human Photographers Choose Analog Flaws" loading="lazy" />
-        <span class="hub-card-cat mono">Analog Culture</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">The Anti-AI Movement: Why Human Photographers Choose Analog Flaws</h2>
-        <p class="hub-card-desc">Why unedited grain, dust, and optical flares represent authentic human creativity.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/tangible-software-design-philosophy.html" class="hub-card" data-category="Analog Culture">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Tangible Software: Designing Digital Tools that Feel Like Mechanical Gear" loading="lazy" />
-        <span class="hub-card-cat mono">Analog Culture</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Tangible Software: Designing Digital Tools that Feel Like Mechanical Gear</h2>
-        <p class="hub-card-desc">Why physical knobs, realistic rangefinder viewfinders, and haptic clicks matter in UI design.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/composition-rules-for-35mm-rangefinder.html" class="hub-card" data-category="Street & Technique">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="35mm Rangefinder Composition: 5 Rules for Fast Street Photography" loading="lazy" />
-        <span class="hub-card-cat mono">Street & Technique</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">35mm Rangefinder Composition: 5 Rules for Fast Street Photography</h2>
-        <p class="hub-card-desc">How frame lines and peripheral vision help street photographers capture decisive moments.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/direct-flash-nightlife-party-guide.html" class="hub-card" data-category="Street & Technique">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="Direct Flash Mastery: Capturing High-Energy 90s Nightclub Portraits" loading="lazy" />
-        <span class="hub-card-cat mono">Street & Technique</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Direct Flash Mastery: Capturing High-Energy 90s Nightclub Portraits</h2>
-        <p class="hub-card-desc">How on-camera flash creates bold shadows, vibrant saturation, and authentic party candids.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/golden-hour-backlight-portrait-tips.html" class="hub-card" data-category="Street & Technique">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out" loading="lazy" />
-        <span class="hub-card-cat mono">Street & Technique</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out</h2>
-        <p class="hub-card-desc">Balancing warm rim light with fill exposure using rangefinder optical compensation.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/minimalist-geometry-in-urban-spaces.html" class="hub-card" data-category="Street & Technique">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="Urban Geometry: Framing Repetitive Lines and Shadows on Analog Film" loading="lazy" />
-        <span class="hub-card-cat mono">Street & Technique</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Urban Geometry: Framing Repetitive Lines and Shadows on Analog Film</h2>
-        <p class="hub-card-desc">Using architectural lines, staircases, and window shadows for striking minimalist shots.</p>
-        <div class="hub-card-footer mono">5 min read &bull; August 28, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/bi-quyet-chup-anh-polaroid-nghe-thuat.html" class="hub-card" data-category="Thân máy & Kỹ thuật">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_palm.jpg" alt="Bí Quyết Chụp Ảnh Polaroid Vuông Cực Nghệ Cho Người Mới" loading="lazy" />
-        <span class="hub-card-cat mono">Thân máy & Kỹ thuật</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Bí Quyết Chụp Ảnh Polaroid Vuông Cực Nghệ Cho Người Mới</h2>
-        <p class="hub-card-desc">Hướng dẫn chọn góc sáng, cân bằng bố cục 1:1 và bắt trọn cảm xúc hoài niệm thập niên 70.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/chup-chan-dung-kho-trung-pentax-67.html" class="hub-card" data-category="Thân máy & Kỹ thuật">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_field.jpg" alt="Nhiếp Ảnh Chân Dung Khổ Trung 6x7: Đẳng Cấp Chi Tiết Sắc Nét" loading="lazy" />
-        <span class="hub-card-cat mono">Thân máy & Kỹ thuật</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Nhiếp Ảnh Chân Dung Khổ Trung 6x7: Đẳng Cấp Chi Tiết Sắc Nét</h2>
-        <p class="hub-card-desc">Khai thác độ sâu trường ảnh mê hoặc và dải chuyển màu mịn màng của máy ảnh Pentax 67.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/sang-tao-anh-doi-diptych-half-frame.html" class="hub-card" data-category="Thân máy & Kỹ thuật">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_train.jpg" alt="Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình" loading="lazy" />
-        <span class="hub-card-cat mono">Thân máy & Kỹ thuật</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình</h2>
-        <p class="hub-card-desc">Cách phối hợp 2 góc máy cận và toàn cảnh để tạo nên bức ảnh ghép đôi giàu cảm xúc.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/con-sot-may-anh-ccd-y2k-tiktok.html" class="hub-card" data-category="Văn hóa Retro">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="Cơn Sốt Máy Ảnh CCD Y2K: Vì Sao Gen Z Đang Rời Xa Camera AI?" loading="lazy" />
-        <span class="hub-card-cat mono">Văn hóa Retro</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Cơn Sốt Máy Ảnh CCD Y2K: Vì Sao Gen Z Đang Rời Xa Camera AI?</h2>
-        <p class="hub-card-desc">Giải mã sức hút của màu sắc rực rỡ và cảm giác ảnh kỹ thuật số đầu những năm 2000.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/cong-thuc-chup-anh-dem-cinestill-800t.html" class="hub-card" data-category="Công thức chụp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="Công Thức Màu Phim Đêm CineStill 800T Vệt Đỏ Quanh Đèn Neon" loading="lazy" />
-        <span class="hub-card-cat mono">Công thức chụp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Công Thức Màu Phim Đêm CineStill 800T Vệt Đỏ Quanh Đèn Neon</h2>
-        <p class="hub-card-desc">Bí quyết chụp phố đêm với vệt lóa sáng đỏ cam (halation) huyền ảo quanh biển hiệu neon.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/cong-thuc-mau-film-kodachrome-du-lich.html" class="hub-card" data-category="Công thức chụp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="Công Thức Kodachrome 64: Sắc Đỏ Vàng Kinh Điển Của Ảnh Du Lịch" loading="lazy" />
-        <span class="hub-card-cat mono">Công thức chụp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Công Thức Kodachrome 64: Sắc Đỏ Vàng Kinh Điển Của Ảnh Du Lịch</h2>
-        <p class="hub-card-desc">Tái hiện chất màu phim tài liệu National Geographic rực rỡ và ấm áp cho kỳ nghỉ.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/chup-anh-den-trang-ngay-mua-ilford.html" class="hub-card" data-category="Công thức chụp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động" loading="lazy" />
-        <span class="hub-card-cat mono">Công thức chụp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động</h2>
-        <p class="hub-card-desc">Cách khai thác phản chiếu mặt đường ướt và ánh sáng âm u để tạo nên ảnh monochrome kịch tính.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/tone-mau-xanh-la-fuji-nhat-ban.html" class="hub-card" data-category="Công thức chụp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_palm.jpg" alt="Tone Màu Xanh Lá Fuji: Bí Quyết Chụp Ảnh Phong Cách Nhật Bản Trong Trẻo" loading="lazy" />
-        <span class="hub-card-cat mono">Công thức chụp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Tone Màu Xanh Lá Fuji: Bí Quyết Chụp Ảnh Phong Cách Nhật Bản Trong Trẻo</h2>
-        <p class="hub-card-desc">Hướng dẫn chụp tone màu pastel nhẹ nhàng với bóng tối xanh ngọc bích thanh lịch.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/cong-thuc-mau-da-chan-dung-portra-400.html" class="hub-card" data-category="Công thức chụp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_field.jpg" alt="Công Thức Kodak Portra 400: Da Mịn Tự Nhiên Và Nắng Vàng Nhẹ" loading="lazy" />
-        <span class="hub-card-cat mono">Công thức chụp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Công Thức Kodak Portra 400: Da Mịn Tự Nhiên Và Nắng Vàng Nhẹ</h2>
-        <p class="hub-card-desc">Chuẩn mực nhiếp ảnh chân dung: giữ trọn chi tiết khuôn mặt và sắc độ da mềm mại.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/thiet-ke-am-thanh-man-trap-co-hoc.html" class="hub-card" data-category="Bảo mật & Công nghệ">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Thiết Kế Âm Thanh Màn Trập: Mô Phỏng Cơ Khí Lá Thép Và Bánh Răng" loading="lazy" />
-        <span class="hub-card-cat mono">Bảo mật & Công nghệ</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Thiết Kế Âm Thanh Màn Trập: Mô Phỏng Cơ Khí Lá Thép Và Bánh Răng</h2>
-        <p class="hub-card-desc">Bên trong bộ tổng hợp âm thanh Web Audio: tái hiện tiếng tách đanh giòn của màn trập máy ảnh.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/mo-phong-do-meo-thau-kinh-glsl.html" class="hub-card" data-category="Bảo mật & Công nghệ">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/03-color-config.png" alt="Mô Phỏng Độ Méo Thấu Kính Bằng Fragment Shader GLSL 60fps" loading="lazy" />
-        <span class="hub-card-cat mono">Bảo mật & Công nghệ</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Mô Phỏng Độ Méo Thấu Kính Bằng Fragment Shader GLSL 60fps</h2>
-        <p class="hub-card-desc">Cách shader tính toán độ cong quang học và tán sắc viền (chromatic aberration) thời gian thực.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/vung-nen-sang-quang-hoc-highlight-shoulder.html" class="hub-card" data-category="Bảo mật & Công nghệ">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/03-color-config.png" alt="Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng" loading="lazy" />
-        <span class="hub-card-cat mono">Bảo mật & Công nghệ</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng</h2>
-        <p class="hub-card-desc">Phân tích đường cong nén sáng S-curve giúp bảo toàn chi tiết mây trời trên ảnh analog.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/xu-ly-anh-bang-dart-isolate-khong-giat-lag.html" class="hub-card" data-category="Bảo mật & Công nghệ">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms" loading="lazy" />
-        <span class="hub-card-cat mono">Bảo mật & Công nghệ</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms</h2>
-        <p class="hub-card-desc">Kiến trúc luồng xử lý nền giúp chụp ảnh liên tục mà không làm khựng khung ngắm 60fps.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/bao-mat-anh-ca-nhan-khong-can-quyen-internet.html" class="hub-card" data-category="Bảo mật & Công nghệ">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet?" loading="lazy" />
-        <span class="hub-card-cat mono">Bảo mật & Công nghệ</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet?</h2>
-        <p class="hub-card-desc">Cam kết 0 quyền mạng ở cấp hệ điều hành bảo vệ tuyệt đối kho ảnh riêng tư của bạn.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/trao-luu-chong-anh-ai-nhiep-anh-chan-that.html" class="hub-card" data-category="Văn hóa Retro">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="Trào Lưu 'Anti-AI': Khi Người Trẻ Khao Khát Những Tì Vết Chân Thật" loading="lazy" />
-        <span class="hub-card-cat mono">Văn hóa Retro</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Trào Lưu 'Anti-AI': Khi Người Trẻ Khao Khát Những Tì Vết Chân Thật</h2>
-        <p class="hub-card-desc">Vì sao hạt grain sần sùi và vệt lóa sáng ngẫu nhiên lại trở thành biểu tượng của sự chân thành.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/triet-ly-thiet-ke-phan-mem-co-hoc.html" class="hub-card" data-category="Văn hóa Retro">
-      <div class="hub-card-img">
-        <img src="../assets/screenshots/01-camera.png" alt="Triết Lý Phần Mềm Cơ Học: Khi Giao Diện Số Có Trọng Lượng Xúc Giác" loading="lazy" />
-        <span class="hub-card-cat mono">Văn hóa Retro</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Triết Lý Phần Mềm Cơ Học: Khi Giao Diện Số Có Trọng Lượng Xúc Giác</h2>
-        <p class="hub-card-desc">Tại sao nút bấm vật lý, vạch chia quang học và phản hồi rung làm tăng cảm hứng sáng tác.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/nguyen-tac-bo-cuc-khung-ngam-rangefinder.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc" loading="lazy" />
-        <span class="hub-card-cat mono">Kỹ thuật nhiếp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc</h2>
-        <p class="hub-card-desc">Cách tận dụng tầm nhìn bao quát ngoài khung ngắm để dự đoán chuyển động chủ thể.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/chup-flash-truc-dien-tiec-dem-vintage.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_beach.jpg" alt="Chụp Flash Trực Diện: Tạo Nên Phong Cách Tiệc Đêm 90s Nổi Loạn" loading="lazy" />
-        <span class="hub-card-cat mono">Kỹ thuật nhiếp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Chụp Flash Trực Diện: Tạo Nên Phong Cách Tiệc Đêm 90s Nổi Loạn</h2>
-        <p class="hub-card-desc">Kỹ thuật đánh flash trực tiếp tạo bóng đổ sắc nét và màu sắc bão hòa đầy năng lượng.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/chup-nguoc-sang-hoang-hon-khong-chay-anh.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_street.jpg" alt="Chụp Ngược Sáng Hoàng Hôn: Giữ Viền Sáng Tóc Và Chi Tiết Khuôn Mặt" loading="lazy" />
-        <span class="hub-card-cat mono">Kỹ thuật nhiếp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Chụp Ngược Sáng Hoàng Hôn: Giữ Viền Sáng Tóc Và Chi Tiết Khuôn Mặt</h2>
-        <p class="hub-card-desc">Cách bù trừ độ sáng EV và tận dụng quầng sáng tán xạ để bức ảnh chiều tà trở nên lung linh.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
-    <a href="/blog/bo-cuc-hinh-khoi-kien-truc-do-thi.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
-      <div class="hub-card-img">
-        <img src="../assets/samples/sample_traindoor.jpg" alt="Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film" loading="lazy" />
-        <span class="hub-card-cat mono">Kỹ thuật nhiếp ảnh</span>
-      </div>
-      <div class="hub-card-body">
-        <h2 class="hub-card-title">Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film</h2>
-        <p class="hub-card-desc">Cách sắp xếp các mảng sáng tối và đường dẫn thị giác để tạo nên bức ảnh kiến trúc mạch lạc.</p>
-        <div class="hub-card-footer mono">5 phút đọc &bull; 28 Tháng 8, 2026</div>
-      </div>
-    </a>
-    
+      <a href="/blog/analog-camera-shutter-sound-design.html" class="hub-card" data-category="Analog Culture">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="The Psychology of Sound: Why Mechanical Shutter Clicks Make You Shoot Better — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Analog Culture</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">The Psychology of Sound: Why Mechanical Shutter Clicks Make You Shoot Better — RfCamera Guides</h2>
+          <p class="hub-card-desc">How physical leaf shutters, winding gears, and tactile haptic feedback transform smartphone photography from a passive screen tap into an art form.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/anamorphic-horizontal-streak-flares-physics.html" class="hub-card" data-category="Optical Science">
+        <div class="hub-card-img">
+          <img src="../assets/blog/anamorphic-night-flares.jpg" alt="Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares" loading="lazy" />
+          <span class="hub-card-cat">Optical Science</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Cylindrical Optics: The Physical Mechanics of Anamorphic Blue Streak Flares</h2>
+          <p class="hub-card-desc">How cylindrical glass optical elements squeeze widescreen perspectives, generate horizontal blue streak lens flares, and produce oval out-of-focus bokeh.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/android-zero-permission-security-audit.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Security Audit: Building a Production Camera App with 0 Internet Perms — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Security Audit: Building a Production Camera App with 0 Internet Perms — RfCamera Guides</h2>
+          <p class="hub-card-desc">Why zero-permission architecture protects user privacy against data leaks and telemetry.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/bao-mat-anh-ca-nhan-khong-can-quyen-internet.html" class="hub-card" data-category="Bảo mật & Công nghệ">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet? — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Bảo mật & Công nghệ</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet? — RfCamera Guides</h2>
+          <p class="hub-card-desc">Cam kết 0 quyền mạng ở cấp hệ điều hành bảo vệ tuyệt đối kho ảnh riêng tư của bạn.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/best-free-dazz-cam-alternatives-android-ios.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/02-selector.png" alt="Top 7 Free Dazz Cam Alternatives for Android and iOS (No Subscriptions) — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Top 7 Free Dazz Cam Alternatives for Android and iOS (No Subscriptions) — RfCamera Guides</h2>
+          <p class="hub-card-desc">Looking for the best free Dazz Cam alternative? Discover vintage film camera apps with authentic 35mm grain, light leaks, and zero subscription paywalls.</p>
+          <div class="hub-card-footer mono">7 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 7 min read</div>
+        </div>
+      </a>
+      <a href="/blog/bi-quyet-chup-anh-polaroid-nghe-thuat.html" class="hub-card" data-category="Thân máy & Kỹ thuật">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_palm.jpg" alt="Bí Quyết Chụp Ảnh Polaroid Vuông Cực Nghệ Cho Người Mới — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Thân máy & Kỹ thuật</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Bí Quyết Chụp Ảnh Polaroid Vuông Cực Nghệ Cho Người Mới — RfCamera Guides</h2>
+          <p class="hub-card-desc">Hướng dẫn chọn góc sáng, cân bằng bố cục 1:1 và bắt trọn cảm xúc hoài niệm thập niên 70.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/bo-cuc-hinh-khoi-kien-truc-do-thi.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật nhiếp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film — RfCamera Guides</h2>
+          <p class="hub-card-desc">Cách sắp xếp các mảng sáng tối và đường dẫn thị giác để tạo nên bức ảnh kiến trúc mạch lạc.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/cach-chup-anh-may-film-dung-1-lan-cpm35.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="Cách Chụp Ảnh Máy Film Dùng 1 Lần (Disposable Camera) Lóa Sáng Cực Đẹp — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Cách Chụp Ảnh Máy Film Dùng 1 Lần (Disposable Camera) Lóa Sáng Cực Đẹp — RfCamera Guides</h2>
+          <p class="hub-card-desc">Hướng dẫn sử dụng máy CPM35 để tạo ra những bức ảnh mùa hè rực rỡ với vệt lóa sáng cam (light leak) đặc trưng của máy ảnh dùng một lần.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/ccd-vintage-digital-camera-trend.html" class="hub-card" data-category="Analog Culture">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="The Y2K CCD Camera Trend: Why Gen Z Loves Early 2000s Digicams — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Analog Culture</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">The Y2K CCD Camera Trend: Why Gen Z Loves Early 2000s Digicams — RfCamera Guides</h2>
+          <p class="hub-card-desc">Explore why early CCD digital cameras are trending on TikTok and how the CCD profile in RfCamera delivers the authentic Y2K aesthetic.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/chup-anh-den-trang-duong-pho-gr-d.html" class="hub-card" data-category="Street & Technique">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="Nghệ Thuật Chụp Ảnh Đen Trắng Đường Phố Sâu Thẳm Với GR D — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Street & Technique</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Nghệ Thuật Chụp Ảnh Đen Trắng Đường Phố Sâu Thẳm Với GR D — RfCamera Guides</h2>
+          <p class="hub-card-desc">Khám phá phong cách nhiếp ảnh đường phố đen trắng tương phản cao, viền tối sắc nét và hạt grain đậm chất nghệ thuật.</p>
+          <div class="hub-card-footer mono">6 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 6 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/chup-anh-den-trang-ngay-mua-ilford.html" class="hub-card" data-category="Công thức chụp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Công thức chụp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động — RfCamera Guides</h2>
+          <p class="hub-card-desc">Cách khai thác phản chiếu mặt đường ướt và ánh sáng âm u để tạo nên ảnh monochrome kịch tính.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/chup-anh-half-frame-72-kieu-d-half.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_train.jpg" alt="D Half: Trải Nghiệm Chụp Máy Film Half-Frame Ghép Đôi 72 Kiểu — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">D Half: Trải Nghiệm Chụp Máy Film Half-Frame Ghép Đôi 72 Kiểu — RfCamera Guides</h2>
+          <p class="hub-card-desc">Hướng dẫn sáng tạo câu chuyện ảnh đôi dọc (diptych) với thân máy D Half — nhân đôi số lượng ảnh và tạo cảm giác điện ảnh.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/chup-chan-dung-kho-trung-pentax-67.html" class="hub-card" data-category="Thân máy & Kỹ thuật">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_field.jpg" alt="Nhiếp Ảnh Chân Dung Khổ Trung 6x7: Đẳng Cấp Chi Tiết Sắc Nét — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Thân máy & Kỹ thuật</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Nhiếp Ảnh Chân Dung Khổ Trung 6x7: Đẳng Cấp Chi Tiết Sắc Nét — RfCamera Guides</h2>
+          <p class="hub-card-desc">Khai thác độ sâu trường ảnh mê hoặc và dải chuyển màu mịn màng của máy ảnh Pentax 67.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/chup-flash-truc-dien-tiec-dem-vintage.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="Chụp Flash Trực Diện: Tạo Nên Phong Cách Tiệc Đêm 90s Nổi Loạn — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật nhiếp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Chụp Flash Trực Diện: Tạo Nên Phong Cách Tiệc Đêm 90s Nổi Loạn — RfCamera Guides</h2>
+          <p class="hub-card-desc">Kỹ thuật đánh flash trực tiếp tạo bóng đổ sắc nét và màu sắc bão hòa đầy năng lượng.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/chup-nguoc-sang-hoang-hon-khong-chay-anh.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="Chụp Ngược Sáng Hoàng Hôn: Giữ Viền Sáng Tóc Và Chi Tiết Khuôn Mặt — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật nhiếp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Chụp Ngược Sáng Hoàng Hôn: Giữ Viền Sáng Tóc Và Chi Tiết Khuôn Mặt — RfCamera Guides</h2>
+          <p class="hub-card-desc">Cách bù trừ độ sáng EV và tận dụng quầng sáng tán xạ để bức ảnh chiều tà trở nên lung linh.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/cinestill-800t-night-halation-recipe.html" class="hub-card" data-category="Film Recipes">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="CineStill 800T Night Recipe: Capturing Glowing Red Neon Halation — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Film Recipes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">CineStill 800T Night Recipe: Capturing Glowing Red Neon Halation — RfCamera Guides</h2>
+          <p class="hub-card-desc">Step-by-step recipe for recreating cinema tungsten film halation and glowing lights at night.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/composition-rules-for-35mm-rangefinder.html" class="hub-card" data-category="Street & Technique">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="35mm Rangefinder Composition: 5 Rules for Fast Street Photography — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Street & Technique</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">35mm Rangefinder Composition: 5 Rules for Fast Street Photography — RfCamera Guides</h2>
+          <p class="hub-card-desc">How frame lines and peripheral vision help street photographers capture decisive moments.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/con-sot-may-anh-ccd-y2k-tiktok.html" class="hub-card" data-category="Văn hóa Retro">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="Cơn Sốt Máy Ảnh CCD Y2K: Vì Sao Gen Z Đang Rời Xa Camera AI? — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Văn hóa Retro</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Cơn Sốt Máy Ảnh CCD Y2K: Vì Sao Gen Z Đang Rời Xa Camera AI? — RfCamera Guides</h2>
+          <p class="hub-card-desc">Giải mã sức hút của màu sắc rực rỡ và cảm giác ảnh kỹ thuật số đầu những năm 2000.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/cong-thuc-chup-anh-dem-cinestill-800t.html" class="hub-card" data-category="Công thức chụp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="Công Thức Màu Phim Đêm CineStill 800T Vệt Đỏ Quanh Đèn Neon — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Công thức chụp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Công Thức Màu Phim Đêm CineStill 800T Vệt Đỏ Quanh Đèn Neon — RfCamera Guides</h2>
+          <p class="hub-card-desc">Bí quyết chụp phố đêm với vệt lóa sáng đỏ cam (halation) huyền ảo quanh biển hiệu neon.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/cong-thuc-chup-anh-tone-mau-film-hongkong.html" class="hub-card" data-category="Film Recipes">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="Công Thức Chụp Ảnh Tone Màu Film Hongkong Thập Niên 1980 Siêu Nghệ — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Film Recipes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Công Thức Chụp Ảnh Tone Màu Film Hongkong Thập Niên 1980 Siêu Nghệ — RfCamera Guides</h2>
+          <p class="hub-card-desc">Bí quyết chụp ảnh màu film Hongkong ấm áp, da sáng mịn màng và dải tương phản dịu bằng thân máy FXN trên RfCamera.</p>
+          <div class="hub-card-footer mono">6 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 6 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/cong-thuc-mau-da-chan-dung-portra-400.html" class="hub-card" data-category="Công thức chụp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_field.jpg" alt="Công Thức Kodak Portra 400: Da Mịn Tự Nhiên Và Nắng Vàng Nhẹ — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Công thức chụp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Công Thức Kodak Portra 400: Da Mịn Tự Nhiên Và Nắng Vàng Nhẹ — RfCamera Guides</h2>
+          <p class="hub-card-desc">Chuẩn mực nhiếp ảnh chân dung: giữ trọn chi tiết khuôn mặt và sắc độ da mềm mại.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/cong-thuc-mau-film-kodachrome-du-lich.html" class="hub-card" data-category="Công thức chụp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="Công Thức Kodachrome 64: Sắc Đỏ Vàng Kinh Điển Của Ảnh Du Lịch — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Công thức chụp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Công Thức Kodachrome 64: Sắc Đỏ Vàng Kinh Điển Của Ảnh Du Lịch — RfCamera Guides</h2>
+          <p class="hub-card-desc">Tái hiện chất màu phim tài liệu National Geographic rực rỡ và ấm áp cho kỳ nghỉ.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/cpm35-disposable-camera-aesthetic-guide.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery — RfCamera Guides</h2>
+          <p class="hub-card-desc">How the CPM35 single-use camera simulation creates punchy contrast, vibrant saturated primaries, and warm corner light leaks for vintage summer memories.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/cyanotype-sun-printing-chemical-process.html" class="hub-card" data-category="Alternative Processes">
+        <div class="hub-card-img">
+          <img src="../assets/blog/cyanotype-botanical-print.jpg" alt="Cyanotype and Sun Printing: The 1842 Alternative Chemical Process" loading="lazy" />
+          <span class="hub-card-cat">Alternative Processes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Cyanotype and Sun Printing: The 1842 Alternative Chemical Process</h2>
+          <p class="hub-card-desc">The chemical foundations of 19th-century cyanotype sun printing: iron salt photoreduction, Prussian Blue pigment formation, and handmade archival permanence.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/dart-isolate-image-processing-performance.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking — RfCamera Guides</h2>
+          <p class="hub-card-desc">How background worker isolates process heavy image matrices without dropping 60fps frames.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/direct-flash-nightlife-party-guide.html" class="hub-card" data-category="Street & Technique">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="Direct Flash Mastery: Capturing High-Energy 90s Nightclub Portraits — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Street & Technique</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Direct Flash Mastery: Capturing High-Energy 90s Nightclub Portraits — RfCamera Guides</h2>
+          <p class="hub-card-desc">How on-camera flash creates bold shadows, vibrant saturation, and authentic party candids.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/double-exposure-composition-analog-technique.html" class="hub-card" data-category="Creative Techniques">
+        <div class="hub-card-img">
+          <img src="../assets/blog/double-exposure-portrait.jpg" alt="Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide" loading="lazy" />
+          <span class="hub-card-cat">Creative Techniques</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Double Exposure Dynamics: Additive Latent Images on 35mm Silver Halide</h2>
+          <p class="hub-card-desc">Mastering analog double exposure photography: cumulative photon absorption, silhouette masking strategies, intentional underexposure, and surreal compositing.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/fuji-superia-green-shadow-aesthetic.html" class="hub-card" data-category="Film Recipes">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_palm.jpg" alt="Fuji Superia 400: The Secret to Japanese Film Greens & Cool Shadows — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Film Recipes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Fuji Superia 400: The Secret to Japanese Film Greens & Cool Shadows — RfCamera Guides</h2>
+          <p class="hub-card-desc">Master the clean, breezy Japanese film photography aesthetic with soft emerald shadows.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/fujicolor-c200-pastel-greens-daylight-guide.html" class="hub-card" data-category="Film Stocks">
+        <div class="hub-card-img">
+          <img src="../assets/blog/fujicolor-summer-greens.jpg" alt="Fujicolor C200 Daylight Palette: Soft Greens, Cyan Skies, and Clean Shadows" loading="lazy" />
+          <span class="hub-card-cat">Film Stocks</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Fujicolor C200 Daylight Palette: Soft Greens, Cyan Skies, and Clean Shadows</h2>
+          <p class="hub-card-desc">A technical study of Fujicolor C200 35mm film: spectral sensitivity, emerald green foliage rendering, shadow cyan color casts, and summer nostalgic aesthetics.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/fujicolor-c200-sac-mau-nhat-ban-trong-treo.html" class="hub-card" data-category="Cuộn phim & Màu sắc">
+        <div class="hub-card-img">
+          <img src="../assets/blog/fujicolor-summer-greens.jpg" alt="Fujicolor C200: Sắc Xanh Lơ Trong Trẻo Của Phố Phường Mùa Hè" loading="lazy" />
+          <span class="hub-card-cat">Cuộn phim & Màu sắc</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Fujicolor C200: Sắc Xanh Lơ Trong Trẻo Của Phố Phường Mùa Hè</h2>
+          <p class="hub-card-desc">Khám phá bảng màu đặc trưng của cuộn phim Fujicolor C200: sắc xanh lục lá cây dịu mát, tông xanh lơ cyan ở bóng râm và cảm xúc hoài niệm mùa hè Nhật Bản.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/fxn-35mm-rangefinder-camera-guide.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="FXN 35mm Rangefinder Guide: Warm Tones, Smooth Skin & Leica Leaf Shutter — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">FXN 35mm Rangefinder Guide: Warm Tones, Smooth Skin & Leica Leaf Shutter — RfCamera Guides</h2>
+          <p class="hub-card-desc">Master the legendary FXN 35mm rangefinder camera emulation: optical characteristics, color matrix tuning, skin tone rendering, and golden hour setups.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/golden-hour-backlight-portrait-tips.html" class="hub-card" data-category="Street & Technique">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Street & Technique</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out — RfCamera Guides</h2>
+          <p class="hub-card-desc">Balancing warm rim light with fill exposure using rangefinder optical compensation.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/golden-hour-film-recipes-warm-tones.html" class="hub-card" data-category="Film Recipes">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="Tokyo Golden Hour: The Ultimate Film Recipe for Warm Sunset Shots — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Film Recipes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Tokyo Golden Hour: The Ultimate Film Recipe for Warm Sunset Shots — RfCamera Guides</h2>
+          <p class="hub-card-desc">Recreate the golden glow of late afternoon sunlight with the FXN 35mm recipe: warm color shifts, fine silk grain, and amber date stamps.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/gr-d-street-monochrome-photography-tips.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="GR D Black & White: Street Photography Tips with High-Contrast Film — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">GR D Black & White: Street Photography Tips with High-Contrast Film — RfCamera Guides</h2>
+          <p class="hub-card-desc">Learn how to capture dramatic, timeless monochrome street photographs using the GR D camera profile with deep vignettes and micro grain.</p>
+          <div class="hub-card-footer mono">7 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 7 min read</div>
+        </div>
+      </a>
+      <a href="/blog/half-frame-photography-72-frames-diptych-d-half.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_train.jpg" alt="D Half: 72-Frame Half-Frame Photography & Vertical Diptych Storytelling — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">D Half: 72-Frame Half-Frame Photography & Vertical Diptych Storytelling — RfCamera Guides</h2>
+          <p class="hub-card-desc">Discover the creative power of half-frame 35mm cameras. Shoot paired vertical diptychs and tell cinematic dual-frame visual stories.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/hasselblad-500cm-kho-trung-goc-nhin-ngang-hong.html" class="hub-card" data-category="Thân máy & Lịch sử">
+        <div class="hub-card-img">
+          <img src="../assets/blog/hasselblad-waist-level.jpg" alt="Nghi Thức Ngắm Ngang Hông: Hasselblad 500C/M Và Định Dạng Vuông 6x6" loading="lazy" />
+          <span class="hub-card-cat">Thân máy & Lịch sử</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Nghi Thức Ngắm Ngang Hông: Hasselblad 500C/M Và Định Dạng Vuông 6x6</h2>
+          <p class="hub-card-desc">Trải nghiệm nghi thức chụp ảnh khổ trung với Hasselblad 500C/M: khung ngắm waist-level đảo ngược trái phải, định dạng vuông 6x6 và triết lý làm chậm thời gian.</p>
+          <div class="hub-card-footer mono">6 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 6 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/hasselblad-waist-level-ground-glass-ritual.html" class="hub-card" data-category="Camera Lore">
+        <div class="hub-card-img">
+          <img src="../assets/blog/hasselblad-waist-level.jpg" alt="Ground-Glass Contemplation: The Square Frame of the Hasselblad 500C/M" loading="lazy" />
+          <span class="hub-card-cat">Camera Lore</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Ground-Glass Contemplation: The Square Frame of the Hasselblad 500C/M</h2>
+          <p class="hub-card-desc">Examining the contemplative ritual of medium format photography: waist-level framing, lateral image reversal on ground glass, and the discipline of 6x6 squares.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/highlight-shoulder-compression-physics.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/03-color-config.png" alt="Highlight Shoulder Roll-off: Why Film Never Clips Like Digital — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Highlight Shoulder Roll-off: Why Film Never Clips Like Digital — RfCamera Guides</h2>
+          <p class="hub-card-desc">An optical deep dive into S-curve shoulder compression and highlight preservation.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/how-gpu-shaders-simulate-analog-film-grain.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/03-color-config.png" alt="Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain — RfCamera Guides</h2>
+          <p class="hub-card-desc">A deep dive into mobile computer graphics: how fragment shaders, chromatic aberration, and highlight shoulder curves create genuine analog warmth.</p>
+          <div class="hub-card-footer mono">7 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 7 min read</div>
+        </div>
+      </a>
+      <a href="/blog/ilford-hp5-push-processing-look.html" class="hub-card" data-category="Film Recipes">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="Ilford HP5 Plus: Pushed Grain Recipe for Moody Rainy Street Scenes — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Film Recipes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Ilford HP5 Plus: Pushed Grain Recipe for Moody Rainy Street Scenes — RfCamera Guides</h2>
+          <p class="hub-card-desc">How high-contrast pushed black and white film captures dramatic urban textures.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/kodachrome-64-vintage-travel-recipe.html" class="hub-card" data-category="Film Recipes">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="Kodachrome 64 Travel Recipe: Bold Red-Yellows & Timeless Contrast — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Film Recipes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Kodachrome 64 Travel Recipe: Bold Red-Yellows & Timeless Contrast — RfCamera Guides</h2>
+          <p class="hub-card-desc">Recreate the iconic National Geographic travel look of the 1970s and 80s on your phone.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/kodak-ektar-100-phong-canh-bien-da.html" class="hub-card" data-category="Cuộn phim & Màu sắc">
+        <div class="hub-card-img">
+          <img src="../assets/blog/kodak-ektar-cliffs.jpg" alt="Kodak Ektar 100: Độ Mịn Hạt Vi Điểm Cho Ảnh Phong Cảnh Rực Rỡ" loading="lazy" />
+          <span class="hub-card-cat">Cuộn phim & Màu sắc</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Kodak Ektar 100: Độ Mịn Hạt Vi Điểm Cho Ảnh Phong Cảnh Rực Rỡ</h2>
+          <p class="hub-card-desc">Phân tích cuộn phim màu âm bản mịn hạt nhất thế giới Kodak Ektar 100: công nghệ tinh thể T-Grain, độ bão hòa màu sống động và sức mạnh chinh phục phong cảnh thiên nhiên.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/kodak-ektar-100-ultrafine-grain-architecture.html" class="hub-card" data-category="Film Stocks">
+        <div class="hub-card-img">
+          <img src="../assets/blog/kodak-ektar-cliffs.jpg" alt="Kodak Ektar 100: Micro-Structure, T-Grain Emulsion, and Coastal Saturation" loading="lazy" />
+          <span class="hub-card-cat">Film Stocks</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Kodak Ektar 100: Micro-Structure, T-Grain Emulsion, and Coastal Saturation</h2>
+          <p class="hub-card-desc">Deep technical analysis of Kodak Ektar 100 color negative film: RMS 25 granularity, advanced T-Grain architecture, high color saturation, and landscape fidelity.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/kodak-tri-x-400-do-tuong-phan-duong-pho.html" class="hub-card" data-category="Cuộn phim & Màu sắc">
+        <div class="hub-card-img">
+          <img src="../assets/blog/street-monochrome-tri-x.jpg" alt="Kodak Tri-X 400: Hạt Bạc Thô Mộc Định Hình Nhiếp Ảnh Phóng Sự" loading="lazy" />
+          <span class="hub-card-cat">Cuộn phim & Màu sắc</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Kodak Tri-X 400: Hạt Bạc Thô Mộc Định Hình Nhiếp Ảnh Phóng Sự</h2>
+          <p class="hub-card-desc">Tìm hiểu cuộn phim đen trắng huyền thoại Kodak Tri-X 400: độ tương phản sâu thẳm, cấu trúc hạt grain sắc bén và dung sai đẩy sáng push process tới ISO 1600.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/kodak-tri-x-monochrome-grain-mastery.html" class="hub-card" data-category="Film Stocks">
+        <div class="hub-card-img">
+          <img src="../assets/blog/street-monochrome-tri-x.jpg" alt="Kodak Tri-X 400 at Night: High-Acutance Grain and Push Processing" loading="lazy" />
+          <span class="hub-card-cat">Film Stocks</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Kodak Tri-X 400 at Night: High-Acutance Grain and Push Processing</h2>
+          <p class="hub-card-desc">Mastering Kodak Tri-X 400 black and white film in low light: developer chemistry, push processing to ISO 1600, micro-contrast, and silver grain structure.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/ky-thuat-chup-phoi-sang-kep-double-exposure.html" class="hub-card" data-category="Kỹ thuật sáng tạo">
+        <div class="hub-card-img">
+          <img src="../assets/blog/double-exposure-portrait.jpg" alt="Làm Chủ Kỹ Thuật Phơi Sáng Kép: Ghép Nối Không Gian Trên Phim 35mm" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật sáng tạo</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Làm Chủ Kỹ Thuật Phơi Sáng Kép: Ghép Nối Không Gian Trên Phim 35mm</h2>
+          <p class="hub-card-desc">Hướng dẫn làm chủ kỹ thuật phơi sáng kép (Double Exposure) trên máy ảnh cơ: nguyên lý cộng dồn quang lượng, quy tắc bóng tối và cách lồng ghép chân dung siêu thực.</p>
+          <div class="hub-card-footer mono">6 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 6 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/ky-thuat-in-anh-cyanotype-nang-mat-troi.html" class="hub-card" data-category="Kỹ thuật sáng tạo">
+        <div class="hub-card-img">
+          <img src="../assets/blog/cyanotype-botanical-print.jpg" alt="Bản In Xanh Cyanotype: Kỹ Thuật Tráng Rọi Mặt Trời Từ Năm 1842" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật sáng tạo</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Bản In Xanh Cyanotype: Kỹ Thuật Tráng Rọi Mặt Trời Từ Năm 1842</h2>
+          <p class="hub-card-desc">Khám phá quy trình in ấn cổ điển Cyanotype ra đời từ năm 1842: phản ứng hóa học của muối sắt dưới tia cực tím, sắc xanh phổ Prussian Blue và chất cảm thủ công độc bản.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/ky-thuat-redscale-nhuong-sac-hoang-hon.html" class="hub-card" data-category="Kỹ thuật sáng tạo">
+        <div class="hub-card-img">
+          <img src="../assets/blog/redscale-crimson-sunset.jpg" alt="Phim Redscale: Lộn Ngược Đáy Nhũ Tương Đón Sắc Đỏ Rực Lửa" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật sáng tạo</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Phim Redscale: Lộn Ngược Đáy Nhũ Tương Đón Sắc Đỏ Rực Lửa</h2>
+          <p class="hub-card-desc">Khám phá kỹ thuật chụp phim Redscale độc đáo: cuốn ngược bề mặt phim để ánh sáng đi xuyên từ lớp đáy, tạo nên tông màu đỏ rực hổ phách ma mị và đầy tính biểu cảm.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/leica-m3-double-stroke-huyen-thoai.html" class="hub-card" data-category="Thân máy & Lịch sử">
+        <div class="hub-card-img">
+          <img src="../assets/blog/leica-m3-rangefinder.jpg" alt="Huyền Thoại Leica M3 Double Stroke: Cỗ Máy Đo Khoảng Cách Vĩ Đại Nhất" loading="lazy" />
+          <span class="hub-card-cat">Thân máy & Lịch sử</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Huyền Thoại Leica M3 Double Stroke: Cỗ Máy Đo Khoảng Cách Vĩ Đại Nhất</h2>
+          <p class="hub-card-desc">Giải mã kiệt tác cơ khí Leica M3 ra đời năm 1954: cơ chế lên phim hai nhịp double stroke, hệ lăng kính ngắm phóng đại 0.91x và âm thanh màn trập vải êm như hơi thở.</p>
+          <div class="hub-card-footer mono">6 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 6 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/macro-film-optics-bellows-extension-factor.html" class="hub-card" data-category="Optical Science">
+        <div class="hub-card-img">
+          <img src="../assets/blog/macro-film-dewdrop.jpg" alt="Macro Film Physics: Bellows Extension, Inverse-Square Falloff, and Bokeh" loading="lazy" />
+          <span class="hub-card-cat">Optical Science</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Macro Film Physics: Bellows Extension, Inverse-Square Falloff, and Bokeh</h2>
+          <p class="hub-card-desc">Technical breakdown of extreme close-up analog photography: bellows light loss calculation, razor-thin focal planes, and specular bubble bokeh.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/mechanical-shutter-sound-synthesizer.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio — RfCamera Guides</h2>
+          <p class="hub-card-desc">A sound engineering breakdown of mechanical camera acoustics, spring snaps, and gear clicks.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/medium-format-6x7-depth-of-field-s67.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_field.jpg" alt="S 67 Medium Format: Unlocking Massive 6x7 Tonal Depth on Mobile — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">S 67 Medium Format: Unlocking Massive 6x7 Tonal Depth on Mobile — RfCamera Guides</h2>
+          <p class="hub-card-desc">Experience the legendary Pentax 6x7 medium format camera look with ultra-smooth tonal transitions and sharp edge-to-edge resolution.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/minimalist-geometry-in-urban-spaces.html" class="hub-card" data-category="Street & Technique">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="Urban Geometry: Framing Repetitive Lines and Shadows on Analog Film — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Street & Technique</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Urban Geometry: Framing Repetitive Lines and Shadows on Analog Film — RfCamera Guides</h2>
+          <p class="hub-card-desc">Using architectural lines, staircases, and window shadows for striking minimalist shots.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/mo-phong-do-meo-thau-kinh-glsl.html" class="hub-card" data-category="Bảo mật & Công nghệ">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/03-color-config.png" alt="Mô Phỏng Độ Méo Thấu Kính Bằng Fragment Shader GLSL 60fps — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Bảo mật & Công nghệ</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Mô Phỏng Độ Méo Thấu Kính Bằng Fragment Shader GLSL 60fps — RfCamera Guides</h2>
+          <p class="hub-card-desc">Cách shader tính toán độ cong quang học và tán sắc viền (chromatic aberration) thời gian thực.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/nghe-thuat-chup-anh-film-can-canh-macro.html" class="hub-card" data-category="Kỹ thuật quang học">
+        <div class="hub-card-img">
+          <img src="../assets/blog/macro-film-dewdrop.jpg" alt="Nghệ Thuật Chụp Macro Máy Film: Chi Tiết Tinh Thể Và Độ Mở Ống Kính" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật quang học</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Nghệ Thuật Chụp Macro Máy Film: Chi Tiết Tinh Thể Và Độ Mở Ống Kính</h2>
+          <p class="hub-card-desc">Khám phá nguyên lý quang học chụp macro trên máy film 35mm, tính toán hệ số bù sáng bellows extension và cách xử lý hạt bạc ở cự ly siêu cận.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/nguyen-tac-bo-cuc-khung-ngam-rangefinder.html" class="hub-card" data-category="Kỹ thuật nhiếp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_street.jpg" alt="Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật nhiếp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc — RfCamera Guides</h2>
+          <p class="hub-card-desc">Cách tận dụng tầm nhìn bao quát ngoài khung ngắm để dự đoán chuyển động chủ thể.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/olympus-pen-half-frame-storytelling.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_train.jpg" alt="The Art of Half-Frame: Visual Storytelling with Paired Diptychs — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">The Art of Half-Frame: Visual Storytelling with Paired Diptychs — RfCamera Guides</h2>
+          <p class="hub-card-desc">Learn how to compose two vertical frames to tell richer photographic narratives.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/ong-kinh-anamorphic-vet-sang-dien-anh.html" class="hub-card" data-category="Kỹ thuật quang học">
+        <div class="hub-card-img">
+          <img src="../assets/blog/anamorphic-night-flares.jpg" alt="Ống Kính Anamorphic: Vệt Lóa Xanh Ngang Và Tỷ Lệ Màn Bạc 2.39:1" loading="lazy" />
+          <span class="hub-card-cat">Kỹ thuật quang học</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Ống Kính Anamorphic: Vệt Lóa Xanh Ngang Và Tỷ Lệ Màn Bạc 2.39:1</h2>
+          <p class="hub-card-desc">Khám phá cấu trúc quang học thấu kính trụ anamorphic: cách nén hình ảnh quang học, vệt flare xanh tia ngang và cảm xúc điện ảnh hoài niệm trên phim 35mm.</p>
+          <div class="hub-card-footer mono">6 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 6 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/optical-barrel-distortion-glsl-shader.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/03-color-config.png" alt="Simulating Lens Curvature: Radial Barrel Distortion in GLSL — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Simulating Lens Curvature: Radial Barrel Distortion in GLSL — RfCamera Guides</h2>
+          <p class="hub-card-desc">How fragment shaders calculate non-linear optical distortion without blurring central sharpness.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/pentax-67-medium-format-portrait-guide.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_field.jpg" alt="Pentax 67 Emulation: Mastering Editorial Medium Format Portraits — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Pentax 67 Emulation: Mastering Editorial Medium Format Portraits — RfCamera Guides</h2>
+          <p class="hub-card-desc">How to achieve massive depth of field and creamy skin transitions with the S 67 camera.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/polaroid-70s-instant-film-aesthetic-ct2r.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_palm.jpg" alt="CT2R: 1970s Instant Polaroid Color Cast & Square Framing — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">CT2R: 1970s Instant Polaroid Color Cast & Square Framing — RfCamera Guides</h2>
+          <p class="hub-card-desc">Recreate the dreamy, nostalgic pastel colors of 1970s instant film with the CT2R profile: cyan-green shadow casts, soft contrast, and square ratio.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/polaroid-instant-film-creative-guide.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_palm.jpg" alt="Creative Polaroid Guide: 7 Tips for Shooting Dreamy Instant Film — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Creative Polaroid Guide: 7 Tips for Shooting Dreamy Instant Film — RfCamera Guides</h2>
+          <p class="hub-card-desc">Explore creative techniques for instant film photography: composition, lighting, and square framing.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/portra-400-pastel-editorial-look.html" class="hub-card" data-category="Film Recipes">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_field.jpg" alt="Kodak Portra 400: Achieving Flawless Skin Tones & Pastel Highlights — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Film Recipes</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Kodak Portra 400: Achieving Flawless Skin Tones & Pastel Highlights — RfCamera Guides</h2>
+          <p class="hub-card-desc">The gold standard portrait film recipe: natural skin rendering and gentle highlight roll-off.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/privacy-in-camera-apps-why-offline-matters.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Why Your Camera App Should Never Require Internet Permissions — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Why Your Camera App Should Never Require Internet Permissions — RfCamera Guides</h2>
+          <p class="hub-card-desc">Explore the critical privacy risks of cloud-connected camera apps and why 100% offline image processing is the future of personal photography.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/redscale-reversed-emulsion-physics.html" class="hub-card" data-category="Creative Techniques">
+        <div class="hub-card-img">
+          <img src="../assets/blog/redscale-crimson-sunset.jpg" alt="Redscale Physics: Inverse Layer Penetration and Chromatic Shift" loading="lazy" />
+          <span class="hub-card-cat">Creative Techniques</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Redscale Physics: Inverse Layer Penetration and Chromatic Shift</h2>
+          <p class="hub-card-desc">The optical and chemical physics of redscale film: reversing color negative film inside the cartridge, orange base filtration, and fiery amber urban photography.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/sang-tao-anh-doi-diptych-half-frame.html" class="hub-card" data-category="Thân máy & Kỹ thuật">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_train.jpg" alt="Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Thân máy & Kỹ thuật</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình — RfCamera Guides</h2>
+          <p class="hub-card-desc">Cách phối hợp 2 góc máy cận và toàn cảnh để tạo nên bức ảnh ghép đôi giàu cảm xúc.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/tai-sao-khong-nen-dung-app-chup-anh-doi-quyen-mang.html" class="hub-card" data-category="Tech & Privacy">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Bảo Vệ Quyền Riêng Tư: Tại Sao App Chụp Ảnh Không Nên Xin Quyền Internet? — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Tech & Privacy</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Bảo Vệ Quyền Riêng Tư: Tại Sao App Chụp Ảnh Không Nên Xin Quyền Internet? — RfCamera Guides</h2>
+          <p class="hub-card-desc">Phân tích rủi ro bảo mật khi ứng dụng máy ảnh tải ảnh cá nhân lên máy chủ đám mây và lý do kiến trúc 100% Offline của RfCamera là an toàn tuyệt đối.</p>
+          <div class="hub-card-footer mono">6 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 6 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/tangible-software-design-philosophy.html" class="hub-card" data-category="Analog Culture">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Tangible Software: Designing Digital Tools that Feel Like Mechanical Gear — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Analog Culture</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Tangible Software: Designing Digital Tools that Feel Like Mechanical Gear — RfCamera Guides</h2>
+          <p class="hub-card-desc">Why physical knobs, realistic rangefinder viewfinders, and haptic clicks matter in UI design.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/the-anatomy-of-leica-rangefinder-optics.html" class="hub-card" data-category="Optical Science">
+        <div class="hub-card-img">
+          <img src="../assets/blog/leica-m3-rangefinder.jpg" alt="The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm" loading="lazy" />
+          <span class="hub-card-cat">Optical Science</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm</h2>
+          <p class="hub-card-desc">An engineering teardown of the mechanical rangefinder mechanism: triangular optical triangulation, beam-splitters, moving mirrors, and split-image coincidence focusing.</p>
+          <div class="hub-card-footer mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 6 min read</div>
+        </div>
+      </a>
+      <a href="/blog/the-anti-ai-photography-movement.html" class="hub-card" data-category="Analog Culture">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="The Anti-AI Movement: Why Human Photographers Choose Analog Flaws — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Analog Culture</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">The Anti-AI Movement: Why Human Photographers Choose Analog Flaws — RfCamera Guides</h2>
+          <p class="hub-card-desc">Why unedited grain, dust, and optical flares represent authentic human creativity.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/thiet-ke-am-thanh-man-trap-co-hoc.html" class="hub-card" data-category="Bảo mật & Công nghệ">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Thiết Kế Âm Thanh Màn Trập: Mô Phỏng Cơ Khí Lá Thép Và Bánh Răng — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Bảo mật & Công nghệ</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Thiết Kế Âm Thanh Màn Trập: Mô Phỏng Cơ Khí Lá Thép Và Bánh Răng — RfCamera Guides</h2>
+          <p class="hub-card-desc">Bên trong bộ tổng hợp âm thanh Web Audio: tái hiện tiếng tách đanh giòn của màn trập máy ảnh.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/tone-mau-xanh-la-fuji-nhat-ban.html" class="hub-card" data-category="Công thức chụp ảnh">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_palm.jpg" alt="Tone Màu Xanh Lá Fuji: Bí Quyết Chụp Ảnh Phong Cách Nhật Bản Trong Trẻo — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Công thức chụp ảnh</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Tone Màu Xanh Lá Fuji: Bí Quyết Chụp Ảnh Phong Cách Nhật Bản Trong Trẻo — RfCamera Guides</h2>
+          <p class="hub-card-desc">Hướng dẫn chụp tone màu pastel nhẹ nhàng với bóng tối xanh ngọc bích thanh lịch.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/top-app-chup-anh-film-dep-nhat-mien-phi.html" class="hub-card" data-category="Camera Guides">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/02-selector.png" alt="Top App Chụp Ảnh Màu Film Đẹp Nhất 2026 (Miễn Phí, Không Thu Phí Thuê Bao) — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Camera Guides</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Top App Chụp Ảnh Màu Film Đẹp Nhất 2026 (Miễn Phí, Không Thu Phí Thuê Bao) — RfCamera Guides</h2>
+          <p class="hub-card-desc">Đánh giá chi tiết các ứng dụng chụp ảnh máy film analog đẹp nhất: Khung ngắm 35mm sống động, hạt grain mịn màng, không quảng cáo và mở khóa sẵn toàn bộ máy.</p>
+          <div class="hub-card-footer mono">7 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 7 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/trao-luu-chong-anh-ai-nhiep-anh-chan-that.html" class="hub-card" data-category="Văn hóa Retro">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="Trào Lưu 'Anti-AI': Khi Người Trẻ Khao Khát Những Tì Vết Chân Thật — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Văn hóa Retro</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Trào Lưu 'Anti-AI': Khi Người Trẻ Khao Khát Những Tì Vết Chân Thật — RfCamera Guides</h2>
+          <p class="hub-card-desc">Vì sao hạt grain sần sùi và vệt lóa sáng ngẫu nhiên lại trở thành biểu tượng của sự chân thành.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/travel-photography-with-film-camera-apps.html" class="hub-card" data-category="Street & Technique">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_train.jpg" alt="Travel Light: Document Your Entire Vacation with an Offline Film App — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Street & Technique</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Travel Light: Document Your Entire Vacation with an Offline Film App — RfCamera Guides</h2>
+          <p class="hub-card-desc">Leave heavy gear and airport X-ray worries behind. Learn how to capture timeless vintage travel diaries with RfCamera.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/triet-ly-thiet-ke-phan-mem-co-hoc.html" class="hub-card" data-category="Văn hóa Retro">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Triết Lý Phần Mềm Cơ Học: Khi Giao Diện Số Có Trọng Lượng Xúc Giác — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Văn hóa Retro</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Triết Lý Phần Mềm Cơ Học: Khi Giao Diện Số Có Trọng Lượng Xúc Giác — RfCamera Guides</h2>
+          <p class="hub-card-desc">Tại sao nút bấm vật lý, vạch chia quang học và phản hồi rung làm tăng cảm hứng sáng tác.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/vintage-flash-photography-portraits.html" class="hub-card" data-category="Street & Technique">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_beach.jpg" alt="Vintage Flash Photography: Achieving the 90s Editorial Party Look — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Street & Technique</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Vintage Flash Photography: Achieving the 90s Editorial Party Look — RfCamera Guides</h2>
+          <p class="hub-card-desc">Direct flash photography is back. Learn how to balance hard light with warm film tones for striking party and fashion portraits.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/vung-nen-sang-quang-hoc-highlight-shoulder.html" class="hub-card" data-category="Bảo mật & Công nghệ">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/03-color-config.png" alt="Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Bảo mật & Công nghệ</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng — RfCamera Guides</h2>
+          <p class="hub-card-desc">Phân tích đường cong nén sáng S-curve giúp bảo toàn chi tiết mây trời trên ảnh analog.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/why-gen-z-prefers-imperfect-photos.html" class="hub-card" data-category="Analog Culture">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_palm.jpg" alt="The Anti-AI Aesthetic: Why Creators Prefer Imperfect Analog Photos — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Analog Culture</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">The Anti-AI Aesthetic: Why Creators Prefer Imperfect Analog Photos — RfCamera Guides</h2>
+          <p class="hub-card-desc">In an era of hyper-filtered AI images, unedited film grain, light leaks, and honest optical flaws are the new definition of authenticity.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
+      <a href="/blog/xu-ly-anh-bang-dart-isolate-khong-giat-lag.html" class="hub-card" data-category="Bảo mật & Công nghệ">
+        <div class="hub-card-img">
+          <img src="../assets/screenshots/01-camera.png" alt="Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Bảo mật & Công nghệ</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms — RfCamera Guides</h2>
+          <p class="hub-card-desc">Kiến trúc luồng xử lý nền giúp chụp ảnh liên tục mà không làm khựng khung ngắm 60fps.</p>
+          <div class="hub-card-footer mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026 • 5 phút đọc</div>
+        </div>
+      </a>
+      <a href="/blog/y2k-ccd-digicam-renaissance.html" class="hub-card" data-category="Analog Culture">
+        <div class="hub-card-img">
+          <img src="../assets/samples/sample_traindoor.jpg" alt="Why Early 2000s Digicams with CCD Sensors Are Dominating Feeds — RfCamera Guides" loading="lazy" />
+          <span class="hub-card-cat">Analog Culture</span>
+        </div>
+        <div class="hub-card-body">
+          <h2 class="hub-card-title">Why Early 2000s Digicams with CCD Sensors Are Dominating Feeds — RfCamera Guides</h2>
+          <p class="hub-card-desc">The technical and cultural reasons behind the explosion of Y2K digital camera looks.</p>
+          <div class="hub-card-footer mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026 • 5 min read</div>
+        </div>
+      </a>
     </div>
   </div>
 

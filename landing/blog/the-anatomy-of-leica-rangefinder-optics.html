@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm - RfCamera Guides</title>
+  <meta name="description" content="An engineering teardown of the mechanical rangefinder mechanism: triangular optical triangulation, beam-splitters, moving mirrors, and split-image coincidence focusing." />
+  <meta name="keywords" content="the, anatomy, of, leica, rangefinder, optics, rfcamera, analog film, 35mm photography" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/the-anatomy-of-leica-rangefinder-optics.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/the-anatomy-of-leica-rangefinder-optics.html" />
+  <meta property="og:title" content="The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm" />
+  <meta property="og:description" content="An engineering teardown of the mechanical rangefinder mechanism: triangular optical triangulation, beam-splitters, moving mirrors, and split-image coincidence focusing." />
+  <meta property="og:image" content="https://rfcam.roycorp.xyz/assets/blog/leica-m3-rangefinder.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm" />
+  <meta name="twitter:description" content="An engineering teardown of the mechanical rangefinder mechanism: triangular optical triangulation, beam-splitters, moving mirrors, and split-image coincidence focusing." />
+  <meta name="twitter:image" content="https://rfcam.roycorp.xyz/assets/blog/leica-m3-rangefinder.jpg" />
+
+  <!-- Schema.org Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm",
+    "description": "An engineering teardown of the mechanical rangefinder mechanism: triangular optical triangulation, beam-splitters, moving mirrors, and split-image coincidence focusing.",
+    "image": "https://rfcam.roycorp.xyz/assets/blog/leica-m3-rangefinder.jpg",
+    "datePublished": "2026-08-28",
+    "dateModified": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial Team",
+      "url": "https://rfcam.roycorp.xyz/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RfCamera",
+      "url": "https://rfcam.roycorp.xyz/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://rfcam.roycorp.xyz/assets/rfcam_icon.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rfcam.roycorp.xyz/blog/the-anatomy-of-leica-rangefinder-optics.html"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0A0A0D;
+      --surface: #121217;
+      --surface-card: #181820;
+      --border: #262633;
+      --border-focus: #4F4F66;
+      --text: #F0F0F5;
+      --text-muted: #8E8EA0;
+      --text-dim: #5A5A6E;
+      --accent: #E05A47;
+      --accent-warm: #E5A93C;
+      --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px 80px;
+    }
+
+    .article-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding-top: 50px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      margin-bottom: 30px;
+      transition: color 0.15s ease;
+    }
+    .back-link:hover { color: var(--text); }
+
+    .article-header {
+      margin-bottom: 32px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .cat-badge {
+      background: rgba(224, 90, 71, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(224, 90, 71, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .mono { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted); }
+
+    h1 {
+      font-size: clamp(26px, 4.5vw, 36px);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .hero-img-box {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin-bottom: 40px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      max-height: 480px;
+    }
+    .img-caption {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .content-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-size: 16px;
+      color: #D6D6E0;
+    }
+
+    .content-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 24px;
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+
+    .content-body p {
+      margin-bottom: 6px;
+      line-height: 1.75;
+    }
+
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 16px 0 24px;
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 420px;
+      object-fit: cover;
+    }
+
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-top: 40px;
+    }
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      background: #000;
+    }
+    .author-info h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .author-info p { font-size: 13px; color: var(--text-muted); }
+
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 22px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 520px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link"><- Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Optical Science</span>
+        <span>•</span>
+        <span class="mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/blog/leica-m3-rangefinder.jpg" alt="The Optical Geometry of Rangefinders: Split-Image Coincidence in 35mm" />
+      <div class="img-caption mono">Mechanical precision: The dual optical windows of a vintage 35mm rangefinder system.</div>
+    </div>
+
+    <div class="content-body">
+      <!-- Section 1 -->
+      <h2>Triangulation Physics and the Geometric Baseline</h2>
+      <p>Unlike Single-Lens Reflex (SLR) cameras that view the world through the shooting lens via a swinging reflex mirror, a rangefinder operates as an autonomous optical triangulation instrument. The mechanism relies on two separate windows positioned along the top plate of the camera: the primary viewfinder window on the right and a secondary rangefinder window spaced several centimeters to the left. The linear distance between the centers of these two entrance apertures is defined as the physical baseline (b).</p>
+      <p>When light rays from a subject enter both windows simultaneously, the ray entering the secondary window is reflected across a rotating mirror or pivoting glass prism directly toward a semi-transparent beam-splitter located in front of the photographer's eye. By mechanically coupling this pivoting mirror to the helical focusing ring of the taking lens via a hardened cam follower arm, the device constructs a precise right-angled triangle where the subject's physical distance (D) is calculated by the angle of optical convergence.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/blog/leica-m3-rangefinder.jpg" alt="Triangulation Physics and the Geometric Baseline" />
+        <div class="img-caption mono">Satin chrome top plate housing the intricate glass prisms and mirrors of the coincidence rangefinder.</div>
+      </div>
+
+      <!-- Section 2 -->
+      <h2>Effective Baselines and the 50mm f/1.4 Focusing Threshold</h2>
+      <p>The mechanical accuracy of any rangefinder camera is governed by its Effective Base Length (EBL), calculated by multiplying the physical distance between windows by the optical magnification factor of the viewfinder eyepiece (EBL = physical baseline × magnification). A wider baseline coupled with high eyepiece magnification generates a greater angular displacement for the split image, allowing human ocular vernier acuity to resolve microscopic discrepancies in focus.</p>
+      <p>For high-speed portrait lenses such as a 50mm f/1.4 or 75mm f/1.4 wide open, where the depth of field at 1 meter is thinner than a fingernail, an EBL exceeding 55mm is mathematically required to guarantee critical focus. If the rangefinder cam arm is misaligned by even 5 microns due to an impact or worn lubricant, the coincidence patch will report perfect alignment while the actual focal plane drifts several centimeters behind the subject's eyelashes.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/blog/rangefinder-table-sunlight.jpg" alt="Effective Baselines and the 50mm f/1.4 Focusing Threshold" />
+        <div class="img-caption mono">Natural window light accentuating the physical dials and knurled focus helical.</div>
+      </div>
+
+      <!-- Section 3 -->
+      <h2>Translating Mechanical Triangulation into Touchscreen Software</h2>
+      <p>Building RfCamera meant solving a fundamental philosophical question: how do you honor the visceral tactility of a mechanical rangefinder on a smooth smartphone screen? We rejected flat digital autofocus squares in favor of recreating the actual spatial experience of looking through optical glass. Outside the 35mm frame lines, the scene remains visible but subtly dimmed and softly blurred, allowing photographers to monitor emerging human drama before it steps into the frame.</p>
+      <p>When adjusting the manual focal tray (26mm / 35mm / 50mm), the interface triggers fine micro-haptic clicks timed to the virtual helical teeth, while the acoustics replicate the quiet, breath-like sweep of a rubberized cloth focal-plane shutter, returning intentionality and contemplative joy to mobile image-making.</p>
+
+      <div class="inline-img-card">
+        <img src="../assets/screenshots/01-camera.png" alt="Translating Mechanical Triangulation into Touchscreen Software" />
+        <div class="img-caption mono">RfCamera's live rangefinder viewfinder recreates the unobstructed environmental perspective.</div>
+      </div>
+    </div>
+
+    <!-- Author Card -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
