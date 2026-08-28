@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms — RfCamera Guides</title>
+  <meta name="description" content="Kiến trúc luồng xử lý nền giúp chụp ảnh liên tục mà không làm khựng khung ngắm 60fps." />
+  <meta name="keywords" content="xu, ly, anh, bang, dart, isolate, khong, giat, lag, nhiep anh film, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/xu-ly-anh-bang-dart-isolate-khong-giat-lag.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/xu-ly-anh-bang-dart-isolate-khong-giat-lag.html" />
+  <meta property="og:title" content="Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms" />
+  <meta property="og:description" content="Kiến trúc luồng xử lý nền giúp chụp ảnh liên tục mà không làm khựng khung ngắm 60fps." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms" />
+  <meta name="twitter:description" content="Kiến trúc luồng xử lý nền giúp chụp ảnh liên tục mà không làm khựng khung ngắm 60fps." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms",
+    "description": "Kiến trúc luồng xử lý nền giúp chụp ảnh liên tục mà không làm khựng khung ngắm 60fps.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Bảo mật & Công nghệ</span>
+        <span>•</span>
+        <span class="mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026</span>
+      </div>
+      <h1>Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/screenshots/01-camera.png" alt="Xử Lý Ảnh Bằng Dart Isolate: Tráng Ảnh 12MP Trong 200ms" />
+      <div class="img-caption mono">Photo Study: Nghiên cứu thị giác: Xử Lý Ảnh Bằng Dart Isolate</div>
+    </div>
+
+    <div class="content-body">
+      <p class="lead-p">Mỗi khung hình trên kính ngắm Flutter đòi hỏi hoàn thành việc kết xuất trong vòng 16.6 mili-giây để duy trì độ mượt 60fps ổn định. Việc đẩy toàn bộ chu trình giải mã và tráng ảnh 12MP sang một Dart isolate độc lập thông qua hàm compute() giúp ứng dụng giải phóng hoàn toàn luồng giao diện chính, cho phép bạn bấm chụp liên tục mà không bao giờ gặp hiện tượng giật đứng màn hình.</p>
+
+      <h2>Giới hạn 16.6ms của UI Thread và cái bẫy xử lý ảnh đồng bộ</h2>
+      <p>Trong kiến trúc đơn luồng (single-thread event loop) của Dart, toàn bộ các tác vụ bao gồm tiếp nhận thao tác chạm của người dùng, chạy hoạt họa chuyển động, đồng bộ luồng camera từ phần cứng và vẽ lại giao diện (widget rendering) đều chia sẻ chung một không gian thực thi duy nhất gọi là main isolate hay UI thread. Để màn hình đạt chuẩn chuyển động mượt mà 60 khung hình trên giây (fps), hệ thống chỉ có đúng 16.6 mili-giây cho mỗi chu kỳ khung hình. Trên các dòng điện thoại cao cấp có màn hình tần số quét 120Hz ProMotion, con số này bị rút ngắn xuống mức cực kỳ khắc nghiệt: 8.3 mili-giây. Bất kỳ tác vụ nào chiếm giữ CPU lâu hơn khung thời gian này đều khiến hệ điều hành bỏ qua (drop) một hoặc nhiều khung hình tiếp theo, tạo nên hiện tượng giật lag rất khó chịu.</p>
+      <p>Một bức ảnh chụp ra từ cảm biến 12MP tiêu chuẩn có độ phân giải xấp xỉ 4032 x 3024 điểm ảnh, tương đương hơn 12 triệu điểm ảnh thô cần xử lý. Khi áp dụng các hiệu ứng phim tương tự thực tế — từ giải mã luồng byte JPEG, xoay đúng chiều theo thông số EXIF, cắt khung tỉ lệ 3:2, chạy thuật toán uốn cong méo hình quang học, nhân ma trận màu 5x5, hòa trộn hạt grain đến việc nén ngược lại thành file ảnh lưu trữ — tổng khối lượng phép toán số học lên tới hàng trăm triệu phép tính. Nếu bạn thực thi chuỗi logic này trực tiếp trên luồng giao diện chính, CPU sẽ bị khóa chặt trong khoảng 200 đến 350 mili-giây. Kính ngắm sẽ khựng đứng hoàn toàn, tiếng hoạt họa lá khẩu đóng mở bị giật cục, và người chụp hoàn toàn mất đi cơ hội bắt trọn khoảnh khắc vàng kế tiếp trên đường phố.</p>
+
+      <h2>Cơ chế bộ nhớ cô lập và cấu trúc truyền dữ liệu BakeRequest</h2>
+      <p>Khác với mô hình đa luồng chia sẻ bộ nhớ (shared-memory multithreading) trong các ngôn ngữ như C++ hay Java nơi các luồng cùng truy cập vào một vùng nhớ heap chung, Dart vận hành các luồng dưới dạng những ốc đảo hoàn toàn biệt lập mang tên Isolate. Mỗi isolate sở hữu vùng nhớ heap riêng biệt và một bộ thu gom rác (garbage collector) độc lập. Hai isolate không thể trực tiếp đọc hay ghi vào biến số của nhau; chúng chỉ có thể tương tác thông qua cơ chế gửi nhận bản tin (message passing). Đặc điểm kiến trúc này loại bỏ hoàn toàn các lỗi xung đột tài nguyên hay khóa chết (deadlock), nhưng lại đặt ra bài toán nghiêm ngặt về việc chuẩn hóa dữ liệu khi gửi qua ranh giới luồng.</p>
+      <p>Các đối tượng giao diện người dùng quen thuộc trong Flutter như ui.Image, ColorFiltered hay các lớp chứa đối tượng Color không thể truyền trực tiếp qua cổng giao tiếp giữa các isolate. Để giải quyết rào cản này, hệ thống RfCamera đóng gói toàn bộ tham số cần thiết vào một cấu trúc dữ liệu thuần túy mang tên BakeRequest. Trong tệp mã nguồn core/bake.dart, lớp BakeRequest chỉ chứa các mảng byte thô kiểu Uint8List cùng các biến số nguyên và số thực dấu phẩy động cơ bản. Mọi kết cấu tấm phủ như hạt grain từ phim scan thật, vệt lọt sáng (light leak) hay vết bụi xước (dust plate) đều được giải nén sẵn từ luồng chính thành mảng byte thô kèm độ mờ alpha trước khi đóng gói vào yêu cầu tráng ảnh. Isolate xử lý hoàn toàn không phụ thuộc vào bất kỳ thành phần đồ họa trừu tượng nào của Flutter Engine.</p>
+
+      <h2>Đường ống tráng ảnh bakePhoto bên trong luồng tính toán nền</h2>
+      <p>Hàm thực thi cốt lõi bakePhoto(BakeRequest r) sử dụng cơ chế compute(_bake, r) của Flutter. Khi người dùng nhấn nút bấm chụp màn trập cơ học, ứng dụng phát ra âm thanh phản hồi xúc giác ngay lập tức và gửi BakeRequest vào luồng nền, cho phép luồng chính quay lại vẽ kính ngắm thời gian thực ở tốc độ 60fps mà không chậm trễ một mili-giây nào. Bên trong hàm cô lập _bake, đường ống xử lý hình ảnh tái hiện chính xác tuần tự các lớp bộ lọc quang học từng xuất hiện trên khung ngắm: từ chỉnh méo hình thấu kính, nhân ma trận màu sắc, nén sáng highlight shoulder, tạo viền quang sai halation, thêm tia lóe ngôi sao (star flare), đến phủ kết cấu phim thật và đóng dấu ngày tháng bảy đoạn.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Công Đoạn Xử Lý</th>
+              <th>Thời Gian Ước Tính</th>
+              <th>Tác Động Nếu Chạy Trên UI Thread</th>
+              <th>Giải Pháp Xử Lý Trong Isolate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Giải mã JPEG gốc (12MP)</td>
+              <td>60 - 90 ms</td>
+              <td>Rơi 4 - 6 khung hình liên tiếp</td>
+              <td>Giải mã nền qua thư viện image thành đối tượng src</td>
+            </tr>
+            <tr>
+              <td>Quang sai & méo hình quang học</td>
+              <td>40 - 70 ms</td>
+              <td>Kính ngắm camera bị đông cứng</td>
+              <td>Tính toán ánh xạ tọa độ pixel UV trên mảng tuyến tính</td>
+            </tr>
+            <tr>
+              <td>Ma trận màu & nén sáng shoulder</td>
+              <td>25 - 40 ms</td>
+              <td>Gây trễ thao tác bấm chụp kế tiếp</td>
+              <td>Áp dụng bảng tra cứu LUT 256 giá trị cho ba kênh RGB</td>
+            </tr>
+            <tr>
+              <td>Phủ hạt grain & vết xước phim thật</td>
+              <td>30 - 50 ms</td>
+              <td>Khựng hoạt họa cửa trập cơ học</td>
+              <td>Hòa trộn trực tiếp mảng byte plate theo kênh alpha</td>
+            </tr>
+            <tr>
+              <td>Nén ảnh thành file JPEG cuối</td>
+              <td>45 - 65 ms</td>
+              <td>Ứng dụng đơ thao tác điều khiển</td>
+              <td>Nén mức chất lượng 94 và lưu thẳng vào thư mục cục bộ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Nhờ việc cô lập hoàn toàn chuỗi thao tác nặng nhọc này, thời gian xử lý khoảng 200 đến 300 mili-giây diễn ra âm thầm phía sau hậu trường. Khi isolate hoàn tất việc ghi đĩa hoặc trả về mảng byte kết quả, người chụp đã có thể canh góc và bấm liên tiếp các bức ảnh tiếp theo trên đường phố mà máy ảnh không bao giờ gặp tình trạng nghẽn hàng đợi (shutter queue stall).</p>
+
+      <h2>Tối ưu ma trận màu và thuật toán giảm tải tính toán 16 lần</h2>
+      <p>Ngay cả khi đã chạy trên một isolate riêng biệt, việc tối ưu hóa hiệu năng tính toán vẫn mang tính sống còn nhằm tiết kiệm pin thiết bị và tránh hiện tượng quá nhiệt chip khi người dùng chụp liên tục nhiều tấm. Một trong những cải tiến quan trọng nhất trong bake.dart nằm ở thuật toán tạo mặt nạ vùng sáng cho hiệu ứng tán sắc đỏ halation và tia lóe star flare. Thông thường, một bộ lọc làm mờ (blur) trên diện rộng đối với ảnh 12MP đòi hỏi hàng chục phép tích chập (convolution) trên từng điểm ảnh, tiêu tốn lượng tài nguyên CPU khổng lồ.</p>
+      <p>Đội ngũ kỹ thuật đã giải quyết bài toán này bằng cách triển khai hằng số co bước lưới _maskStep = 4. Bản chất của hiệu ứng tán sắc vùng sáng là việc trích xuất các điểm ảnh vượt ngưỡng độ sáng rồi phủ một lớp mờ diện rộng (low-pass filter). Thay vì tính toán trên toàn bộ 12 triệu điểm ảnh, thuật toán co nhỏ mặt nạ xuống kích thước một phần tư theo cả chiều ngang lẫn chiều dọc bằng phép tính trung bình ô lưới 4x4. Việc tạo mặt nạ trên lưới kích thước thu nhỏ này rẻ hơn tới 16 lần về mặt chi phí tính toán so với lưới điểm ảnh gốc. Sau khi xử lý xong độ mờ trên lưới thu nhỏ, mảng dữ liệu được nội suy song tuyến (bilinear resampling) ngược lại kích thước khung hình ban đầu. Kết quả thị giác hoàn toàn tương đương với việc làm mờ trên toàn khung hình nhưng giúp tiết kiệm tới 93% thời gian xử lý của khâu tạo viền sáng.</p>
+      <p>Bên cạnh đó, để giữ thời gian xử lý luôn ổn định bất kể độ phân giải của cảm biến máy ảnh, tham số maxEdge được khống chế ở mức 2048 điểm ảnh cho cạnh dài nhất đối với các tác vụ tráng ảnh thường nhật. Nếu chiều dài của ảnh gốc vượt quá ngưỡng này, hàm img.copyResize sẽ tự động hạ tỉ lệ bằng giải thuật nội suy trung bình (average interpolation). Các phép toán nén sáng highlight shoulder cũng được thay thế hoàn toàn từ phép tính số mũ dấu phẩy động sang bảng tra cứu 256 phần tử Uint8List(256), loại bỏ mọi phép tính dư thừa khi lặp qua hàng triệu điểm ảnh.</p>
+
+      <h2>Kiến trúc lưu trữ ngoại tuyến cục bộ và không xin quyền mạng</h2>
+      <p>Toàn bộ quá trình chụp và tráng ảnh trong RfCamera diễn ra hoàn toàn khép kín trên bộ nhớ phần cứng của thiết bị di động. Ứng dụng không khai báo bất kỳ quyền truy cập mạng Internet nào trong tệp cấu hình nền tảng (AndroidManifest.xml hoặc Info.plist). Bức ảnh sau khi được isolate hoàn tất nén ở mức chất lượng JPEG 94 sẽ được ghi thẳng vào thư mục tài liệu nội bộ của ứng dụng (app documents directory) bằng các hàm xuất nhập tệp tin tiêu chuẩn của hệ điều hành. Cơ chế lưu trữ trực tiếp này không yêu cầu cấp quyền truy cập toàn bộ thư viện ảnh chung (photos permission) phức tạp, giúp người dùng hoàn toàn làm chủ dữ liệu thị giác cá nhân của mình.</p>
+      <p>Việc loại bỏ hoàn toàn các yêu cầu kết nối máy chủ đám mây, các đoạn mã thu thập dữ liệu hành vi (telemetry) hay cơ chế xác thực tài khoản đăng nhập giúp quy trình tráng ảnh đạt được độ tin cậy cơ học tuyệt đối. Bạn không bao giờ phải lo lắng về việc ảnh bị chậm trễ do sóng viễn thông yếu, dung lượng gói cước 4G cạn kiệt hay máy chủ dịch vụ ngoại vi gặp sự cố gián đoạn. Mỗi bức ảnh film bạn ghi lại trên phố đều được sinh ra, tráng màu và lưu trữ bằng chính sức mạnh tính toán của vi xử lý nằm trong túi áo của bạn, đảm bảo tính riêng tư bền vững và sự tự do tuyệt đối trong mọi chuyến đi.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

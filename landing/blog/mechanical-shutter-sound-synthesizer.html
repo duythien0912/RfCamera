@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio — RfCamera Guides</title>
+  <meta name="description" content="A sound engineering breakdown of mechanical camera acoustics, spring snaps, and gear clicks." />
+  <meta name="keywords" content="mechanical, shutter, sound, synthesizer, film photography, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/mechanical-shutter-sound-synthesizer.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/mechanical-shutter-sound-synthesizer.html" />
+  <meta property="og:title" content="How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio" />
+  <meta property="og:description" content="A sound engineering breakdown of mechanical camera acoustics, spring snaps, and gear clicks." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio" />
+  <meta name="twitter:description" content="A sound engineering breakdown of mechanical camera acoustics, spring snaps, and gear clicks." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio",
+    "description": "A sound engineering breakdown of mechanical camera acoustics, spring snaps, and gear clicks.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Tech & Privacy</span>
+        <span>•</span>
+        <span class="mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/screenshots/01-camera.png" alt="How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio" />
+      <div class="img-caption mono">Photo Study: Visual study: How We Synthesized 6 Physical Leaf Shutter Sounds in Web Audio</div>
+    </div>
+
+    <div class="content-body">
+      <p class="lead-p">Every RfCamera shutter click is synthesized from layered recordings of real mechanical shutter behavior, not a single stock sound effect copied across twelve cameras. Getting six distinct camera mechanisms to sound physically correct meant treating each one as a separate acoustic event with its own spring tension, blade count, and mirror behavior.</p>
+
+      <h2>Why Shutter Sound Isn't Decoration</h2>
+      <p>Mechanical film cameras give you almost no visual feedback at the moment of exposure. A rangefinder like a Leica M has no mirror to flip up and no viewfinder blackout — you compose through a separate optical window that never goes dark, so the only signal that the shutter actually fired is the sound and the small jolt of the release button under your finger. Photographers who grew up shooting these cameras learned to read that sound the way a driver reads engine noise: a clean, short click meant a fast shutter speed fired correctly, a longer sustained sound meant a slow speed was open for longer, and a sound that felt wrong — sluggish, uneven, or doubled — often meant the mechanism needed servicing before the next roll.</p>
+      <p>That auditory feedback loop is part of why experienced film shooters can tell you a rough shutter speed from the sound alone, and part of why a fully silent digital shutter feels disorienting to anyone who learned photography on mechanical gear. Rebuilding that feedback loop in a phone app matters for the same reason it mattered decades ago: without it, you press a button and get a photo with no sense of the mechanism that made it, and film photography is largely about feeling connected to that mechanism. The sound is not decoration layered on top of the photo — it's the only real-time confirmation a mechanical camera ever gave you, and reproducing it accurately is what makes a digital shutter simulation feel like an actual camera instead of a screen with a camera icon on it.</p>
+
+      <h2>Anatomy of a Leaf Shutter's Click</h2>
+      <p>A leaf shutter, the kind found in most rangefinders and older folding cameras, is built from a small ring of thin metal blades — usually five to eight of them — arranged around the lens opening. Pressing the shutter release does two distinct mechanical things in rapid succession: a spring-loaded mechanism snaps the blades open to whatever aperture you have set, holds that opening for a precisely timed interval controlled by a separate escapement or electronic timer, and then a second spring snaps the blades shut again. Each of those two events produces its own transient sound — a short, sharp metallic snap on opening, a brief interval of near silence while the blades hold position, and a second snap on closing that is usually slightly duller than the first because the closing spring works against more residual tension.</p>
+      <p>At fast shutter speeds, like 1/500 of a second, those two snaps happen close enough together that they blur into what sounds like a single click. At slow speeds, like 1/8 or 1/15 of a second, the gap between the opening snap and closing snap becomes audible as a distinct pause, which is part of why slow shutter speeds on old cameras sound noticeably different from fast ones rather than just quieter. The cocking lever adds a third sound entirely separate from the exposure itself — winding the film and re-tensioning the shutter spring produces a ratcheting or clicking sound of its own, which is why a single shutter sound on an old mechanical camera is really three or four overlapping mechanical events, not one.</p>
+
+      <h2>Six Mechanisms, Six Signatures</h2>
+      <p>Not every mechanical camera sounds the same, and the differences come from real structural choices rather than arbitrary variation. A rangefinder's leaf shutter sits inside the lens itself, close to a thin metal barrel that resonates differently than a camera body. A single-lens reflex has to move a mirror out of the light path before the shutter can fire, adding a second, heavier mechanical event on top of the shutter blades. A twin-lens reflex uses a leaf shutter too, but its winding mechanism is geared differently, adding a distinct crank-like sound around the exposure itself. Building six accurate signatures meant treating each of these as its own small machine rather than pitch-shifting one generic click across every camera profile in the app.</p>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Mechanism</th><th>Primary Sound Source</th><th>Character</th></tr>
+          <tr><td>Rangefinder leaf shutter</td><td>Blade spring snap</td><td>Soft, short, almost muted</td></tr>
+          <tr><td>Focal-plane SLR</td><td>Mirror flip + blade travel</td><td>Sharp double-thud, mechanical clack</td></tr>
+          <tr><td>Twin-lens reflex</td><td>Leaf shutter + crank gearing</td><td>Rounded click plus a soft mechanical whir</td></tr>
+          <tr><td>Box camera</td><td>Single spring-loaded blade</td><td>Dull, low-pitched thunk</td></tr>
+          <tr><td>Half-frame</td><td>Fast blade cycle, smaller opening</td><td>Light, quick snap, higher pitch</td></tr>
+          <tr><td>Medium-format leaf shutter</td><td>Larger blades, heavier spring</td><td>Deeper, longer snap with more decay</td></tr>
+        </table>
+      </div>
+      <p>The size of the aperture opening turns out to matter as much as the mechanism type. Medium-format leaf shutters have to move physically larger blades across a bigger lens opening, so their spring has to do more mechanical work, and that extra work shows up as a lower-pitched, longer-decaying sound compared to a 35mm leaf shutter doing the same job on a smaller opening. Half-frame cameras go the other direction — a smaller frame area meant manufacturers could use a lighter, faster-cycling mechanism, which produces a noticeably higher-pitched and shorter sound than a full-frame camera from the same era. None of these differences are cosmetic tuning; they come directly from the physical size and mass of the metal doing the moving, which is why matching each camera to its correct mechanism sound mattered more than making six sounds that were merely different from each other.</p>
+
+      <h2>Building the Sound From Layers</h2>
+      <p>Getting a single click to sound mechanically real means building it from several short layered events rather than recording one sound and calling it done. A convincing shutter sound needs at minimum three separate layers: a sharp, high-frequency transient for the spring release itself, a lower and slightly longer body for the blade travel or mirror movement, and a very short tail that represents mechanical resonance in the camera body as the vibration settles. Each layer needs its own envelope — how fast it reaches full volume and how it fades — because a spring snap has an almost instant attack and a very fast decay, while a mirror slap has a slightly slower attack and a longer, rounder decay as the larger mass of the mirror mechanism settles back into place.</p>
+      <p>Getting the relative timing between these layers wrong is the fastest way to make a shutter sound feel fake: if the blade-travel layer starts even a few milliseconds before the spring-release transient, the ear picks up the mismatch immediately, even if the listener couldn't describe what's wrong. The winding or cocking sound that follows a shot is built the same way, as its own separate layered event rather than a tail bolted onto the shutter click, because on a real camera those two actions happen at clearly different moments — you hear the shutter fire, then you hear the film advance separately as you cock the lever for the next frame.</p>
+
+      <h2>Why It Plays Offline, Every Time</h2>
+      <p>RfCamera has no network permission at all — it does not declare INTERNET access in its app manifest, which means it cannot make a network request even if some future update tried to. Every shutter sound the app plays is a bundled asset stored on your device from the moment you install it, not a file streamed from a server on demand. That matters for a sound that's supposed to fire the instant you press the shutter button: a sound pulled over a network connection, even a fast one, carries enough latency and jitter to break the illusion of a physical mechanism responding to your finger. A camera that plays its shutter sound a hundred milliseconds late doesn't feel mechanical, it feels laggy.</p>
+      <p>Keeping every sound asset local also means the experience doesn't degrade on a train, on a hike outside cell coverage, or anywhere else a travel photographer is likely to actually be using a camera app. This offline-first approach is consistent with how the rest of the app handles photography too — the same on-device processing that bakes grain, color, and optical distortion into your saved JPEG without uploading anything also applies to sound, and the two systems share the same basic principle: nothing about using this camera should depend on a connection you might not have when you're standing in a market in a country where your data plan doesn't work.</p>
+
+      <h2>Matching Sound to the Shot</h2>
+      <p>Sound in RfCamera serves as a direct functional cue rather than decoration bolted onto a generic shutter button; it is tied to which of the twelve camera profiles you have selected, so switching from a rangefinder profile to a medium-format profile changes the sound you hear along with the optical characteristics of your photo. That pairing matters for building an accurate mental model of what each camera profile is supposed to represent. A photographer who has actually handled a twin-lens reflex expects to hear that specific mechanical event, not a generic camera-app beep, and getting that expectation right does more for the feeling of authenticity than almost any visual tweak could.</p>
+      <p>The sound layer runs independently of the image processing pipeline — selecting a shutter sound has no effect on the grain, color matrix, or shader applied to your photo, and the two systems are matched by design choice rather than by any technical dependency between them. This separation is deliberate: it means the six shutter sounds can be refined, retimed, or rebalanced without touching the film simulation pipeline at all, and it means a future camera profile added to the app can pair an existing sound with a new optical look, or vice versa, without either system needing to change. The result, when it works, is a shutter press that feels like a specific piece of mechanical equipment rather than a stock effect, which is the entire point of building six distinct sound events instead of one that gets reused everywhere.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc — RfCamera Guides</title>
+  <meta name="description" content="Cách tận dụng tầm nhìn bao quát ngoài khung ngắm để dự đoán chuyển động chủ thể." />
+  <meta name="keywords" content="nguyen, tac, bo, cuc, khung, ngam, rangefinder, nhiep anh film, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/nguyen-tac-bo-cuc-khung-ngam-rangefinder.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/nguyen-tac-bo-cuc-khung-ngam-rangefinder.html" />
+  <meta property="og:title" content="Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc" />
+  <meta property="og:description" content="Cách tận dụng tầm nhìn bao quát ngoài khung ngắm để dự đoán chuyển động chủ thể." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc" />
+  <meta name="twitter:description" content="Cách tận dụng tầm nhìn bao quát ngoài khung ngắm để dự đoán chuyển động chủ thể." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc",
+    "description": "Cách tận dụng tầm nhìn bao quát ngoài khung ngắm để dự đoán chuyển động chủ thể.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Kỹ thuật nhiếp ảnh</span>
+        <span>•</span>
+        <span class="mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026</span>
+      </div>
+      <h1>Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/samples/sample_street.jpg" alt="Bố Cục Khung Ngắm Rangefinder: 5 Nguyên Tắc Bắt Khoảnh Khắc Thần Tốc" />
+      <div class="img-caption mono">Photo Study: Nghiên cứu thị giác: Bố Cục Khung Ngắm Rangefinder</div>
+    </div>
+
+    <div class="content-body">
+      <p class="lead-p">Khung ngắm rangefinder không nhìn qua ống kính — nó là hệ quang học riêng, tách biệt với đường sáng đi vào phim. Bạn luôn thấy nhiều hơn những gì máy sẽ ghi lại, và khoảng dư đó chính là công cụ để đón đầu chuyển động. Năm nguyên tắc dưới đây khai thác đúng đặc điểm ấy thay vì biến rangefinder thành một chiếc SLR nhìn xuyên ống kính.</p>
+      <h2>Parallax Và Khung Ngắm Sáng: Vì Sao Ảnh Không Giống Như Bạn Thấy</h2>
+      <p>Trên một chiếc SLR, bạn nhìn thẳng qua ống kính nhờ gương lật 45 độ, nên khung ngắm luôn khớp chính xác với những gì phim sẽ ghi. Rangefinder hoạt động khác hẳn: khung ngắm là một cửa sổ quang học độc lập, đặt lệch so với trục ống kính một khoảng gọi là đường nền (rangefinder base), thường dao động 35-70mm tùy máy — trên Leica M là khoảng 69mm, trên các máy compact rẻ hơn như Canonet hay Olympus 35 RC chỉ khoảng 30-40mm. Vì hai hệ quang học lệch trục, ảnh bạn thấy trong khung ngắm và ảnh ống kính thu được sẽ lệch nhau theo chiều dọc và ngang, đặc biệt rõ khi chụp gần. Hiện tượng này gọi là parallax. Để bù trừ, gần như mọi rangefinder cơ đều có khung dây sáng (bright frame lines) di chuyển tự động khi bạn xoay vòng lấy nét: một cặp vạch phụ xuất hiện dịch xuống và sang một bên khi khoảng cách lấy nét ngắn lại. Ở khoảng cách trên 3m, độ lệch gần như không đáng kể và bạn có thể phớt lờ nó. Nhưng khi chụp chân dung ở 0.7-1m, sai số parallax có thể khiến đỉnh đầu chủ thể bị cắt mất nếu bạn canh theo khung dây chính thay vì khung phụ đã bù trừ. Quy tắc thực hành: luôn nhìn vào cặp vạch phụ khi khoảng cách dưới 1.5m, và nhớ rằng khung ngắm rangefinder không bao giờ nói dối bạn về việc máy nhìn thấy gì — nó chỉ cần bạn đọc đúng vạch đang hoạt động tại thời điểm bấm máy.</p>
+      <h2>Nhìn Ra Ngoài Khung Hình: Kỹ Thuật Dự Đoán Chuyển Động Của Rangefinder</h2>
+      <p>Điểm khác biệt lớn nhất giữa khung ngắm rangefinder và khung ngắm SLR không phải độ sáng hay độ nét, mà là vùng nhìn thấy. Một SLR chỉ cho bạn thấy chính xác vùng ảnh sẽ chụp — không hơn không kém — vì bạn đang nhìn qua chính ống kính đó. Rangefinder thì ngược lại: khung dây sáng chỉ đánh dấu vùng sẽ được ghi lại, nhưng toàn bộ ô kính ngắm rộng hơn nhiều, thường cho bạn thấy thêm 15-25% diện tích xung quanh khung hình thật, tùy máy và tiêu cự ống kính đang gắn. Với ống 35mm trên thân Leica M hay Bessa, phần rìa nhìn thấy ngoài khung dây có thể tương đương trường nhìn của một ống 28mm. Khoảng dư này không phải sai sót thiết kế — nó là lý do các nhiếp ảnh gia đường phố từ thập niên 1950 chọn rangefinder thay vì SLR để chụp chuyển động bất ngờ. Bạn nhìn thấy người đi bộ, xe đạp hay con chó chạy từ ngoài khung dây tiến vào, ước lượng quỹ đạo và tốc độ của họ trước khi họ thật sự bước vào vùng sẽ được ghi hình, rồi bấm máy đúng khoảnh khắc họ chạm vạch mà bạn đã định sẵn trong đầu. Kỹ thuật này đòi hỏi bạn ngừng phản ứng theo kiểu "thấy rồi mới bấm" — vốn luôn trễ vài phần mười giây do thời gian phản xạ — và chuyển sang bấm máy dự đoán, tức là nhắm đúng thời điểm chủ thể sẽ ở vị trí mong muốn chứ không phải vị trí hiện tại. Kết hợp với màn trập cơ không gương lật của rangefinder — vốn không có độ trễ do gương hất lên như SLR — độ chính xác thời điểm của bạn tăng lên đáng kể khi luyện tập đủ lâu để mắt quen với việc đọc chuyển động ngoài khung dây.</p>
+      <h2>Lấy Nét Bằng Thước Đo Khoảng Cách: Zone Focusing Và Khoảng Cách Siêu Nét</h2>
+      <p>Rangefinder cơ không lấy nét tự động và không có màn hình xem trước độ sâu trường ảnh như máy số hiện đại — bạn lấy nét bằng cách xoay vòng trên ống kính cho đến khi hai hình ảnh chồng (double image) trong ô ngắm khớp làm một, hoặc bỏ qua bước đó hoàn toàn bằng zone focusing. Zone focusing nghĩa là đặt trước khoảng cách lấy nét và khép khẩu đủ sâu để một vùng khoảng cách rộng đều nét, rồi chụp ngay khi chủ thể bước vào vùng đó mà không cần chạm vòng lấy nét lần nữa. Hầu hết ống kính rangefinder cơ có thang khoảng cách in trên thân (feet hoặc mét) cùng các vạch độ sâu trường ảnh (DOF scale) đối xứng hai bên vạch lấy nét trung tâm — mỗi cặp vạch tương ứng với một giá trị khẩu độ. Khi bạn khép khẩu xuống f/8 hoặc f/11, khoảng cách giữa hai vạch f/8 trên thang đó chính là vùng ảnh rõ nét. Với ống 35mm ở khẩu f/8, khoảng cách sinh nét thực tế trải rộng từ khoảng 2.5m đến vô cực nếu bạn lấy nét trước ở khoảng 5m — con số này gọi là khoảng cách siêu nét (hyperfocal distance), điểm lấy nét mà tại đó vùng nét kéo dài từ một nửa khoảng cách đó cho tới vô cực. Đây là lý do các nhiếp ảnh gia đường phố kinh điển theo đuổi phong cách chụp nhanh thường để ống kính cố định ở f/8, 5m suốt buổi chụp, chỉ tập trung vào bố cục và thời điểm thay vì loay hoay lấy nét từng khung hình. Bảng dưới đây là một thiết lập zone-focus cụ thể cho chụp đường phố ban ngày, trời có mây, dùng phim ISO 400 — bạn có thể dùng làm điểm khởi đầu rồi điều chỉnh theo ánh sáng thực tế nơi mình đứng.</p>
+      <div class="recipe-callout">
+        <div class="recipe-callout-header">
+          <span>Thiết Lập Zone-Focus Đường Phố</span>
+          <span class="mono">Trời Nhiều Mây, ISO 400</span>
+        </div>
+        <div class="recipe-grid">
+          <div class="recipe-cell"><span>Khẩu Độ</span><strong>f/8</strong></div>
+          <div class="recipe-cell"><span>Lấy Nét Trước Ở</span><strong>5m (Nét 2.5m → ∞)</strong></div>
+          <div class="recipe-cell"><span>Tốc Độ Màn Trập</span><strong>1/250s</strong></div>
+          <div class="recipe-cell"><span>ISO Phim</span><strong>400</strong></div>
+        </div>
+      </div>
+      <h2>Bố Cục Trong Khung Dây Sáng: Đường Dẫn, Tỷ Lệ Ba Phần Và Không Gian Âm</h2>
+      <p>Vì rangefinder không có gương lật, khung ngắm của bạn không bao giờ tối đen giữa lúc bấm máy như trên SLR — bạn nhìn thấy khoảnh khắc màn trập mở và đóng, không bị gián đoạn hình ảnh dù chỉ một phần mười giây. Điều này cho phép bạn bố cục liên tục, theo dõi chủ thể di chuyển qua khung dây sáng mà không mất dấu vị trí của họ giữa các lần bấm. Hãy dùng chính khung dây sáng làm lưới bố cục tạm thời: hầu hết khung dây rangefinder hình chữ nhật có tỷ lệ gần 2:3, bạn có thể tưởng tượng chia nó thành ba phần bằng nhau theo cả chiều ngang và dọc, đặt các điểm giao nhau làm nơi neo chủ thể chính thay vì luôn chính giữa khung. Khi chụp dự đoán theo nguyên tắc ở phần trên, hãy cố tình chừa nhiều không gian âm ở phía chủ thể sắp di chuyển tới — nếu người đi bộ đang tiến từ trái sang phải, đặt họ lệch về một phần ba bên trái khung để phần không gian bên phải trở thành hướng chuyển động, tạo cảm giác họ đang bước vào khung hình chứ không phải bước ra khỏi nó. Đường dẫn trong môi trường đô thị — mép vỉa hè, bóng đổ dài buổi chiều, đường ray, hàng cột đèn — là công cụ mạnh để dẫn mắt người xem từ rìa khung vào đúng vị trí chủ thể đang tiến vào. Vì bạn nhìn thấy các yếu tố này liên tục qua khung ngắm sáng mà không bị gián đoạn, bạn có đủ thời gian nhận diện một đường dẫn tốt trước khi chủ thể xuất hiện, thay vì phát hiện ra nó sau khi đã bấm máy và xem lại ảnh.</p>
+      <h2>Nhịp Bấm Máy: Màn Trập Êm, Tốc Độ Tay Và Quy Tắc Sunny 16</h2>
+      <p>Rangefinder cơ dùng màn trập lá (leaf shutter) đặt trong thân ống kính hoặc màn trập vải/kim loại chạy ngang trong thân máy, cả hai đều không cần gương lật lên trước khi phơi sáng. Kết quả là tiếng bấm máy chỉ là một tiếng "tách" khẽ, êm hơn nhiều so với tiếng "clack" của gương SLR va vào khung đỡ. Sự im lặng này không chỉ là chi tiết kỹ thuật thú vị — nó cho phép bạn chụp gần chủ thể trong không gian yên tĩnh như quán cà phê, thư viện hay đám đông đang tập trung mà không khiến ai giật mình quay lại nhìn máy ảnh. Kết hợp với zone focusing, bạn hiếm khi cần đưa máy lên ngang mắt quá lâu, giảm thêm sự chú ý không mong muốn. Về tốc độ màn trập cầm tay, quy tắc kinh điển là giữ tốc độ chụp không chậm hơn nghịch đảo của tiêu cự ống kính — với ống 35mm, đừng chụp chậm hơn 1/30s nếu không có chống rung, còn khi chụp chuyển động đi bộ bình thường, 1/125s đến 1/250s đủ đóng băng dáng đi mà không gây rung tay. Khi không mang theo máy đo sáng hoặc đơn giản là muốn giữ nhịp chụp nhanh, quy tắc Sunny 16 vẫn là công cụ đáng tin cậy nhất: dưới trời nắng gắt không mây, khép khẩu f/16 và đặt tốc độ màn trập bằng nghịch đảo ISO đang dùng — phim ISO 400 thì chụp ở 1/400s (làm tròn 1/500s). Trời nhiều mây nhẹ, mở thêm một khẩu xuống f/11; trời âm u hoàn toàn, mở tới f/8 hoặc f/5.6. Vì các con số này cố định theo điều kiện sáng chứ không phụ thuộc máy đo, bạn có thể đặt sẵn khẩu và tốc độ trước khi giơ máy lên, giữ trọn sự tập trung cho bố cục và thời điểm bấm máy.</p>
+      <h2>Từ Khung Ngắm Cơ Đến Màn Hình Sống: RfCamera Xử Lý Gì Trong Thời Gian Thực</h2>
+      <p>Toàn bộ năm nguyên tắc trên có một điểm chung: chúng đòi hỏi bạn tin vào mắt và trực giác nhiều hơn là màn hình xem trước, vì rangefinder cơ vốn không cho bạn xem lại ảnh ngay lập tức. RfCamera được xây dựng để giữ đúng cảm giác đó trong khi vẫn cho bạn một chút phản hồi hữu ích. Khung ngắm sống của ứng dụng — nằm trong bộ xử lý hiển thị thời gian thực film_view.dart — chạy song song hai lớp xử lý: một ma trận màu (colour matrix) mô phỏng đặc tính từng loại phim, và một shader GLSL viết riêng (shaders/film.frag) tính toán méo ống kính dạng thùng (barrel distortion) và quang sai màu (chromatic aberration) ngay trên khung hình bạn đang nhìn, trước cả khi bấm máy. Điều này nghĩa là khi bạn đang zone-focus và dự đoán chuyển động theo các nguyên tắc ở trên, bạn đã thấy trước phần nào độ méo rìa khung và sắc thái màu của kiểu phim đã chọn — hữu ích khi bố cục gần rìa khung dây, nơi méo quang học rõ nhất. Sau khi bấm máy, ảnh JPEG cuối cùng không được xử lý lại từ đầu bằng một thuật toán khác: file core/bake.dart chạy lại đúng chuỗi xử lý đó — cùng ma trận màu, cùng shader, cộng thêm các lớp hạt grain, vệt sáng lọt (light leak), bụi phim và vignette lấy từ phim quét thật — bên trong một isolate tính toán (compute()) để không làm giật giao diện. Ảnh bạn thấy lúc ngắm và ảnh bạn nhận được sau khi lưu vì vậy gần như là cùng một hình ảnh, chỉ khác độ phân giải. Toàn bộ quá trình diễn ra trên máy, ứng dụng không khai báo quyền INTERNET và không cần tài khoản, nên ảnh và dữ liệu chụp không rời khỏi thiết bị của bạn.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out — RfCamera Guides</title>
+  <meta name="description" content="Balancing warm rim light with fill exposure using rangefinder optical compensation." />
+  <meta name="keywords" content="golden, hour, backlight, portrait, tips, film photography, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/golden-hour-backlight-portrait-tips.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/golden-hour-backlight-portrait-tips.html" />
+  <meta property="og:title" content="Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out" />
+  <meta property="og:description" content="Balancing warm rim light with fill exposure using rangefinder optical compensation." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out" />
+  <meta name="twitter:description" content="Balancing warm rim light with fill exposure using rangefinder optical compensation." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out",
+    "description": "Balancing warm rim light with fill exposure using rangefinder optical compensation.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Street & Technique</span>
+        <span>•</span>
+        <span class="mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/samples/sample_street.jpg" alt="Golden Hour Backlighting: How to Prevent Lens Flares from Washing Out" />
+      <div class="img-caption mono">Photo Study: Visual study: Golden Hour Backlighting</div>
+    </div>
+
+    <div class="content-body">
+        <p class="lead-p">Backlight at golden hour blows out fast — point a lens at a sun sitting 5 to 15 degrees above the horizon and veiling flare can eat two stops of contrast before you notice on a small screen. Get the metering and lens-flare geometry right instead of fighting it in post.</p>
+
+        <h2>Why Backlight Blows Out: Veiling Flare Physics</h2>
+        <p>Veiling flare happens when strong off-axis light — the sun sitting low and behind your subject — bounces between the internal glass elements of a lens before it reaches the film plane or sensor, rather than focusing cleanly like the light from your actual subject does. Every air-to-glass surface in a lens reflects a small percentage of incoming light, typically half a percent to one percent per uncoated surface even with modern coatings, and a compact zoom or vintage lens with eight or more internal surfaces stacks that scattered light into a visible milky wash across the frame. That wash raises the black level of the entire image rather than adding a discrete bright spot, which is why backlit shots often look flat and gray in the shadows even when the highlights are not technically clipped — the flare is adding light directly into the parts of the image that should stay dark.</p>
+        <p>Film handles this differently than a digital sensor, and it matters for how you should shoot it. Color negative film has enormous highlight latitude, often four to five stops past middle gray before detail disappears completely, so a flare-lifted sky or sun disc rarely goes to a hard, textureless white the way an unprotected digital highlight does — negative film's characteristic curve rolls off gradually at the top rather than clipping. That gentle highlight shoulder is exactly why golden hour backlight photographed on film reads as glowing rather than blown, provided the shadows underneath still carry enough exposure to hold detail. Underexpose the whole frame to protect a bright sun disc and you lose the shadow information film's latitude was supposed to protect, so the real fix is metering for shadow detail deliberately rather than protecting the highlight by default.</p>
+
+        <h2>Meter the Shadows, Not the Sky</h2>
+        <p>Point-and-average metering built into most cameras reads the entire frame, sun included, and will underexpose your subject every time in a backlit scene because the meter is trying to bring an extremely bright sky down to middle gray, dragging everything else down with it. The fix is to meter deliberately off your subject's face or another shadow-side area you want to hold detail in, then lock that exposure before recomposing with the sun back in frame. On a manual or aperture-priority setup this means spot-metering skin in shadow and dialing in roughly +1 to +1.7 stops of positive exposure compensation relative to what an averaged meter reading suggests, since skin in shade reads darker than middle gray and needs that lift to look correct rather than muddy.</p>
+        <p>The tradeoff is a brighter sky and a more pronounced flare halo around the sun, which is the correct tradeoff for a backlit portrait — a slightly blown sky reads as natural in a scene where the sun is visible in frame, while a correctly exposed sky with a silhouetted, underexposed subject reads as a mistake. Bracket if you are unsure: shoot the shadow-metered exposure, then one at roughly two-thirds of a stop under it, and compare which one holds enough shadow-side skin detail without pushing the sky into a flat, featureless white block rather than a soft, warm-toned overexposure. Aperture choice affects this too — stopping down past f/8 sharpens flare into distinct polygonal artifacts from the aperture blades, while shooting wide open around f/2.8 to f/4 turns flare into the softer, rounder glow most people associate with a flattering golden hour look, so choose aperture based on which flare character you want, not just depth of field.</p>
+
+        <h2>A Repeatable Golden Hour Backlight Setting</h2>
+        <p>These four numbers are a starting point for a specific, repeatable backlit portrait setup, not a universal rule — adjust for how deep into golden hour you are shooting, since the sun's angle and color temperature change fast in the twenty minutes before sunset. White balance at 4800K keeps the naturally warm, low-angle light from tipping into an overly orange cast the way daylight-preset 5500K sometimes does when the sun is this low; going even warmer than 4800K starts to mute the rim-light separation you are trying to create around your subject's edges. The +1.3 stop exposure compensation is calibrated for spot-metering shadow-side skin specifically — if you are metering an 18% gray card or a mid-tone instead, drop that compensation back toward +0.3 to avoid overexposing.</p>
+
+        <div class="recipe-callout">
+          <div class="recipe-callout-header">
+            <span>Backlit Portrait Setting</span>
+            <span class="mono">Golden Hour Rim Light</span>
+          </div>
+          <div class="recipe-grid">
+            <div class="recipe-cell"><span>White Balance</span><strong>4800K Warm Daylight</strong></div>
+            <div class="recipe-cell"><span>Exposure Comp</span><strong>+1.3 EV Shadow-Metered</strong></div>
+            <div class="recipe-cell"><span>Aperture</span><strong>f/2.8 Soft Flare Bloom</strong></div>
+            <div class="recipe-cell"><span>Shutter Speed</span><strong>1/320s Typical</strong></div>
+          </div>
+        </div>
+
+        <p>Aperture at f/2.8 is chosen for flare character as much as for the shallow depth of field it gives a portrait: at this aperture the diaphragm is closer to fully open, so flare renders as soft circular blooms rather than the hard-edged polygonal streaks a stopped-down aperture produces from its blade shape. Shutter speed follows from there rather than being fixed — in fast-fading golden hour light you will often need something in the 1/250s to 1/500s range at this aperture and a moderate film speed to avoid overexposing the already-compensated shadow exposure. None of these four settings work in isolation from each other; changing one, especially the exposure compensation, means reconsidering the others, which is the actual skill in backlit shooting rather than any single fixed number.</p>
+
+        <h2>Position the Subject Relative to the Sun</h2>
+        <p>The angle between your subject, the sun, and your lens axis decides whether you get a clean rim light or a lens full of flare artifacts with no compensating benefit. The most reliable position keeps the sun 20 to 40 degrees off the lens axis rather than dead center behind the subject's head — directly behind the subject puts the sun's disc partially hidden by their silhouette, which still sends flare into the lens but gives you none of the visible rim-light benefit, since the light source itself is blocked from grazing their hair and shoulder edges at a useful angle. Shifting the subject or your own position so the sun sits just to one side of their head, still behind them but not perfectly aligned, lets light skim across hair and shoulder fabric at a low grazing angle, which is what produces the bright, warm rim outline golden hour backlight is known for.</p>
+        <p>Distance from the subject to whatever is casting shade on their face — a building, a tree line, your own shadow — also matters more than people account for. If the subject's face falls into open shade from something blocking direct sun while their hair and shoulders stay lit from behind, you get natural separation between a softly lit, evenly exposed face and a distinctly warm rim without needing a reflector at all. Without that shade source, direct sun hitting the face from a low, side-grazing angle competes with the backlight for attention and tends to create harsh, short shadows under the brow and nose that fight the softer look backlighting is supposed to create. Scouting for a shade line — the edge where a building's shadow ends — before you scout for the sun's position often solves the lighting faster than moving the subject repeatedly.</p>
+
+        <h2>Controlling Flare with RfCamera's Optics Shader</h2>
+        <p>Real backlit flare comes from light bouncing inside physical lens elements, something a phone's small, tightly-packed lens stack produces differently than a vintage rangefinder lens with more internal air gaps — modern phone optics tend toward small, hard-edged flare spots rather than the soft veiling wash older glass produces. RfCamera's film emulation restores that older, softer character deliberately: the same GLSL fragment shader (shaders/film.frag) that renders barrel distortion and chromatic aberration for the live viewfinder in widgets/film_view.dart also handles halation, the warm glow that appears around bright highlights when light scatters back through a film emulsion's layers before reaching the light-sensitive silver crystals. Halation is why a backlit sun or a bright window in a film photograph gets a soft red-orange bloom around its edges rather than a hard-clipped white circle — the shader reproduces that same scattering behavior per-pixel in real time as you frame the shot.</p>
+        <p>Because this rendering happens in the live viewfinder rather than as a post-capture filter, you see the flare and halation behavior while you are still adjusting your angle to the sun, which means you can react to it the way a film photographer reacts to a light meter — nudge your position, watch the bloom around the highlight change, and settle on the framing before pressing the shutter rather than guessing and fixing later. When you do press the shutter, core/bake.dart replays the identical shader pass inside a Dart isolate via compute() to produce the final JPEG, so the halation and flare behavior you composed around in the viewfinder is exactly what gets written to the file. The whole render happens on-device — RfCamera has no INTERNET permission and does no server-side processing — so there is no delay between framing a flare-heavy backlit shot and getting the finished photo saved to the app's local storage.</p>
+
+        <h2>Faking Fill Light Without Extra Gear</h2>
+        <p>A backlit subject's face is, by definition, in shadow relative to the sun, and even with correct shadow-metered exposure a face can look flat if there is nothing bouncing light back into it from the front. A reflector solves this in a studio, but golden hour backlit portraits taken outdoors rarely have one on hand, so the practical substitute is using whatever light-colored surface already exists in the scene. A light concrete wall, a sandy path, or a white or pale-colored piece of clothing held below the frame line all bounce a usable amount of the same warm, low-angle sunlight back up into the shadow side of a face, softening the contrast between the lit rim and the shaded front without adding any equipment.</p>
+        <p>Positioning matters more than surface choice: the bounce surface needs to sit roughly opposite the sun relative to your subject, low enough to catch the grazing light and angled to redirect it toward the face rather than off to the side, similar to how a reflector is angled in a studio setup. A phone screen set to full brightness, held just out of frame below chin height, works as a small, weak fill source at close range — close enough that inverse-square falloff still gives it enough intensity to open shadow detail slightly, even though it cannot compete with the sun directly. Skip the fill light entirely if the shadow side of the face is not the visual focus of the shot; a rim-lit silhouette with intentionally dark shadow detail is a legitimate creative choice, and forcing fill into every backlit frame flattens a look that sometimes works better left contrasty and moody, with just the warm edge light doing the work.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

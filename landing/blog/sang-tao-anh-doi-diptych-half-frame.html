@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình — RfCamera Guides</title>
+  <meta name="description" content="Cách phối hợp 2 góc máy cận và toàn cảnh để tạo nên bức ảnh ghép đôi giàu cảm xúc." />
+  <meta name="keywords" content="sang, tao, anh, doi, diptych, half, frame, nhiep anh film, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/sang-tao-anh-doi-diptych-half-frame.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/sang-tao-anh-doi-diptych-half-frame.html" />
+  <meta property="og:title" content="Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình" />
+  <meta property="og:description" content="Cách phối hợp 2 góc máy cận và toàn cảnh để tạo nên bức ảnh ghép đôi giàu cảm xúc." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình" />
+  <meta name="twitter:description" content="Cách phối hợp 2 góc máy cận và toàn cảnh để tạo nên bức ảnh ghép đôi giàu cảm xúc." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình",
+    "description": "Cách phối hợp 2 góc máy cận và toàn cảnh để tạo nên bức ảnh ghép đôi giàu cảm xúc.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Thân máy & Kỹ thuật</span>
+        <span>•</span>
+        <span class="mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026</span>
+      </div>
+      <h1>Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/samples/sample_train.jpg" alt="Sáng Tạo Ảnh Đôi Dọc (Diptych): Kể Câu Chuyện Điện Ảnh 2 Khung Hình" />
+      <div class="img-caption mono">Photo Study: Nghiên cứu thị giác: Sáng Tạo Ảnh Đôi Dọc (Diptych)</div>
+    </div>
+
+    <div class="content-body">
+        <p class="lead-p">Khi bạn cầm một chiếc máy ảnh half-frame như Olympus Pen F hay đưa khung ngắm điện thoại về tỉ lệ dọc 3:4, mỗi lần bấm máy tự động tìm kiếm nửa kia của nó. Ảnh đôi diptych biến trục phim 35mm thành cuộc đối thoại thị giác giữa hai khung hình 18×24mm đặt cạnh nhau, nơi chi tiết đặc tả giải nghĩa trọn vẹn cho không gian toàn cảnh kế tiếp.</p>
+
+        <h2>Định Dạng Nửa Khung 18×24mm Và Tư Duy Khung Dọc Tự Nhiên</h2>
+        <p>Máy ảnh full-frame 35mm tiêu chuẩn phơi sáng khung hình 24×36mm nằm ngang dọc theo chiều chuyển động của dải phim đục lỗ. Khi kỹ sư Yoshihisa Maitani thiết kế dòng máy Olympus Pen vào năm 1959, ông xoay dọc cửa sổ phơi sáng thành kích thước 18×24mm để tiết kiệm phim và giảm một nửa chi phí cho người dùng thời hậu chiến. Sự thay đổi cơ học này dẫn đến một hệ quả quang học tự nhiên: khi bạn áp mắt vào kính ngắm ở tư thế cầm ngang thông thường, khung ảnh hiển thị là một hình chữ nhật đứng với tỉ lệ 3:4 thay vì tỉ lệ 2:3 nằm ngang. Một cuộn phim Kodak Tri-X hoặc Ilford HP5 36 kiểu lập tức nhân đôi thành 72 bức ảnh đơn, tương đương 36 cặp ảnh đôi diptych hoàn chỉnh nằm liền kề trên dải nhũ tương.</p>
+        <p>Khoảng cách vật lý giữa hai khung hình trên dải phim tiêu chuẩn chỉ vỏn vẹn 1,5mm đến 2mm rãnh phân cách. Khi đem tráng và quét scan cả dải phim liền mạch, hai khung hình đứng cạnh nhau không thể bị tách rời bởi mắt người luôn có xu hướng quét qua quét lại giữa hai vùng thông tin thị giác liền kề. Thay vì tìm kiếm một bố cục tĩnh bao quát mọi chi tiết trong một khung 24×36mm, người chụp half-frame buộc phải chia nhỏ thực tại thành hai mảnh ghép bổ trợ. Khung hình thứ nhất đóng vai trò thiết lập bối cảnh hoặc nêu vấn đề, trong khi khung hình thứ hai đưa ra góc nhìn cận cảnh, chi tiết vật liệu hoặc phản ứng của chủ thể. Kỹ thuật này đòi hỏi bạn phải rèn luyện thói quen tư duy trước một bước: khi ngón tay vừa bấm khung hình đầu tiên, tâm trí bạn đã phải phác thảo góc máy tiếp theo để ghép nối câu chuyện mạch lạc.</p>
+
+        <h2>Cấu Trúc Tương Phản Tỉ Lệ Giữa Cận Cảnh Và Toàn Cảnh</h2>
+        <p>Mô hình diptych hiệu quả nhất trong phóng sự đường phố và chân dung môi trường là ghép một góc máy toàn cảnh với một góc máy cận cảnh. Nếu cả hai khung hình đều sử dụng góc rộng 28mm với cùng khoảng cách chụp 3 mét, người xem sẽ bị bối rối vì lượng thông tin thị giác bị lặp lại mà không có trọng tâm phân cấp rõ ràng. Ngược lại, khi bạn đặt bức ảnh chụp toàn cảnh góc rộng của góc phố cũ cạnh một khung hình đặc tả bàn tay người thợ đồng hồ đang kẹp bánh răng qua ống kính tiêu cự 50mm, hai bức ảnh lập tức tạo ra một lực hút thị giác mạnh mẽ.</p>
+        <p>Sự tương phản về tỉ lệ kích thước buộc não bộ người xem phải liên kết không gian vĩ mô với chi tiết vi mô. Để thực hiện điều này mượt mà, bạn cần duy trì một sợi dây liên kết rõ ràng giữa hai bức ảnh: đó có thể là vệt nắng xiên cùng góc 45 độ, mảng màu đỏ của biển hiệu xuất hiện ở góc xa khung toàn rồi lặp lại trên chiếc bật lửa ở khung cận, hoặc đường dẫn thị giác của mép bàn kéo dài từ khung trái sang khung phải. Khoảng cách vật lý giữa ống kính và chủ thể trong hai lần bấm máy nên thay đổi ít nhất gấp 3 lần. Khung toàn chụp ở khoảng cách 4 mét với khẩu độ f/5.6 để lấy nét sâu toàn bộ không gian từ tiền cảnh đến hậu cảnh; sau đó bạn bước sát lại cự ly 0,8 mét, mở khẩu lên f/2.8 để tách biệt chủ thể khỏi phông nền bằng độ sâu trường ảnh mỏng.</p>
+
+        <h2>Nhịp Điệu Thời Gian Và Chuỗi Hành Động Giữa Hai Khung Cạnh Nhau</h2>
+        <p>Bên cạnh tương phản về không gian, diptych là công cụ thể hiện dòng chảy thời gian và chuỗi hành động tuyến tính. Khác với ảnh đơn chỉ ghi lại một lát cắt 1/125 giây đóng băng vĩnh viễn, ảnh đôi half-frame cho phép bạn ghi nhận nguyên nhân và kết quả của một sự kiện diễn ra cách nhau từ vài giây cho đến vài phút. Một ví dụ cụ thể là khung hình bên trái ghi lại khoảnh khắc người pha chế bắt đầu rót dòng nước sôi 92 độ C từ ấm cổ ngỗng xuống phễu lọc V60, còn khung hình bên phải bắt trọn giọt cà phê đầu tiên rơi xuống bình thủy tinh bên dưới, kéo theo làn khói mỏng bốc lên ngược chiều ánh sáng.</p>
+        <p>Khoảng ngắt thời gian giữa hai lần bấm màn trập tạo ra một khoảng trống tưởng tượng mà người xem tự lấp đầy bằng trải nghiệm cá nhân. Nếu hai khoảnh khắc diễn ra quá sát nhau, chẳng hạn cách nhau 1/10 giây như chế độ chụp liên tục, bức ảnh đôi sẽ biến thành một tấm ảnh rung nhòe cơ học thiếu chiều sâu câu chuyện. Ngược lại, nếu khoảng cách thời gian kéo dài quá lâu khiến điều kiện ánh sáng xung quanh thay đổi hoàn toàn, tính liên kết mạch lạc của cặp ảnh sẽ bị bẻ gãy. Khoảng chờ lý tưởng cho một chuỗi hành động nhịp nhàng thường rơi vào khoảng 2 đến 15 giây. Trong khoảng thời gian ngắn ngủi đó, bạn giữ nguyên vị trí đứng, chỉ điều chỉnh nhẹ góc xoay thân máy hoặc chờ đợi chuyển động cơ thể của đối tượng đạt đến điểm rơi cảm xúc cao nhất.</p>
+
+        <h2>Kiểm Soát Ánh Sáng Và Cân Bằng Độ Phơi Sáng Giữa Hai Khung</h2>
+        <p>Yếu tố kỹ thuật sống còn quyết định chất lượng của một tác phẩm diptych nằm ở tính đồng nhất về mặt phơi sáng và nhiệt độ màu. Trên dải phim âm bản truyền thống, mắt người cực kỳ nhạy cảm với sự chênh lệch độ hạt và mật độ quang học giữa hai khung hình đặt sát vách. Nếu khung bên trái phơi sáng chuẩn với vùng tối giữ được chi tiết nhung mịn, nhưng khung bên phải bị thiếu sáng một stop dẫn đến hạt grain bị vỡ hạt và vùng tối ngả sang màu xám đục, cặp ảnh sẽ trông như hai mảnh chắp vá thô kệch thay vì một tác phẩm nghệ thuật thống nhất.</p>
+        <p>Khi sử dụng chế độ đo sáng điểm hoặc đo sáng trung tâm, bạn cần khóa thông số phơi sáng dựa trên vùng ánh sáng chung của bối cảnh thay vì để máy đo sáng tự động thay đổi theo từng góc ngắm. Giả sử khung thứ nhất bạn chụp một bức tường gạch sáng ngoài trời ở thông số 1/250 giây tại f/8, khi quay ống kính sang bóng râm để chụp chi tiết cánh cửa gỗ cho khung thứ hai, bạn không nên vội vã hạ tốc độ màn trập xuống 1/30 giây nếu muốn giữ nguyên cảm giác ánh sáng tự nhiên của hiện trường. Thay vào đó, hãy tìm kiếm một góc đón sáng tương đồng hoặc sử dụng một tấm hắt sáng nhỏ để bù trừ chênh lệch vùng tối không quá 1,5 EV. Tương tự, nhiệt độ màu trên máy kỹ thuật số hoặc kính lọc bù màu trên máy phim cần được cố định ở mức 5500K cho ánh sáng ban ngày ngoài trời hoặc 3200K dưới đèn dây tóc tungsten nhằm triệt tiêu hiện tượng lệch tông màu giữa hai khung.</p>
+
+        <h2>Thiết Lập Thông Số Phơi Sáng Và Bố Cục Ghép Đôi Chuẩn ISO 400</h2>
+        <p>Để bắt đầu thực hành một cuộn phim hoặc thiết lập thông số cho buổi chụp ảnh đôi đạt hiệu quả cao, bạn cần một bộ thông số nền tảng chuẩn mực nhằm tối ưu hóa độ tương phản và độ mịn của nhũ tương. Với dòng phim có độ nhạy ISO 400 đa dụng như Kodak Tri-X 400 hay Fujifilm Superia X-TRA 400, việc duy trì tốc độ màn trập từ 1/125 giây đến 1/250 giây sẽ giúp loại bỏ hoàn toàn hiện tượng rung lắc tay máy khi thao tác cầm đứng mà không cần chân máy cồng kềnh. Khẩu độ f/4 đến f/5.6 mang lại điểm ngọt quang học tối ưu cho hầu hết các ống kính tiêu cự 28mm hoặc 38mm, bảo toàn độ sắc nét rìa ảnh đồng đều cho cả hai khung hình trên cùng một mặt phẳng phim.</p>
+        <p>Trong thực tế chụp diptych đường phố, bạn hãy thiết lập khoảng cách lấy nét cố định theo vùng ở mốc 2,5 mét khi khép khẩu f/5.6. Cách cài đặt này tạo ra một độ sâu trường ảnh sâu từ 1,8 mét đến tận vô cực, giải phóng bạn khỏi áp lực phải xoay vòng nét liên tục giữa hai lần bấm máy liền kề. Khung hình thứ nhất bạn bắt trọn toàn bộ mặt tiền tiệm may cổ với bảng hiệu sơn tay; ngay sau đó, chỉ cần dịch chuyển nửa bước chân về phía trước và hướng ống kính xuống góc 45 độ, bạn đã sẵn sàng ghi lại cuộn chỉ may màu vàng cùng cây kéo cũ đặt trên mặt bàn gỗ mà thông số phơi sáng lẫn độ nét vẫn được giữ nguyên vẹn. Sự chính xác về cơ học và tính kỷ luật trong thao tác bấm máy chính là chìa khóa biến hai khung hình rời rạc thành một chỉnh thể nghệ thuật hoàn chỉnh.</p>
+
+        <div class="recipe-callout">
+          <div class="recipe-callout-header">
+            <span>Thông Số Ghép Đôi Nửa Khung</span>
+            <span class="mono">Cấu Hình Diptych 35mm</span>
+          </div>
+          <div class="recipe-grid">
+            <div class="recipe-cell"><span>Nhũ Tương</span><strong>Kodak Tri-X 400</strong></div>
+            <div class="recipe-cell"><span>Khẩu Độ & Tốc Độ</span><strong>f/5.6 — 1/250s</strong></div>
+            <div class="recipe-cell"><span>Tiêu Cự & Tỉ Lệ</span><strong>38mm (Khung Dọc 3:4)</strong></div>
+            <div class="recipe-cell"><span>Lấy Nét Vùng</span><strong>Zone Focus 2.5m (1.8m - ∞)</strong></div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -6,6 +6,7 @@
   <title>RfCamera — 12 Vintage Film Cameras in Your Pocket</title>
   <meta name="description" content="12 classic analog film cameras in your pocket. Real 35mm viewfinder with live grain, authentic light leaks, and mechanical shutter sounds. 100% offline, zero accounts, completely free." />
   <link rel="canonical" href="https://rfcam.roycorp.xyz/" />
+  <meta name="google-site-verification" content="C8ARW7nEhI0kod1X0FtMIMlV1V8qX-kUfqedJZCs7nc" />
 
   <!-- Open Graph / Facebook / Zalo / Telegram -->
   <meta property="og:type" content="website" />
@@ -119,7 +120,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 40px;
+      padding: 0 36px;
       background: rgba(10, 10, 12, 0.94);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
@@ -157,7 +158,21 @@
     .nav-right-deck {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
+    }
+
+    .nav-link-blog {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      transition: color 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-link-blog:hover {
+      color: var(--orange);
     }
 
     .btn-nav-share {
@@ -439,7 +454,7 @@
     }
 
     /* ========================================================
-       VIRAL CREATOR RECIPE STRIP
+       VIRAL RECIPES STRIP (WITH BLOG CTA LINK)
        ======================================================== */
     .viral-recipes-strip {
       width: 100%;
@@ -602,12 +617,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text-dim);
       background: #000000;
       width: 100%;
       position: relative;
       z-index: 1;
+    }
+
+    .footer-blog-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 12px;
+      transition: opacity 0.15s ease;
+    }
+    .footer-blog-link:hover {
+      opacity: 0.8;
     }
 
     /* Toast */
@@ -644,12 +670,16 @@
 
   <!-- Minimal Nav -->
   <nav>
-    <a href="#" class="nav-brand">
+    <a href="/" class="nav-brand">
       <img src="assets/rfcam_icon.png" alt="RfCamera" class="nav-logo" onerror="this.style.display='none'" />
       <span class="nav-name">RfCamera</span>
       <span class="nav-tag mono">OFFLINE</span>
     </a>
     <div class="nav-right-deck">
+      <a href="/blog/" class="nav-link-blog">
+        <span>Blog & Guides</span>
+        <span style="font-size: 10px;">↗</span>
+      </a>
       <button class="btn-nav-share" id="btn-share" onclick="shareApp()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
         <span>Share</span>
@@ -846,7 +876,13 @@
   <!-- Footer -->
   <footer>
     <div>RfCamera &bull; Pure offline 35mm analog camera.</div>
-    <div>Free forever for iOS and Android.</div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <a href="/privacy.html" class="footer-blog-link" style="color: var(--text-muted);">Privacy Policy</a>
+      <span>&bull;</span>
+      <a href="/blog/" class="footer-blog-link">Film Guides & Stories &rarr;</a>
+      <span>&bull;</span>
+      <span>Free forever for iOS and Android.</span>
+    </div>
   </footer>
 
   <!-- Toast Notification -->

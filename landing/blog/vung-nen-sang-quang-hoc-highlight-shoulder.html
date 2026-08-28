@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng — RfCamera Guides</title>
+  <meta name="description" content="Phân tích đường cong nén sáng S-curve giúp bảo toàn chi tiết mây trời trên ảnh analog." />
+  <meta name="keywords" content="vung, nen, sang, quang, hoc, highlight, shoulder, nhiep anh film, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/vung-nen-sang-quang-hoc-highlight-shoulder.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/vung-nen-sang-quang-hoc-highlight-shoulder.html" />
+  <meta property="og:title" content="Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng" />
+  <meta property="og:description" content="Phân tích đường cong nén sáng S-curve giúp bảo toàn chi tiết mây trời trên ảnh analog." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng" />
+  <meta name="twitter:description" content="Phân tích đường cong nén sáng S-curve giúp bảo toàn chi tiết mây trời trên ảnh analog." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng",
+    "description": "Phân tích đường cong nén sáng S-curve giúp bảo toàn chi tiết mây trời trên ảnh analog.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Bảo mật & Công nghệ</span>
+        <span>•</span>
+        <span class="mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026</span>
+      </div>
+      <h1>Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/screenshots/03-color-config.png" alt="Vùng Nén Sáng Quang Học: Vì Sao Ảnh Film Không Bao Giờ Cháy Sáng" />
+      <div class="img-caption mono">Photo Study: Nghiên cứu thị giác: Vùng Nén Sáng Quang Học</div>
+    </div>
+
+    <div class="content-body">
+      <p class="lead-p">Cảm biến kỹ thuật số cắt phăng mọi photon vượt ngưỡng giới hạn thành mảng trắng bệt vô hồn, trong khi nhũ tương bạc của phim 35mm nén dần độ sáng theo một đường cong mượt mà. Hiện tượng vật lý này gọi là highlight shoulder, vùng vai trên đồ thị quang học quyết định khả năng giữ trọn vân mây trắng và sắc độ da ngay dưới ánh nắng gắt.</p>
+
+      <h2>Đường đặc tuyến D-log H và cơ chế vật lý của tinh thể bạc</h2>
+      <p>Khi ánh sáng chiếu xuyên qua thấu kính vào cuộn phim 35mm, phản ứng hóa học trên bề mặt nhũ tương diễn ra thông qua hàng triệu tinh thể bạc halogenua (AgBr). Các nhà khoa học quang học thế kỷ 19 Ferdinand Hurter và Vero Charles Driffield đã mô tả mối quan hệ giữa lượng sáng phơi nhiễm (Log H) và mật độ quang học sau khi tráng (Optical Density - D) bằng một biểu đồ hình chữ S kinh điển mang tên đường đặc tuyến Hurter-Driffield. Biểu đồ này chia độ nhạy sáng của nhũ tương thành ba phân đoạn rõ rệt: vùng chân (toe) ở các sắc độ tối sâu, vùng tuyến tính (straight-line) phản ánh độ tương phản chuẩn ở dải trung tông, và vùng vai (shoulder) uốn cong thoải dần ở các sắc độ sáng rực rỡ nhất.</p>
+      <p>Điểm mấu chốt nằm ở cách các tinh thể bạc hấp thụ photon. Khi phơi sáng ở mức vừa phải, mỗi photon đập vào tinh thể sẽ kích hoạt một cụm bạc tiềm ẩn để sẵn sàng chuyển hóa trong dung dịch thuốc tráng. Nhưng khi ánh sáng tăng vọt, số lượng tinh thể bạc chưa phản ứng trong lớp nhũ tương giảm dần theo cấp số nhân. Để tăng thêm một đơn vị mật độ quang học ở vùng highlight, nhũ tương đòi hỏi lượng năng lượng ánh sáng gấp nhiều lần so với vùng trung tông. Quá trình bão hòa diễn ra tiệm tiến chứ không đột ngột chạm đỉnh. Nhờ mật độ tinh thể xếp lớp đa tầng trong màng keo gelatin, những vùng phơi sáng cực mạnh vẫn còn sót lại các hạt bạc chưa bị phân rã hoàn toàn, giúp phim giữ được các vi chi tiết nhỏ như nếp gấp sợi vải áo trắng hay vân mây trên bầu trời mùa hè.</p>
+
+      <h2>Cắt ngưỡng cảm biến số và hiện tượng lệch màu highlight</h2>
+      <p>Trái ngược hoàn toàn với cấu trúc hóa học của phim, cảm biến kỹ thuật số CMOS hoặc CCD hoạt động dựa trên các đi-ốt quang bán dẫn với nguyên lý giếng điện tích (full-well capacity). Mỗi điểm ảnh phụ trách một màu thông qua bộ lọc Bayer chỉ có thể tích trữ một lượng electron nhất định, thường dao động trong khoảng 20.000 đến 60.000 electron tùy kích thước điểm ảnh vật lý. Khi cường độ ánh sáng vượt qua sức chứa tối đa của giếng, điện áp đầu ra bị ghim cứng ở giá trị đỉnh (mức 255 trên kênh 8-bit hoặc 4095 trên kênh 12-bit thô). Đồ thị phản hồi quang học của cảm biến số là một đường thẳng tắp đâm sầm vào bức tường giới hạn với góc cắt 90 độ, hiện tượng này được gọi là hard clipping.</p>
+      <p>Nguy hại hơn cả việc mất chi tiết là hiện tượng biến màu cục bộ quanh rìa vùng cháy sáng. Ba kênh màu Đỏ (R), Xanh lục (G) và Xanh lam (B) có độ nhạy quang học và hệ số khuếch đại tín hiệu analog hoàn toàn khác nhau dưới từng nhiệt độ màu Kelvin. Dưới ánh sáng ban ngày nắng gắt 5500K, kênh Green và Blue thường đạt ngưỡng bão hòa trước kênh Red. Khi một hoặc hai kênh bị kịch trần trong khi kênh còn lại vẫn tiếp tục thu nhận tín hiệu, thuật toán nội suy màu de-Bayering sẽ tính toán sai lệch tỉ lệ phổ màu, biến rìa viền của vầng thái dương từ vàng nhạt sang dải viền tím hoặc xanh lơ nhân tạo. Hiện tượng này biến các bức chân dung ngược sáng trên cảm biến số thành những vết loang lổ với da mặt khô khốc.</p>
+
+      <h2>Dung sai phơi sáng thực tế giữa phim âm bản và cảm biến số</h2>
+      <p>Các cuộn phim âm bản màu chuyên nghiệp như Kodak Portra 400, Fuji Pro 400H hay dòng phim cine Kodak Vision3 500T sở hữu dung sai dư sáng (overexposure latitude) từ +3 EV đến thậm chí +5 EV mà màu sắc không hề gãy đổ. Khi người chụp lỡ tay mở khẩu quá lớn hoặc đo sáng nhầm vào vùng bóng râm, vùng vai shoulder của phim lập tức hấp thu lượng photon dư thừa, nén các sắc độ trắng chói vào dải mật độ quang học an toàn của tấm phim. Sau đó trong phòng tối hoặc buồng quét film số, người thợ rọi chỉ cần tăng thời gian chiếu sáng qua máy rọi (enlarger) hoặc tinh chỉnh thời gian phơi sáng của đầu quét scanner là toàn bộ vân mây hay làn da người mẫu lập tức hiện ra đầy đặn.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Mức Phơi Sáng</th>
+              <th>Nhũ Tương Phim Âm Bản (Kodak Portra / Vision3)</th>
+              <th>Cảm Biến Kỹ Thuật Số CMOS (Raw 14-bit)</th>
+              <th>Ảnh Hưởng Thị Giác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0 EV (Chuẩn)</td>
+              <td>Độ tương phản cân bằng, trung tông tuyến tính, hạt mịn.</td>
+              <td>Đầy đủ chi tiết ở cả vùng tối và vùng sáng.</td>
+              <td>Cả hai đều tái tạo chính xác cảnh vật.</td>
+            </tr>
+            <tr>
+              <td>+1 đến +2 EV</td>
+              <td>Màu sắc bão hòa sâu hơn, độ hạt giảm nhẹ, giữ 100% chi tiết.</td>
+              <td>Kênh Green tiệm cận mép bão hòa, vùng sáng bắt đầu căng.</td>
+              <td>Phim cho màu ấm áp và mọng da hơn; số cần kéo thanh Highlight.</td>
+            </tr>
+            <tr>
+              <td>+3 EV</td>
+              <td>Vùng shoulder bắt đầu nén sáng, mây trời chuyển sắc dịu mượt.</td>
+              <td>Kênh Green và Blue chạm trần 255; bắt đầu cháy mảng cục bộ.</td>
+              <td>Phim giữ nguyên chi tiết viền; số xuất hiện viền gãy màu.</td>
+            </tr>
+            <tr>
+              <td>+4 đến +5 EV</td>
+              <td>Độ tương phản tổng thể giảm, vùng sáng nén chặt nhưng không mất khối.</td>
+              <td>Toàn bộ ba kênh RGB bị ghim cứng ở 255; mất hoàn toàn thông tin.</td>
+              <td>Phim tạo chất ảnh mơ màng cổ điển; số tạo mảng trắng bệt loang lổ.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Khả năng hấp thụ dư sáng vượt trội này lý giải vì sao các nhiếp ảnh gia đường phố kỳ cựu luôn có thói quen phơi sáng dư nửa khẩu đến một khẩu (overexpose by 0.5 - 1 stop) khi dùng phim âm bản. Phim màu không bao giờ sợ dư sáng, chúng chỉ sợ thiếu sáng ở vùng chân toe khiến hạt nhiễu bục vỡ và bóng tối trở nên đục ngầu bùn đất. Ngược lại, trên máy ảnh số, quy tắc sinh tồn bất di bất dịch luôn là bảo vệ vùng sáng bằng mọi giá: ưu tiên kéo biểu đồ histogram về bên phải nhưng tuyệt đối không để kênh màu nào chạm nóc.</p>
+
+      <h2>Thuật toán mô phỏng đường cong nén sáng trong pipeline RfCamera</h2>
+      <p>Để tái hiện trung thực chất cảm mềm mại của phim analog trên thiết bị di động hiện đại, hệ thống xử lý hình ảnh RfCamera triển khai một đường ống toán học chuyên biệt chia làm hai giai đoạn đồng bộ: hiển thị khung ngắm thời gian thực và tráng file JPEG ở độ phân giải gốc. Trong tệp cấu hình lõi film_effect.dart, ma trận màu sắc của từng dòng máy film trước tiên được nhân với một hệ số co tỉ lệ mang tên shoulderScale có giá trị chính xác là 0.625. Thao tác này chủ động hạ toàn bộ mức năng lượng của khung hình xuống dưới ngưỡng trần trước khi dữ liệu đi qua bộ lọc ma trận ColorFilter.matrix. Nếu bỏ qua bước co tỉ lệ sơ cấp này, những điểm ảnh có độ sáng cao sẽ lập tức bị hệ điều hành ghim cứng ở giá trị 1.0 (tương đương 255) và biến thành một mặt phẳng đồng nhất trước khi bất kỳ đường cong uốn mềm nào kịp can thiệp.</p>
+      <p>Khi độ sáng đã được thu gom vào khoảng an toàn, hàm toán học FilmEffect.shoulder kích hoạt cơ chế hòa trộn tương đương BlendMode.overlay dựa trên màu trung tính trục xoay shoulderPivot đặt ở mức 0.625. Điểm uốn (knee) của đường cong này được tính toán để tác động trực tiếp lên 20% dải sáng trên cùng của dải tương phản động (từ 0.8 đến 1.0). Ở phân khúc dưới 0.8, thuật toán áp dụng hệ số hồi phục shoulderRestore bằng 1.28 (tương ứng với công thức nghịch đảo 1 / (2 * pivot * scale)) để bảo toàn nguyên vẹn độ tăng ích tỷ lệ 1:1 cho toàn bộ dải trung tông và bóng tối. Nhưng khi giá trị pixel vượt quá mốc 0.8, hệ số góc của hàm dốc đột ngột giảm từ 1.0 xuống 0.6. Giá trị độ sáng 1.0 ban đầu được chuyển đổi mượt mà thành mức 0.92, và khung hình chỉ chạm ngưỡng trắng tinh khi năng lượng đầu vào đạt xấp xỉ mức 1.13.</p>
+      <p>Trong quá trình lưu ảnh cuối cùng tại core/bake.dart, toàn bộ phép tính vi phân phức tạp này được nén gọn thành một bảng tra cứu 256 giá trị (256-entry lookup table - LUT) thông qua hàm _applyShoulder. Isolate xử lý nền chỉ việc quét trực tiếp từng giá trị byte của ba kênh RGB qua mảng Uint8List(256) đã tính sẵn trong bộ nhớ đệm RAM mà không cần thực hiện bất kỳ phép chia dấu phẩy động tốn kém nào trên từng điểm ảnh. Giải pháp bảng tra cứu cố định này giúp tốc độ xử lý vùng sáng diễn ra gần như tức thì, giữ lại từng thớ mây bồng bềnh và vệt phản xạ kim loại lấp lánh mà không gây hao pin hay làm chậm chu trình xử lý ảnh trên máy của bạn.</p>
+
+      <h2>Kỹ thuật kiểm soát nguồn sáng tương phản cao khi chụp thực tế</h2>
+      <p>Khi bạn bước ra đường phố vào những ngày nắng trưa chói chang, độ tương phản giữa vệt bóng đổ của các tòa nhà cao tầng và mặt đường nhựa có thể vượt quá 12 stop phơi sáng. Để khai thác triệt để ưu thế của đường cong nén sáng shoulder, thói quen đo sáng cần được điều chỉnh linh hoạt thay vì phó mặc hoàn toàn cho chế độ tự động ma trận (evaluative metering). Thay vì đo sáng trực tiếp vào mảng trời xanh hay bề mặt phản quang của kính xe hơi, bạn hãy khóa đo sáng (AE Lock) vào vùng tông xám trung tính 18% gần sát chủ thể chính, ví dụ như bờ tường bê tông hoặc mặt đường gạch. Thao tác này chủ động đẩy bầu trời và các đốm nắng xuyên qua tán lá cây trượt lên phía đỉnh của đường cong nén sáng.</p>
+      <p>Nhờ cơ chế vai cong quang học, những vùng trời phơi sáng quá tay từ 1.5 đến 2 EV sẽ không biến thành mảng đục lỗ trắng xóa mà chuyển hóa thành tông màu phấn (pastel) nhẹ nhàng rất đặc trưng của các bộ phim ảnh du lịch thập niên 1980. Khi chụp chân dung ngược sáng lúc hoàng hôn, bạn không cần dùng đến tấm hắt sáng lớn hay đèn flash trợ sáng phức tạp. Hãy can đảm để mặt trời lọt vào một góc mép khung hình. Sự kết hợp giữa thuật toán nén sáng shoulder và lớp quang sai halation viền đỏ quanh các bóng đèn dây tóc sẽ tạo nên một dải chuyển tiếp êm ái từ nguồn sáng trực diện vào mái tóc người mẫu, loại bỏ hoàn toàn cảm giác gai góc thô ráp vốn là nhược điểm cố hữu của nhiếp ảnh di động thời kỳ đầu.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

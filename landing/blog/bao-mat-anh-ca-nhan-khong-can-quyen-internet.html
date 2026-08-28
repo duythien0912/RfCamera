@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet? — RfCamera Guides</title>
+  <meta name="description" content="Cam kết 0 quyền mạng ở cấp hệ điều hành bảo vệ tuyệt đối kho ảnh riêng tư của bạn." />
+  <meta name="keywords" content="bao, mat, anh, ca, nhan, khong, can, quyen, internet, nhiep anh film, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/bao-mat-anh-ca-nhan-khong-can-quyen-internet.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/bao-mat-anh-ca-nhan-khong-can-quyen-internet.html" />
+  <meta property="og:title" content="Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet?" />
+  <meta property="og:description" content="Cam kết 0 quyền mạng ở cấp hệ điều hành bảo vệ tuyệt đối kho ảnh riêng tư của bạn." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet?" />
+  <meta name="twitter:description" content="Cam kết 0 quyền mạng ở cấp hệ điều hành bảo vệ tuyệt đối kho ảnh riêng tư của bạn." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet?",
+    "description": "Cam kết 0 quyền mạng ở cấp hệ điều hành bảo vệ tuyệt đối kho ảnh riêng tư của bạn.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Bảo mật & Công nghệ</span>
+        <span>•</span>
+        <span class="mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026</span>
+      </div>
+      <h1>Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet?</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/screenshots/01-camera.png" alt="Kiểm Định Bảo Mật: Vì Sao App Máy Ảnh Không Nên Xin Quyền Internet?" />
+      <div class="img-caption mono">Photo Study: Nghiên cứu thị giác: Kiểm Định Bảo Mật</div>
+    </div>
+
+    <div class="content-body">
+      <p class="lead-p">Mọi bức ảnh chụp từ điện thoại đều chứa dữ liệu vị trí địa lý, nhận diện khuôn mặt và dấu vân tay thiết bị. Khi một ứng dụng máy ảnh bị tước hoàn toàn quyền truy cập mạng ở cấp hệ điều hành, rủi ro rò rỉ dữ liệu cá nhân giảm về con số không mà không cần dựa vào bất kỳ lời hứa bảo mật nào từ nhà phát triển.</p>
+
+      <h2>Nguy cơ rò rỉ dữ liệu EXIF và thói quen thu thập ngầm của ứng dụng máy ảnh</h2>
+      <p>Mỗi khung hình thu nhận từ cảm biến điện thoại chứa đựng nhiều tầng thông tin vượt xa ma trận điểm ảnh RGB. Mỗi tệp JPEG hay HEIC tạo ra đều đính kèm siêu dữ liệu EXIF (Exchangeable Image File Format) ghi lại chi tiết tọa độ kinh độ và vĩ độ GPS chính xác đến từng mét, thời gian chụp, số seri phần cứng của cụm camera, cùng các giá trị khẩu độ, tiêu cự và tốc độ màn trập. Khi bạn cài đặt các ứng dụng chụp ảnh hoặc bộ lọc màu thương mại thông thường, phần lớn các ứng dụng này đều tích hợp sẵn từ 3 đến 8 bộ công cụ phát triển phần mềm (SDK) của bên thứ ba phục vụ mục đích phân tích hành vi người dùng và phân phối quảng cáo theo ngữ cảnh, điển hình như Facebook Graph SDK, AppsFlyer hay Firebase Analytics.</p>
+      <p>Các thư viện nhúng này thường xuyên chạy các tiến trình ngầm (background service). Ngay khi bạn cấp quyền truy cập mạng cùng quyền đọc bộ nhớ ảnh, tiến trình nền có thể quét siêu dữ liệu EXIF, lập bản đồ thói quen di chuyển và địa điểm cư trú của bạn, thậm chí trích xuất các vector đặc trưng khuôn mặt từ các thuật toán nhận diện tự động. Quá trình thu thập này diễn ra âm thầm thông qua các gói tin HTTP POST gửi về máy chủ từ xa mỗi khi thiết bị kết nối Wi-Fi. Người dùng thường không thể nhận biết lưu lượng mạng này vì nó được đóng gói chung dưới dạng dữ liệu chẩn đoán hệ thống hoặc nhật ký crash log. Việc cấp quyền kết nối mạng cho một ứng dụng có quyền truy cập trực tiếp ống kính quang học do đó tạo ra một lỗ hổng quyền riêng tư thường trực trên thiết bị cá nhân của bạn.</p>
+
+      <h2>Cơ chế cô lập cấp hệ điều hành: AndroidManifest và iOS Info.plist không quyền mạng</h2>
+      <p>Nhiều ứng dụng máy ảnh hiện nay cố gắng xoa dịu lo ngại của người dùng bằng cách bổ sung nút gạt "Không chia sẻ dữ liệu phân tích" hoặc "Bảo mật nâng cao" trong mục cài đặt tài khoản. Tuy nhiên, các nút gạt phần mềm này hoạt động dựa trên sự tự nguyện của nhà phát triển và hoàn toàn có thể bị vô hiệu hóa bởi lỗi lập trình hoặc sự thay đổi trong điều khoản dịch vụ mà người dùng không hề hay biết. Cách duy nhất để thiết lập hàng rào bảo mật kiên cố là tước bỏ quyền mạng ở tầng nhân của hệ điều hành ngay từ khâu đóng gói mã nguồn.</p>
+      <p>Trên hệ điều hành Android, một ứng dụng muốn mở socket mạng để giao tiếp với thế giới bên ngoài bắt buộc phải khai báo quyền android.permission.INTERNET trong tệp cấu hình AndroidManifest.xml. Khi nhà phát triển loại bỏ hoàn toàn dòng khai báo này khỏi tệp kê khai, nhân Linux (Linux kernel) quản lý danh tính người dùng (UID) của ứng dụng đó sẽ lập tức chặn đứng mọi lời gọi hàm cấp thấp tạo socket mạng AF_INET hoặc AF_INET6. Nếu bất kỳ đoạn mã độc hại hoặc SDK bên thứ ba nào cố tình mở kết nối TCP hoặc UDP, hệ điều hành sẽ lập tức ném ra ngoại lệ SecurityException và chấm dứt lệnh gọi ở cấp phần cứng mạng. Tương tự trên iOS, việc không cấu hình quyền mạng trong tệp Info.plist và không xin chứng chỉ App Transport Security (ATS) khiến hệ thống từ chối cấp phát phiên truyền dữ liệu qua giao thức NSURLSession hay BSD sockets. Người dùng có thể tự kiểm chứng điều này bằng cách sử dụng các công cụ dịch ngược mã nguồn mở như jadx hoặc apktool để kiểm tra trực tiếp AndroidManifest.xml trước khi cài đặt.</p>
+
+      <h2>Lưu trữ cục bộ trong App Documents Directory mà không cần quyền bộ nhớ ngoài</h2>
+      <p>Trong các phiên bản Android cũ, nhiều ứng dụng máy ảnh yêu cầu người dùng phải cấp quyền READ_EXTERNAL_STORAGE và WRITE_EXTERNAL_STORAGE để lưu ảnh chụp vào thư viện máy. Quyền hạn diện rộng này vô tình cho phép ứng dụng đọc toàn bộ kho ảnh cá nhân, tệp tải về và tài liệu lưu trữ trong thư mục /sdcard của các ứng dụng khác. RfCamera loại bỏ hoàn toàn yêu cầu cấp quyền này bằng cách tận dụng cơ chế lưu trữ có phạm vi (Scoped Storage) và ghi ảnh trực tiếp vào thư mục cô lập App Documents Directory được hệ thống bảo vệ độc quyền.</p>
+      <p>Tất cả tệp ảnh do ứng dụng xử lý chỉ tồn tại bên trong vùng nhớ sandbox riêng biệt, hoàn toàn miễn nhiễm với sự dòm ngó của các ứng dụng chạy nền khác trên cùng một điện thoại. Khi bạn muốn xuất ảnh sang cuộn camera hệ thống hoặc gửi cho bạn bè, RfCamera kích hoạt bảng chia sẻ tiêu chuẩn (System Share Sheet) của hệ điều hành, trao quyền kiểm soát từng tệp ảnh cụ thể cho bạn thay vì cấp quyền truy cập toàn bộ bộ nhớ máy.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Khía cạnh kỹ thuật</th>
+              <th>Ứng dụng máy ảnh thương mại</th>
+              <th>Kiến trúc Offline của RfCamera</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Quyền mạng hệ điều hành</td>
+              <td>Khai báo INTERNET và ACCESS_NETWORK_STATE</td>
+              <td>0 quyền mạng trong AndroidManifest và Info.plist</td>
+            </tr>
+            <tr>
+              <td>Bộ xử lý màu sắc & hiệu ứng</td>
+              <td>Tải preset từ đám mây, đẩy ảnh lên server AI</td>
+              <td>Chạy GLSL Shader và Dart Isolate trực tiếp trên GPU</td>
+            </tr>
+            <tr>
+              <td>SDK theo dõi & quảng cáo</td>
+              <td>Tích hợp từ 3 đến 8 SDK phân tích hành vi</td>
+              <td>0 SDK bên thứ ba, 0 mã theo dõi, 0 gửi telemetry</td>
+            </tr>
+            <tr>
+              <td>Phạm vi truy cập bộ nhớ</td>
+              <td>Đọc toàn bộ kho ảnh máy hoặc thư viện dùng chung</td>
+              <td>Chỉ lưu trong App Documents Directory riêng biệt</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Kiến trúc xử lý hình ảnh cục bộ: Pipeline hai tầng giữa film_view.dart và bake.dart</h2>
+      <p>Nhiều nhà phát triển biện minh cho việc xin quyền mạng là để xử lý ảnh bằng trí tuệ nhân tạo trên máy chủ đám mây. Trên thực tế, năng lực tính toán của các bộ xử lý đồ họa (GPU) và nhân xử lý tín hiệu hình ảnh trên chip di động hiện nay dư sức thực thi toàn bộ chuỗi tái tạo quang học phức tạp nhất. RfCamera hiện thực hóa điều này thông qua kiến trúc xử lý hình ảnh hai tầng tách biệt hoàn toàn giữa khung ngắm thời gian thực và quá trình xuất tệp ảnh cuối cùng.</p>
+      <p>Ở tầng hiển thị khung ngắm (Live Viewfinder), tệp mã nguồn widgets/film_view.dart áp dụng ma trận biến đổi màu 4x5 kết hợp cùng bộ đổ bóng GLSL tùy chỉnh shaders/film.frag được biên dịch trực tiếp trên phần cứng GPU của thiết bị. Thuật toán đổ bóng tính toán độ méo quang học hình cầu (barrel distortion), quang sai sắc (chromatic aberration), quầng sáng và họa tiết tối góc (vignette) với tần số 60 khung hình mỗi giây mà không làm nóng máy hay tiêu tốn băng thông. Khi bạn nhấn nút bấm chụp, khung hình thô từ cảm biến được chuyển sang tệp mã nguồn core/bake.dart. Thay vì làm gián đoạn luồng giao diện chính, RfCamera kích hoạt một luồng xử lý độc lập thông qua hàm compute() của Dart. Bên trong isolate nền này, CPU và GPU phối hợp phủ lớp hạt grain, vết xước quang học và bụi phim được quét trực tiếp từ các dải phim âm bản 35mm vật lý ở độ phân giải 4000 DPI, sau đó đóng dấu ngày tháng và nén trực tiếp thành tệp JPEG chất lượng cao trong bộ nhớ RAM trước khi ghi xuống bộ nhớ flash. Toàn bộ chu trình từ lúc thu nhận photon đến khi hoàn tất tệp ảnh diễn ra khép kín trong vòng chưa đầy 300 mili-giây.</p>
+
+      <h2>Quy trình kiểm tra độc lập lưu lượng mạng trên thiết bị cá nhân</h2>
+      <p>Bạn không cần phải đặt niềm tin mù quáng vào các tuyên bố về quyền riêng tư. Bất kỳ ai cũng có thể tự mình kiểm chứng tính trung thực của một ứng dụng máy ảnh bằng các công cụ đo kiểm lưu lượng mạng tiêu chuẩn ngay trên điện thoại của mình. Phương pháp trực quan nhất là cài đặt các phần mềm giám sát gói tin dựa trên cấu hình VPN cục bộ như PCAPdroid trên Android hoặc Proxyman trên máy tính kết nối cáp với iPhone. Khi chạy ứng dụng chụp ảnh qua bộ lọc này, bạn có thể giám sát từng kết nối socket được mở bởi mã định danh gói ứng dụng cụ thể.</p>
+      <p>Với một ứng dụng không sở hữu quyền mạng, bảng nhật ký kết nối của PCAPdroid sẽ hiển thị con số 0 tròn trĩnh: không có bất kỳ yêu cầu phân giải tên miền DNS nào, không có gói tin bắt tay TCP SYN, và không có một byte dữ liệu nào truyền qua cổng 80 hay 443. Cách kiểm tra thứ hai đơn giản hơn là theo dõi mục Mức sử dụng dữ liệu (Data Usage) trong phần Cài đặt ứng dụng của hệ điều hành. Sau nhiều tuần sử dụng liên tục với hàng trăm tấm ảnh được chụp, tổng lưu lượng dữ liệu di động và Wi-Fi ghi nhận cho ứng dụng luôn ở mức chính xác 0,00 KB. Cuối cùng, bạn hãy thử kích hoạt Chế độ máy bay (Airplane Mode) và ngắt hoàn toàn kết nối Wi-Fi. Một ứng dụng xử lý cục bộ chuẩn mực sẽ duy trì đầy đủ 100% tính năng, từ hiển thị khung ngắm mô phỏng thấu kính đến tốc độ kết xuất ảnh hoàn chỉnh, chứng minh tính độc lập tuyệt đối với hạ tầng mạng internet.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

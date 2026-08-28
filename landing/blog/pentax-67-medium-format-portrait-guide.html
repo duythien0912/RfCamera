@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pentax 67 Emulation: Mastering Editorial Medium Format Portraits — RfCamera Guides</title>
+  <meta name="description" content="How to achieve massive depth of field and creamy skin transitions with the S 67 camera." />
+  <meta name="keywords" content="pentax, 67, medium, format, portrait, guide, film photography, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/pentax-67-medium-format-portrait-guide.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/pentax-67-medium-format-portrait-guide.html" />
+  <meta property="og:title" content="Pentax 67 Emulation: Mastering Editorial Medium Format Portraits" />
+  <meta property="og:description" content="How to achieve massive depth of field and creamy skin transitions with the S 67 camera." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pentax 67 Emulation: Mastering Editorial Medium Format Portraits" />
+  <meta name="twitter:description" content="How to achieve massive depth of field and creamy skin transitions with the S 67 camera." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Pentax 67 Emulation: Mastering Editorial Medium Format Portraits",
+    "description": "How to achieve massive depth of field and creamy skin transitions with the S 67 camera.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Camera Guides</span>
+        <span>•</span>
+        <span class="mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>Pentax 67 Emulation: Mastering Editorial Medium Format Portraits</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/samples/sample_field.jpg" alt="Pentax 67 Emulation: Mastering Editorial Medium Format Portraits" />
+      <div class="img-caption mono">Photo Study: Visual study: Pentax 67 Emulation</div>
+    </div>
+
+    <div class="content-body">
+
+        <p class="lead-p">A 105mm f/2.4 lens on a 56×70mm negative renders depth of field differently than any 35mm portrait setup: the transition from sharp focus to full blur stretches across inches instead of fractions of an inch, and metering for skin instead of the whole frame becomes the difference between a flat portrait and a good one. RfCamera's Pentax 67 profile is built around that exact optical math.</p>
+
+        <h2>A 6x7 Negative Built Around One Lens</h2>
+        <p>Asahi Optical released the Pentax 6x7 in 1969 as a medium format SLR shaped like an oversized 35mm body rather than the boxy folding cameras that had dominated the format before it. It kept a rotating cloth focal-plane shutter, a mirror-based reflex viewing system, and interchangeable finders — the waist-level finder shipped as standard, with a metered TTL prism sold separately. Asahi renamed it Pentax 67 in 1990 when it added mirror lock-up to tame the shutter slap that had annoyed handheld shooters for two decades, then followed with the 67II in 1998, which added a faster 1/1000s top speed and interchangeable focus screens. Through all three versions, one lens defined the system's portrait reputation: the 105mm f/2.4 Takumar, sold in turn as the Super-Takumar, the SMC Takumar, and finally the SMC Pentax-67. On the 56×70mm negative, that focal length produces roughly the same field of view as a 50mm lens on 35mm film — photographers of the era called it "the normal lens," and it is the reason so many editorial portraits from that period share a similar working distance and compression. RfCamera's Pentax 67 emulation profile models this exact combination: the 105mm-equivalent framing, the negative's wider tonal latitude, and the mechanical rhythm of a camera advancing one frame at a time rather than the rapid-fire cadence of a 35mm motor drive. Shooting it inside the app means committing to ten frames per roll instead of thirty-six, which changes how carefully you frame before you press the shutter.</p>
+
+        <h2>The Depth-of-Field Math Behind the "Creamy" Look</h2>
+        <p>Larger negatives do not inherently blur backgrounds more; they blur backgrounds more at a matched field of view and a matched f-number, which is the comparison that actually matters for a portrait. The 6x7cm frame measures roughly 56×70mm against 24×36mm for 35mm film, a diagonal ratio of about 2.07x. To match the framing the 105mm lens gives you on 6x7, you would need roughly a 50mm lens on 35mm. At the same f/4, the 6x7 setup renders a shallower depth of field equivalent to shooting that 50mm at about f/2 on 35mm. That is the "creamy transition" people mean when they talk about Pentax 67 portraits: not that background blur is more chaotic, but that the zone between sharp focus and full blur stretches out over a longer distance, so a subject's ear can be crisp while their shoulder three inches back has already started to soften. Stopped down to f/5.6, you get an effective f/2.8 look with enough depth to hold both eyes sharp on a three-quarter portrait without losing the background separation. In RfCamera, the aperture selector on the Pentax 67 profile is calibrated against this same equivalence — the colour matrix and the GLSL optics shader in film.frag compute the blur falloff and the mild barrel distortion this lens is known for at each stop, so the framing you see in the live viewfinder shows the depth-of-field behavior of the actual 105mm f/2.4, not a flat blur map applied uniformly across the frame.</p>
+
+        <h2>Metering for Skin: Latitude, Incident Readings, and Exposure</h2>
+        <p>Kodak Portra 400 remains the default reference stock for this kind of portrait work, and its exposure latitude is generous enough to forgive a stop of metering error in either direction — up to two stops of overexposure before highlights clip, about one stop of underexposure before shadows go muddy. That latitude is what lets photographers meter for skin rather than for the whole scene. Take an incident reading off the subject's face, not a reflected reading off the frame, because reflected meters average toward middle gray and will underexpose light skin by roughly a stop and overexpose dark skin by a similar margin. On an overcast day at ISO 400, expect somewhere around f/5.6 at 1/125s; in open shade under direct midday sun, drop to f/8 at 1/125s, or open your shutter speed instead of your aperture if you want to keep the shallower depth of field discussed above. The cool shadow rolloff people associate with this format comes from the film stock's characteristic curve, not the lens — Portra's shadows shift slightly cooler as they lose density, which reads as a gentle color separation between warm highlights and cooler shadow. RfCamera's Portra profile reproduces that curve through the same colour matrix stage that runs in the live viewfinder and gets replayed byte-for-byte in core/bake.dart when you save, so the histogram you compose against on your phone screen is the same one baked into the final JPEG, not a preview that gets overridden at export time.</p>
+
+        <h2>Waist-Level Framing and Working Distance</h2>
+        <p>The waist-level finder is where most first-time 6x7 shooters lose a few rolls learning the format. Because the mirror reflects the image straight up onto a horizontal ground glass, left and right appear reversed — if your subject steps to your right, they move left in the finder. Nothing corrects this unless you buy the accessory metered prism finder, and most photographers who kept the waist-level finder eventually stopped fighting the reversal and used it to their advantage, tracking motion more deliberately instead of chasing a mirrored image. For a head-and-shoulders portrait with the 105mm lens, plan on standing roughly 1.2 to 1.8 meters from your subject; closer than that and the minimum focus distance of the standard Takumar, about 1 meter, starts working against you, forcing you to back up or accept a softer edge. For a three-quarter or full-length frame, 2.5 to 4 meters keeps the moderate telephoto compression without flattening the face the way a longer lens would. Because you are only working with ten frames per roll, waist-level composition rewards a slower rhythm: settle the horizon on the ground glass, check the four corners for stray hands or hair, and only then commit. RfCamera's viewfinder overlay mirrors this discipline by rendering the exact 6x7 crop guide and the 105mm angle of view in real time, so you can practice waist-level framing and left-right reversal awareness holding a phone at chest height instead of a two-kilogram camera body.</p>
+
+        <h2>How RfCamera Rebuilds the 105mm Rendering On-Device</h2>
+        <p>Every part of the look described above runs through one rendering pipeline, not a filter stack applied after the fact. When you point the phone's camera at a scene, widgets/film_view.dart processes the live feed through a colour matrix tuned to the stock — Portra, in this profile — and then through a GLSL fragment shader defined in shaders/film.frag that applies the 105mm lens's mild barrel distortion and edge chromatic aberration in real time, so what shows in the viewfinder already looks like glass, not a flat digital preview. Grain, light leaks, dust, scanline artifacts, vignette, and the optional date stamp are composited on top as overlay layers sourced from actual scanned film plates, not procedurally generated noise, which is why the texture holds up under zoom instead of looking like a uniform digital grain filter. When you press the shutter, RfCamera does not run a separate, cheaper export pipeline: core/bake.dart replays the identical sequence — same colour matrix, same shader, same overlay compositing — inside a compute() isolate, so the full-resolution JPEG gets exactly what you saw live, just rendered at final resolution instead of preview resolution. None of this touches a server. The app requests no INTERNET permission, so the entire Pentax 67 profile, the grain plates, and the shader run on-device, and the finished JPEGs save straight to the app's documents directory without needing storage permission or an account.</p>
+
+        <h2>A Starting Recipe for the 105mm Portrait Look</h2>
+        <p>None of the numbers above are useful without a starting point you can dial in before you lose the light. This is a baseline setup for an outdoor headshot on Portra 400 with the 105mm lens, tuned for the shallow depth of field and cool shadow rolloff this profile is built around. Treat it as a starting point, not a rule: tighten the aperture if you are working closer than 1.5 meters, and warm the white balance by a few hundred Kelvin if you are shooting at golden hour rather than midday open shade. Push the aperture toward f/5.6 if you need both eyes sharp on an angled face, or open toward the f/2.8-equivalent setting if your subject is isolated against a plain background and you want the transition zone to dominate the frame. The 5200K white balance keeps Portra's characteristic warmth on skin without pushing shadows into a cyan cast that reads as underexposure past about 15% vignette. Grain at 22% sits close to what a properly exposed roll of 400-speed film actually resolves at this negative size — pushed lower, skin looks digitally smooth in a way that undercuts the point of shooting a Pentax 67 profile in the first place.</p>
+        <div class="recipe-callout">
+          <div class="recipe-callout-header">
+            <span>Pentax 67 · Portra 400 Recipe</span>
+            <span class="mono">105mm Profile</span>
+          </div>
+          <div class="recipe-grid">
+            <div class="recipe-cell"><span>Aperture</span><strong>f/4 (~f/2 blur equiv.)</strong></div>
+            <div class="recipe-cell"><span>White Balance</span><strong>5200K Daylight</strong></div>
+            <div class="recipe-cell"><span>Grain Intensity</span><strong>22%</strong></div>
+            <div class="recipe-cell"><span>Shadow Vignette</span><strong>15%</strong></div>
+          </div>
+        </div>
+        <p>A ten-shot roll means you rarely get a second attempt at a given setup, so dial these numbers in before you load film rather than chasing corrections afterward — the whole point of shooting this profile is to feel the discipline of the original camera, not to fix it in an edit pass later.</p>
+    
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film — RfCamera Guides</title>
+  <meta name="description" content="Cách sắp xếp các mảng sáng tối và đường dẫn thị giác để tạo nên bức ảnh kiến trúc mạch lạc." />
+  <meta name="keywords" content="bo, cuc, hinh, khoi, kien, truc, do, thi, nhiep anh film, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/bo-cuc-hinh-khoi-kien-truc-do-thi.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/bo-cuc-hinh-khoi-kien-truc-do-thi.html" />
+  <meta property="og:title" content="Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film" />
+  <meta property="og:description" content="Cách sắp xếp các mảng sáng tối và đường dẫn thị giác để tạo nên bức ảnh kiến trúc mạch lạc." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film" />
+  <meta name="twitter:description" content="Cách sắp xếp các mảng sáng tối và đường dẫn thị giác để tạo nên bức ảnh kiến trúc mạch lạc." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film",
+    "description": "Cách sắp xếp các mảng sáng tối và đường dẫn thị giác để tạo nên bức ảnh kiến trúc mạch lạc.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Kỹ thuật nhiếp ảnh</span>
+        <span>•</span>
+        <span class="mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026</span>
+      </div>
+      <h1>Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/samples/sample_traindoor.jpg" alt="Hình Khối Đô Thị: Khai Thác Đường Nét Và Bóng Đổ Trong Nhiếp Ảnh Film" />
+      <div class="img-caption mono">Photo Study: Nghiên cứu thị giác: Hình Khối Đô Thị</div>
+    </div>
+
+    <div class="content-body">
+      <p class="lead-p">Ánh sáng mặt trời chiếu xiên qua các khối bê tông đô thị tạo ra những mảng tương phản hình học gãy gọn. Khi chụp film 35mm, việc biến kiến trúc thành những nhịp điệu đồ họa đòi hỏi bạn phải kiểm soát góc nghiêng trục quang học, đo sáng chính xác vào vùng bóng đổ và lựa chọn đúng đặc tính nhũ tương.</p>
+
+      <h2>Hình Học Không Gian Và Hiện Tượng Méo Hội Tụ Trục Quang Học</h2>
+      <p>Khi bạn đứng dưới chân một tòa nhà cao tầng và ngửa ống kính 28mm hoặc 35mm lên để lấy trọn phần đỉnh tháp, các đường thẳng đứng song song sẽ ngay lập tức chụm lại về một điểm biến mất ở phía trên. Đây là hiện tượng méo hội tụ phối cảnh (keystone effect), sinh ra khi mặt phẳng phim (film plane) không còn song song với bề mặt thẳng đứng của công trình. Trong nhiếp ảnh kiến trúc thương mại cổ điển, các nhiếp ảnh gia dùng máy ảnh khổ lớn (large format) có cơ chế dịch chuyển ống kính (shift) để đưa thấu kính lên cao mà vẫn giữ mặt phẳng phim thẳng đứng tuyệt đối. Với máy ảnh film 35mm thông thường, bạn không có các khớp dịch chuyển quang học này, do đó bạn phải kiểm soát góc đặt máy bằng chính đôi chân của mình.</p>
+      <p>Nếu muốn giữ các bức tường thẳng đứng vuông góc hoàn toàn với mặt đất, bạn cần lùi xa công trình từ 40 đến 80 mét và sử dụng tiêu cự 50mm hoặc 85mm. Khoảng cách này cho phép trục quang học của ống kính duy trì góc song song 90 độ so với mặt đất, loại bỏ hoàn toàn hiện tượng đổ nghiêng của các cột trụ. Ngược lại, nếu bạn chủ động muốn tạo cảm giác đồ sộ, áp bức của chủ nghĩa kiến trúc thô mộc (Brutalism), hãy tiến sát mép tường với ống kính góc rộng 24mm hoặc 28mm, hạ thấp góc chụp xuống cách mặt đất chừng 30cm và ngửa máy lên một góc 45 độ. Lúc này, các góc nhọn bê tông sẽ phóng đại mạnh mẽ ra mép khung hình, biến tòa nhà thành một mũi tên khổng lồ lao thẳng lên bầu trời. Bạn cần căn chỉnh đường chỉ mép tường chính trùng khít với đường lưới một phần ba trong khung ngắm quang học để tạo trục dẫn thị giác vững chãi.</p>
+
+      <h2>Kỹ Thuật Đo Sáng Điểm Vào Vùng Bóng Đổ Của Khối Bê Tông</h2>
+      <p>Bề mặt các tòa nhà đô thị là tập hợp của những vật liệu có độ phản xạ ánh sáng rất chênh lệch: kính phản quang phản chiếu trực tiếp mặt trời với độ sáng cực lớn (EV 15 hoặc EV 16), tường sơn trắng hoặc đá vôi nằm ở mức trung gian (EV 13), trong khi các hốc thụt, gầm cầu vượt hoặc mái hiên đón gió lại chìm sâu trong bóng tối đặc quánh (EV 9 hoặc EV 10). Nếu bạn dùng hệ thống đo sáng đo toàn khung hình (center-weighted hoặc matrix) tích hợp trên các thân máy film như Canon AE-1 hay Nikon FM2, cảm biến sẽ bị độ chói của các mảng kính đánh lừa, dẫn đến việc thiếu sáng nặng cho toàn bộ khung hình. Hậu quả là vùng bóng đổ của khối kiến trúc sẽ biến thành những mảng đen chết bết đặc, hoàn toàn mất đi vân rãnh bê tông và chi tiết sắt thép.</p>
+      <p>Để giữ được chi tiết hình khối trong bóng đổ, bạn nên áp dụng nguyên tắc đo sáng theo hệ thống vùng (Zone System). Hãy cầm máy đo sáng điểm (spot meter) hoặc tiến sát vào gầm tường bê tông nơi có bóng râm sâu nhất để đo trực tiếp chỉ số EV tại đó. Khi máy báo thông số, vùng bóng đổ này đang được hiểu là Zone V (màu xám trung tính 18%). Bạn hãy chủ động khép khẩu hoặc tăng tốc độ chụp lên 2 stop để hạ vùng bóng tối này xuống Zone III. Ở Zone III, phim âm bản đen trắng (như Kodak Tri-X 400 hoặc Ilford HP5 Plus) vẫn ghi lại đầy đủ vân bề mặt của ván cốp pha bê tông và các khớp nối kim loại mà không bị nhiễu hạt phá hủy cấu trúc. Phim âm bản màu có khả năng chịu dư sáng rất rộng (từ 2 đến 3 stop), vì vậy việc phơi sáng dư vào vùng tối sẽ giúp màu sắc của bức tường giữ được độ no và độ bão hòa dày dặn khi tráng rọi.</p>
+
+      <h2>Góc Chiếu Mặt Trời Và Nhịp Điệu Đồ Họa Của Bóng Đổ</h2>
+      <p>Thời điểm vàng để khai thác bóng đổ kiến trúc không phải là buổi trưa khi mặt trời đứng bóng ở góc 80 độ, mà là khoảng thời gian từ 7 đến 9 giờ sáng hoặc từ 3 đến 5 giờ chiều khi góc chiếu mặt trời hạ xuống mức 25 đến 35 độ so với đường chân trời. Ánh sáng chiếu nghiêng ở góc thấp tạo ra những vệt bóng đổ kéo dài gấp ba đến bốn lần chiều cao thực tế của vật thể, vắt ngang qua mặt đường nhựa và các bậc tam cấp. Khi ánh nắng quét ngang qua bề mặt tường gạch thẻ hoặc đá thô, góc chiếu hẹp này làm nổi rõ từng khe vữa sâu vài milimét nhờ bóng đổ siêu nhỏ ở từng rãnh vật liệu, mang lại độ nổi khối xúc giác mà ánh sáng tán xạ của những ngày nhiều mây không bao giờ làm được.</p>
+      <p>Bạn có thể biến bóng đổ từ một yếu tố phụ trợ thành nhân vật chính của bức ảnh bằng cách sắp đặt bố cục tương phản đồ họa (chiaroscuro). Hãy tìm kiếm những nhịp điệu lặp lại của hàng cột trụ hoặc lan can ban công nơi ánh sáng và bóng tối đan xen nhau theo trật tự đối xứng. Một tam giác bóng đổ sắc lẹm chiếm trọn hai phần ba khung hình có thể đóng vai trò như một mảng đặc màu đen tuyền, đối trọng với mảng rỗng sáng rực của ô cửa kính ở góc đối diện. Khi chụp trong điều kiện nắng gắt trực diện không qua mây che, đường ranh giới giữa vùng tối hoàn toàn (umbra) và vùng nửa tối (penumbra) trở nên sắc như một vết cắt dao cạo. Bạn hãy đặt đường biên bóng đổ này cắt chéo qua góc khung hình để tạo lực căng thị giác, dẫn hướng mắt người xem di chuyển tuần tự qua các lớp lang không gian.</p>
+
+      <h2>Chọn Nhũ Tương Phim Và Kính Lọc Màu Tăng Độ Tương Phản Khối</h2>
+      <p>Việc lựa chọn nhũ tương film quyết định trực tiếp đến độ sắc nét của các đường bao hình học và dải chuyển sắc giữa các khối bê tông. Đối với ảnh đen trắng kiến trúc, hai dòng phim thể hiện đặc tính trái ngược rõ rệt là phim hạt truyền thống và phim hạt dạng bảng. Kodak Tri-X 400 sở hữu hạt bạc cubic truyền thống với độ tương phản trung bình cao, rất thích hợp khi bạn muốn đẩy mạnh vẻ thô ráp, gai góc của các công trình công nghiệp cổ điển. Bạn có thể chụp phim này ở ISO 800 hoặc 1600 rồi yêu cầu phòng lab tăng thời gian hiện hình trong thuốc Kodak D-76 để đẩy đường cong tương phản lên mức dốc đứng, tạo ra những mảng đen sâu thẳm đối lập với các mảng sáng chói lọi.</p>
+      <p>Ngược lại, nếu bạn chụp các công trình hiện đại có kết cấu thép thanh mảnh và kính phản quang bóng loáng, nhũ tương hạt bảng như Kodak T-Max 100 hay Ilford Delta 100 là lựa chọn tối ưu nhờ cấu trúc tinh thể bạc dẹt phẳng, mang lại độ phân giải quang học vượt trội và đường viền mép chi tiết sắc bén. Ngoài ra, việc gắn thêm kính lọc màu trước ống kính khi chụp phim đen trắng là kỹ thuật căn bản để kiểm soát độ nổi khối của tòa nhà:</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Kính Lọc</th>
+              <th>Hệ Số Bù Sáng</th>
+              <th>Tác Động Lên Bầu Trời</th>
+              <th>Hiệu Quả Khối Kiến Trúc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vàng Vừa (K2)</td>
+              <td>+1 EV</td>
+              <td>Dìm xanh dương xuống 1 stop</td>
+              <td>Tách biệt nhẹ tường đá vôi với mây trắng</td>
+            </tr>
+            <tr>
+              <td>Cam Đậm (O2)</td>
+              <td>+1.5 to +2 EV</td>
+              <td>Dìm xanh dương xuống 2 stop</td>
+              <td>Làm nổi bật các góc cạnh bê tông sáng màu</td>
+            </tr>
+            <tr>
+              <td>Đỏ Đậm (R25A)</td>
+              <td>+3 EV</td>
+              <td>Chuyển bầu trời thành đen tuyền</td>
+              <td>Tạo tương phản đồ họa cực đại cho công trình</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Khi bạn dùng kính lọc đỏ R25A, bầu trời xanh ban trưa sẽ bị chặn gần như hoàn toàn quang phổ xanh dương, chuyển thành một phông nền đen kịt như màn đêm vũ trụ. Khối nhà bê tông màu trắng hoặc xám sáng khi đó sẽ tách hẳn ra khỏi không gian, nổi lên như một tác phẩm điêu khắc độc lập.</p>
+
+      <h2>Tái Tạo Đặc Tính Quang Học Kiến Trúc Trong RfCamera</h2>
+      <p>Khi chuyển đổi ngôn ngữ nhiếp ảnh kiến trúc analog sang nền tảng số trên thiết bị di động, bài toán lớn nhất là giữ được độ biến dạng tự nhiên của thấu kính cơ học mà không làm sai lệch tính mạch lạc của các hình khối. Trong RfCamera, quy trình xử lý không áp dụng các bộ lọc màu tĩnh làm phẳng dải tương phản. Thay vào đó, tệp mã nguồn widgets/film_view.dart sử dụng trực tiếp bộ đổ bóng phân mảnh shaders/film.frag để tính toán tọa độ biến dạng quang học (barrel distortion) theo thời gian thực trên GPU. Những đường thẳng kiến trúc chạy sát mép viền sẽ hơi cong nhẹ theo đúng vật lý khúc xạ của thấu kính phi cầu đời cũ, mang lại cảm giác quang học chân thực thay vì những đường kẻ thẳng tắp khô cứng như bản vẽ kỹ thuật.</p>
+      <p>Đồng thời, hiệu ứng quang sai màu (chromatic aberration) trong mã nguồn shader phân tách kênh màu đỏ và xanh lam ở các cạnh có độ tương phản cực cao, chẳng hạn như gờ mái nhà cắt ngang bầu trời chói chang. Thay vì xử lý thô bạo trên luồng giao diện chính làm khựng khung hình khi người dùng ngắm bố cục, toàn bộ quá trình nướng ảnh (bake) ở độ phân giải cảm biến tối đa được chuyển vào một isolate nền độc lập thông qua hàm compute() trong core/bake.dart. Lớp hạt phim (grain) và các vết xước quang học không phải là nhiễu hạt thuật toán ngẫu nhiên, mà được quét trực tiếp từ các tấm phim âm bản thật được phơi sáng trong phòng lab. Ứng dụng hoạt động hoàn toàn ngoại tuyến, không yêu cầu quyền INTERNET hay quyền truy cập bộ nhớ hệ thống, bảo lưu toàn bộ tệp ảnh JPEG đã nướng vào thư mục tài liệu nội bộ của ứng dụng để duy trì độ sắc nét của từng mảng khối.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

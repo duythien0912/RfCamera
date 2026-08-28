@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động — RfCamera Guides</title>
+  <meta name="description" content="Cách khai thác phản chiếu mặt đường ướt và ánh sáng âm u để tạo nên ảnh monochrome kịch tính." />
+  <meta name="keywords" content="chup, anh, den, trang, ngay, mua, ilford, nhiep anh film, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/chup-anh-den-trang-ngay-mua-ilford.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/chup-anh-den-trang-ngay-mua-ilford.html" />
+  <meta property="og:title" content="Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động" />
+  <meta property="og:description" content="Cách khai thác phản chiếu mặt đường ướt và ánh sáng âm u để tạo nên ảnh monochrome kịch tính." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động" />
+  <meta name="twitter:description" content="Cách khai thác phản chiếu mặt đường ướt và ánh sáng âm u để tạo nên ảnh monochrome kịch tính." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động",
+    "description": "Cách khai thác phản chiếu mặt đường ướt và ánh sáng âm u để tạo nên ảnh monochrome kịch tính.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Công thức chụp ảnh</span>
+        <span>•</span>
+        <span class="mono">5 phút đọc</span>
+        <span>•</span>
+        <span class="mono">28 Tháng 8, 2026</span>
+      </div>
+      <h1>Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/samples/sample_traindoor.jpg" alt="Chụp Ảnh Đen Trắng Ngày Mưa: Tương Phản Gắt Và Hạt Bạc Sống Động" />
+      <div class="img-caption mono">Photo Study: Nghiên cứu thị giác: Chụp Ảnh Đen Trắng Ngày Mưa</div>
+    </div>
+
+    <div class="content-body">
+      <p class="lead-p">Mặt đường nhựa khô hấp thụ ánh sáng thành một mảng xám phẳng lì, nhưng chỉ cần một lớp nước mưa mỏng, nó biến thành tấm gương phản chiếu đèn đường và biển hiệu thành những vệt sáng kéo dài. Bài viết này chỉ ra cách đo sáng, chọn phim và dựng bố cục để khai thác đúng hiệu ứng đó cho ảnh đen trắng kịch tính.</p>
+      <h2>Vì Sao Ánh Sáng Mưa Là Chất Liệu Tốt Cho Ảnh Đen Trắng</h2>
+      <p>Trời âm u mưa hoạt động như một tấm hắt sáng khổng lồ: toàn bộ bầu trời xám dày mây trở thành nguồn sáng khuếch tán đều, không có bóng đổ gắt như nắng trực xạ, nhưng mặt đường nhựa ướt lại làm ngược lại — nó phản chiếu như một tấm gương mờ, tạo ra những vệt sáng dài (specular highlight) kéo theo hướng đèn đường, biển hiệu hoặc cửa kính. Sự kết hợp giữa ánh sáng nền phẳng và các điểm phản chiếu sắc nét này chính là chất liệu làm nên độ tương phản kịch tính mà nắng gắt bình thường không tạo ra được, vì nắng gắt tạo tương phản bằng bóng đổ còn mưa tạo tương phản bằng phản xạ. Về mặt vật lý, nước trên mặt đường nhựa gồ ghề lấp đầy các khe rỗng siêu nhỏ trên bề mặt, biến một bề mặt tán xạ ánh sáng (diffuse) thành một bề mặt phản xạ định hướng (specular) — đó là lý do một con đường khô trông xỉn màu xám đồng đều, còn con đường vừa ướt mưa lại có những vệt trắng sáng chói xen giữa các mảng đen sâu. Với phim đen trắng, hiệu ứng này càng rõ vì phim loại bỏ hoàn toàn thông tin màu sắc gây phân tán sự chú ý, để lại thuần túy độ sáng và hình khối — mắt người xem buộc phải đọc bức ảnh qua tương phản sáng tối thay vì qua màu áo mưa hay màu đèn neon. Bạn nên tìm những đoạn phố có nguồn sáng điểm rõ ràng — đèn đường, bảng hiệu, đèn pha xe — nằm phía sau hoặc bên cạnh chủ thể, để ánh phản chiếu trên mặt đường kéo dài thành một đường dẫn thị giác tự nhiên hướng mắt người xem vào giữa khung hình.</p>
+      <h2>Đo Sáng Và Phơi Sáng Khi Trời Âm U</h2>
+      <p>Trời mưa âm u thường rơi vào khoảng EV 9 đến EV 11 vào giữa ngày, thấp hơn nắng gắt khoảng 4-5 stop, và con số này còn giảm thêm nếu bạn chụp dưới mái hiên hoặc vào lúc chạng vạng. Với phim ISO 400 ở khẩu độ f/2.8, mức sáng EV 10 tương ứng khoảng 1/60s — đủ chậm để rung tay là vấn đề thật sự nếu bạn không tì máy vào cột, tường hoặc lan can. Cách xử lý thực tế nhất là ưu tiên khẩu độ lớn nhất ống kính cho phép (f/1.4 hoặc f/2 nếu có) trước, sau đó mới cân nhắc đẩy ISO, vì mở khẩu không đổi độ nhạy hạt còn đẩy ISO thì có. Đo sáng nên thiên về đo trung bình có trọng tâm (center-weighted) thay vì đo điểm, vì cảnh mưa hiếm khi có một chủ thể sáng rõ ràng để đo điểm chính xác — bầu trời xám đều khiến đo điểm trên trời và đo điểm trên mặt đường ướt phản chiếu đèn có thể lệch nhau tới 3 stop. Một mẹo hữu ích là đo sáng trực tiếp trên da tay đưa ra trước ống kính dưới cùng điều kiện ánh sáng với chủ thể, sau đó bù thêm nửa stop vì da tay phản xạ sáng hơn tông trung bình 18% một chút. Nếu bạn dùng RfCamera để luyện tập ước lượng phơi sáng trước khi ra ngoài chụp phim thật, hãy tập nhìn bầu trời âm u và tự đọc số EV trong đầu trước khi mở app đo sáng đối chiếu — phản xạ này quan trọng hơn bất kỳ thiết bị đo nào vì phim không cho bạn xem lại ngay như cảm biến số.</p>
+      <h2>Chọn Phim: HP5 Plus, Delta 3200 Và Pan F Plus</h2>
+      <p>Ilford HP5 Plus 400 là lựa chọn mặc định hợp lý nhất cho ngày mưa: dải tương phản rộng đủ để giữ chi tiết cả ở vùng tối ướt sũng lẫn vùng sáng phản chiếu đèn, hạt grain trung bình không quá thô ở độ phơi sáng chuẩn, và biên độ chịu đẩy sáng (push tolerance) tốt — bạn có thể đẩy lên EI 800 (push +1 stop) khi cần thêm một khẩu tốc độ màn trập mà chất lượng ảnh không giảm nhiều, tráng bù thêm khoảng 40% thời gian phát triển so với chỉ số tiêu chuẩn. Nếu ánh sáng mưa quá yếu — chạng vạng hoặc mưa dày đặc giữa các tòa nhà cao tầng — Ilford Delta 3200 (thực chất là phim ISO gốc khoảng 1000, thường được đẩy lên 3200 hoặc 6400) cho phép cầm máy chụp ở tốc độ 1/125s hoặc nhanh hơn ngay cả trong điều kiện gần như thiếu sáng, đổi lại hạt grain thô rõ rệt và tương phản gắt hơn nhiều — một đặc điểm nhiều người chụp mưa đêm chủ động tìm kiếm chứ không né tránh. Ở đầu kia của phổ, Ilford Pan F Plus 50 gần như không dùng được cầm tay dưới mưa vì tốc độ màn trập sẽ rơi xuống dưới 1/15s, nhưng nếu bạn dựng chân máy dưới mái che để chụp một khung cảnh tĩnh — hàng quán đóng cửa, xe cộ đỗ ven đường — nó cho hạt mịn gần như không nhìn thấy và dải tông xám chuyển rất mượt, hợp với những cảnh mưa tĩnh lặng hơn là cảnh động trên phố.</p>
+      <h2>Bố Cục Với Phản Chiếu Trên Mặt Đường Ướt</h2>
+      <p>Vũng nước và mặt đường ướt biến mọi bề mặt phẳng thành một trục đối xứng tiềm năng, và bố cục hiệu quả nhất thường xây quanh trục đó thay vì bỏ qua nó. Đặt máy thấp gần sát mặt đường — quỳ gối hoặc ngồi xổm — làm tăng đáng kể diện tích vùng phản chiếu trong khung hình so với việc chụp từ tầm mắt đứng thẳng, vì góc tới của ánh sáng phản xạ thay đổi theo góc nhìn của bạn với mặt phẳng nước. Một khung hình chia đôi gần như hoàn hảo, nửa trên là chủ thể thật (người đi bộ, xe máy, tòa nhà), nửa dưới là ảnh phản chiếu lộn ngược của chính nó trong vũng nước, tạo hiệu ứng thị giác kép mà mắt người xem tự nhiên bị cuốn vào so sánh hai nửa. Đường dẫn thị giác trong cảnh mưa thường đến từ vệt bánh xe, đường kẻ vỉa hè hoặc mép vũng nước kéo dài theo chiều sâu khung hình — những đường này dẫn mắt người xem từ tiền cảnh vào hậu cảnh hiệu quả hơn nhiều so với đường dẫn khô ráo vì chúng phát sáng nhẹ nhờ phản chiếu, tự nổi bật khỏi nền xám xịt xung quanh. Bạn cũng nên để ý âm thanh hạt mưa rơi trên các bề mặt khác nhau — mái tôn, ô dù, mặt kính — như một gợi ý về nhịp điệu chụp: đợi một cơn gió thổi làm mưa xiên qua vùng có đèn sáng phía sau, bạn sẽ bắt được các hạt mưa hiện ra thành từng vệt sáng mảnh trong khung hình, một chi tiết nhỏ nhưng làm rõ hẳn không khí của cảnh.</p>
+      <h2>Công Thức Bấm Máy Trong RfCamera Cho Ngày Mưa</h2>
+      <p>Ba thông số dưới đây là điểm khởi đầu hợp lý khi bạn dựng lại không khí ngày mưa bằng preset phim trong RfCamera, dựa trên đặc tính thật của HP5 Plus đẩy sáng và ánh sáng phản chiếu lạnh của bầu trời âm u. Cân bằng trắng lệch về phía lạnh hơn bình thường vì bầu trời mưa dày mây có nhiệt độ màu cao hơn ánh sáng ban ngày tiêu chuẩn, trong khi mức grain và halation được đẩy lên để mô phỏng đúng hạt bạc thô của phim đẩy sáng một stop thay vì hạt mịn của phim chụp đúng sáng.</p>
+      <div class="recipe-callout">
+        <div class="recipe-callout-header">
+          <span>Ngày Mưa — HP5 Plus Đẩy Sáng</span>
+          <span class="mono">Thông Số RfCamera</span>
+        </div>
+        <div class="recipe-grid">
+          <div class="recipe-cell"><span>Đẩy ISO (Push)</span><strong>+1 Stop, 400 → 800</strong></div>
+          <div class="recipe-cell"><span>Cân Bằng Trắng</span><strong>7200K, Lạnh Âm U</strong></div>
+          <div class="recipe-cell"><span>Cường Độ Hạt Grain</span><strong>42%</strong></div>
+          <div class="recipe-cell"><span>Halation / Vignette</span><strong>24%</strong></div>
+        </div>
+      </div>
+      <p>Các con số này không phải giá trị cố định duy nhất — chúng là điểm bắt đầu để bạn tinh chỉnh theo từng con phố cụ thể. Một con hẻm có nhiều đèn neon màu sẽ cần giảm halation xuống một chút để tránh vùng sáng bị nở quá đà và nuốt mất chi tiết, trong khi một đại lộ rộng với ít nguồn sáng điểm có thể chịu được halation cao hơn mà không bị vỡ hình. Toàn bộ những điều chỉnh này được tính toán và hiển thị ngay trên khung ngắm trực tiếp nhờ shader GLSL chạy trên GPU, nên bạn thấy trước kết quả cuối cùng trước khi bấm máy, thay vì phải đoán và chỉnh sửa lại sau khi đã lưu ảnh.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

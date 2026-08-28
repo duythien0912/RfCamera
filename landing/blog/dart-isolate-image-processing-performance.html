@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking — RfCamera Guides</title>
+  <meta name="description" content="How background worker isolates process heavy image matrices without dropping 60fps frames." />
+  <meta name="keywords" content="dart, isolate, image, processing, performance, film photography, rfcamera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/dart-isolate-image-processing-performance.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/dart-isolate-image-processing-performance.html" />
+  <meta property="og:title" content="Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking" />
+  <meta property="og:description" content="How background worker isolates process heavy image matrices without dropping 60fps frames." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking" />
+  <meta name="twitter:description" content="How background worker isolates process heavy image matrices without dropping 60fps frames." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking",
+    "description": "How background worker isolates process heavy image matrices without dropping 60fps frames.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Tech & Privacy</span>
+        <span>•</span>
+        <span class="mono">5 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/screenshots/01-camera.png" alt="Zero UI Stutter: Multi-Threaded Dart Isolates for 12MP JPEG Baking" />
+      <div class="img-caption mono">Photo Study: Visual study: Zero UI Stutter</div>
+    </div>
+
+    <div class="content-body">
+        <p class="lead-p">Baking a 12-megapixel RfCamera photo means running a colour matrix, a GLSL optics shader, and five compositing passes over every pixel &mdash; work that takes close to a full second on most phones. RfCamera pushes that work into a Dart isolate through compute(), so the shutter button keeps animating and the sound effect keeps playing while a separate thread finishes the JPEG.</p>
+
+        <h2>The Main Thread Can't Afford a 12-Megapixel Render</h2>
+        <p>Flutter draws every frame of RfCamera's live viewfinder on the same UI thread that reads your taps, plays button sound effects, and animates the shutter button's press state. At 60 frames per second that thread has 16.67 milliseconds to build a frame, hand it to the GPU, and get back to listening for input before the next frame is due. A full-resolution photo bake — decoding a 12-megapixel sensor capture, running a colour matrix multiply across every pixel, compositing grain, dust, and light-leak plates, drawing a date stamp, applying vignette falloff — is not 16-millisecond work. Depending on the device it's closer to a full second of sustained pixel math, and running that on the same thread that owns the UI would freeze the interface solid the instant you pressed the shutter: no button animation, no film-advance sound cue, nothing but a locked screen until the JPEG finished encoding.</p>
+        <p>That's the actual problem RfCamera's isolate architecture solves, and it's worth being specific about why a naive fix doesn't work. You can't simply defer the heavy work with a microtask or a Future scheduled on the same event loop, because Dart's event loop is still single-threaded — an async gap yields between tasks, but a long synchronous pixel loop inside one of those tasks still blocks everything queued behind it, including the next animation frame callback. The only way to get real parallelism, where a second thread is doing pixel math while the first thread keeps drawing frames, is a second Dart execution context with its own thread. That's what an isolate is.</p>
+
+        <h2>How a Dart Isolate Differs From a Shared-Memory Thread</h2>
+        <p>Most languages answer background work with a thread that shares the same heap as the caller, protected by locks you have to remember to take. Dart isolates work differently: each isolate gets its own heap and its own single-threaded event loop, and nothing is shared by default. You can't accidentally read a half-written pixel buffer from the UI isolate while the worker isolate is still writing it, because the two isolates don't see the same memory at all — the only way data moves between them is by copying it across a message port, serialized out and deserialized back in.</p>
+        <p>That copy is the real cost of using an isolate, and it's why the architecture is worth it: for a 12-megapixel RGBA buffer, copying the raw bytes across the isolate boundary takes real time, but it's cheap next to the colour matrix, geometry pass, and layered compositing that follow it, so the round trip pays for itself. RfCamera uses Dart's compute() helper rather than manually managing an Isolate.spawn() and ReceivePort pair, because compute() already handles that lifecycle correctly: it spawns a fresh isolate, sends the input — the captured frame plus the chosen film preset's parameters — waits for the isolate to run the given function to completion, receives the result back over the port, and tears the isolate down afterward. The UI isolate stays responsive the entire time because it's never blocked synchronously — it's awaiting a Future that resolves when the message arrives, which lets the event loop keep servicing frame callbacks and touch events in the meantime.</p>
+
+        <h2>One Pipeline, Two Call Sites</h2>
+        <p>The reason RfCamera's photos never surprise you is that the live viewfinder and the final bake run the same effect pipeline rather than two approximations of each other. widgets/film_view.dart drives what you see while framing a shot: a colour matrix pass sets the film stock's base tonal curve and color bias, followed by a GLSL fragment shader (shaders/film.frag) that runs on the GPU for the optical parts of the look — barrel distortion, chromatic aberration, and other lens-shape effects naturally suited to per-pixel shader math, since the GPU can do that work in parallel across the whole frame on every render pass without touching the CPU.</p>
+        <p>core/bake.dart is the second call site for that same pipeline, triggered once, at full sensor resolution, when you press the shutter. It isn't a separate 'export quality' code path with its own tuning — it replays the identical sequence of transforms the viewfinder just showed you, at higher resolution and inside the compute() isolate described above rather than on the GPU shader pipeline, because the isolate handles the CPU-bound compositing stages (grain, dust, light leaks, scanlines, vignette, date stamp) that come after the optical shader pass. Keeping one pipeline definition that both call sites invoke, instead of maintaining a fast preview version and a separate high-fidelity export version, is what guarantees the JPEG that lands in your camera roll matches the frame you composed — the grain density, the leak position, and the distortion curve are computed by the same function with the same inputs, once at preview resolution on the GPU and once at capture resolution inside an isolate.</p>
+
+        <h2>What Actually Runs Inside the Worker Isolate</h2>
+        <p>Not every stage of the RfCamera pipeline belongs on the GPU. Barrel distortion and chromatic aberration are geometric, per-pixel-coordinate operations that a fragment shader handles natively — sample this pixel's neighborhood, offset the color channels, done, in parallel across the frame. Grain, dust, light leaks, scanlines, vignette, and the date-stamp overlay are compositing operations instead: blending a texture plate over the base image at a computed opacity and position, sometimes several plates stacked in sequence. That's exactly the kind of sequential, CPU-friendly raster work Dart handles well inside an isolate, without needing a second GPU context or the complexity of coordinating multiple shader passes with intermediate render targets.</p>
+        <p>The grain and light-leak plates aren't generated procedurally — they're scans of real exposed and processed film, dust actually lifted off real negatives, light leaks that actually happened on real camera bodies. The isolate's job is to pick the right plate for the selected film preset, position and scale it correctly for the current frame, and blend it using the correct compositing mode: additive for light leaks so bright regions still read through them, multiply or overlay for grain and dust so they sit into the tonal range rather than washing it out. Running that sequence — decode, apply the colour matrix already computed by the shader pass, then four or five compositing blends, then JPEG encode — inside compute() means the isolate owns the full 12-megapixel buffer for the entire duration of that work, and the UI isolate is completely uninvolved until the finished bytes come back.</p>
+
+        <h2>Why the Stutter You'd Expect Doesn't Happen</h2>
+        <p>Picture what shutter-press would feel like without this split. The moment you tap the shutter button, the same thread that needs to animate that tap's ripple effect, play the mechanical shutter sound, and advance the film-wind indicator would instead be locked inside a synchronous loop touching every one of 12 million pixels several times over. Flutter's renderer would have nothing to draw for however long that loop takes, so the frame stays frozen — no animation, no response to a second tap, nothing — until the loop finishes. That's the stutter this architecture exists to prevent, and the isolate boundary removes it structurally rather than by making the bake faster: the UI thread was never blocked in the first place, because it handed the frame off and kept running its own event loop while a separate OS thread did the pixel math.</p>
+        <p>This is also why the shutter button's press animation, the winder sound effect, and the thumbnail-adding-to-gallery animation all keep playing normally the instant you tap, even though the actual JPEG isn't finished yet — those are UI-isolate concerns that never depended on the bake completing. The bake resolves later, asynchronously, and the worker isolate posts the finished image bytes back across the port when it's done, at which point the UI isolate writes them to storage and updates the gallery grid. From your perspective the app never paused; from the runtime's perspective, two independent event loops were doing two independent jobs on two independent threads the entire time.</p>
+
+        <h2>No Server in the Loop</h2>
+        <p>None of this pipeline reaches the network, and that's a deliberate absence rather than an oversight. RfCamera's manifest declares no INTERNET permission at all, which means the operating system enforces the offline claim at the permission level, not just at the level of what the code happens to call. The colour matrices, the film.frag shader, and every grain, dust, and light-leak plate ship inside the app bundle, so the compute() isolate has everything it needs locally the moment you press the shutter — there's no request to a rendering server, no upload of your photo for cloud processing, and no dependency on connectivity to finish a bake. Shooting on a plane, in a basement, or anywhere without signal produces exactly the same result as shooting with full bars.</p>
+        <p>That local-only design extends to how the finished photo is stored. The baked JPEG is written to the app's own documents directory rather than requested through the system photo library with a broad storage permission, and there's no account system asking for an email address or a login before you can shoot. Nothing about the isolate architecture required this — you could imagine a version of RfCamera that shipped the heavy compositing work to a server and streamed back a processed image — but doing it on-device inside a worker isolate is what makes the offline, accountless, free design possible in the first place. The performance architecture and the privacy model are the same decision, not two separate features bolted together.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

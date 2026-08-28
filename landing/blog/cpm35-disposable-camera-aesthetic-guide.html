@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery — RfCamera Guides</title>
+  <meta name="description" content="How the CPM35 single-use camera simulation creates punchy contrast, vibrant saturated primaries, and warm corner light leaks for vintage summer memories." />
+  <meta name="keywords" content="cpm35, disposable camera app, 90s summer aesthetic, light leak camera" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/cpm35-disposable-camera-aesthetic-guide.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/cpm35-disposable-camera-aesthetic-guide.html" />
+  <meta property="og:title" content="CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery" />
+  <meta property="og:description" content="How the CPM35 single-use camera simulation creates punchy contrast, vibrant saturated primaries, and warm corner light leaks for vintage summer memories." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery" />
+  <meta name="twitter:description" content="How the CPM35 single-use camera simulation creates punchy contrast, vibrant saturated primaries, and warm corner light leaks for vintage summer memories." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery",
+    "description": "How the CPM35 single-use camera simulation creates punchy contrast, vibrant saturated primaries, and warm corner light leaks for vintage summer memories.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Camera Guides</span>
+        <span>•</span>
+        <span class="mono">6 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/samples/sample_beach.jpg" alt="CPM35: The 90s Disposable Camera Aesthetic & Light Leak Mastery" />
+      <div class="img-caption mono">Photo Study: Beach snapshot captured on CPM35: rich cyan skies, saturated warm sand, and corner optical flare.</div>
+    </div>
+
+    <div class="content-body">
+        <p class="lead-p">Kodak's Fun Saver and Fujifilm's QuickSnap defined a decade of vacation photos with a single molded-plastic lens, a fixed f/10 aperture, and ISO 800 negative film that overexposed on purpose. CPM35 rebuilds that entire chain of manufacturing compromises &mdash; the chromatic fringing, the amber light leaks, the punchy contrast curve &mdash; as one shader pipeline running live in your viewfinder.</p>
+
+        <h2>A Camera Built to Be Thrown Away</h2>
+        <p>Kodak's Fun Saver and Fujifilm's QuickSnap turned photography into something disposable in the literal sense: buy the camera loaded with film, shoot 24 or 27 frames, hand the whole body to a drugstore counter for processing, and never touch it again. The category exploded through the late 1980s and into the 1990s because it removed every barrier between having a camera and taking a picture — no loading film, no focus ring, no light meter to misread. You aimed a plastic box with a viewfinder window roughly the size of a postage stamp and pressed a spring-loaded shutter release that clicked with a distinct mechanical snap.</p>
+        <p>That simplicity produced a specific look, not by design but by manufacturing economics. Every corner cut to hit a retail price under ten dollars left a visible fingerprint on the negative: a single-element lens instead of a corrected multi-element assembly, no autofocus motor, no exposure compensation, a shutter speed and aperture combination locked at the factory and never revisited per shot. CPM35 rebuilds that same chain of compromises deliberately. It fixes the simulated aperture and shutter the way the original hardware did, so the same processing decisions that gave 1994 beach photos their particular flatness and punch happen automatically here — you point, you shoot, and the render pipeline handles the rest the way a photo lab technician handled a roll of film without ever asking what you were trying to do.</p>
+
+        <h2>The Physics of a Single Plastic Lens</h2>
+        <p>A disposable camera's lens is one piece of molded plastic, usually a meniscus shape — curved on both surfaces, no achromatic doublet to correct for chromatic aberration, no aspherical grinding to flatten field curvature. Optically this is about as far from a corrected rangefinder lens as you can get, and that's the point. A meniscus lens at a small fixed aperture, typically around f/10 to f/11, produces a specific signature: the center of the frame stays reasonably sharp because a small aperture masks off the outer, more aberrated parts of the lens (the same principle behind pinhole sharpness), while the corners fall off in both sharpness and brightness because light rays hitting the edge of a single curved surface refract unevenly by wavelength.</p>
+        <p>That uneven refraction is chromatic aberration in its most visible form: blue and red wavelengths focus at slightly different points, so high-contrast edges near the frame corners pick up faint magenta or cyan fringing. CPM35 reproduces this through the same GLSL fragment shader (film.frag) that drives every camera body in the app — a barrel distortion pass bends the frame geometry outward at the edges the way a single-element lens does, and a chromatic aberration pass offsets the red and blue channels by a small pixel radius that increases toward the corners. The shader runs on both the live viewfinder feed and the final bake, so what you frame is what gets written to the JPEG, not a preview that lies to you.</p>
+
+        <div class="recipe-callout">
+          <div class="recipe-callout-header">
+            <span>CPM35 Simulation Settings</span>
+            <span class="mono">Fixed-Lens Point &amp; Shoot</span>
+          </div>
+          <div class="recipe-grid">
+            <div class="recipe-cell"><span>Aperture / Shutter</span><strong>f/10 @ 1/125s Fixed</strong></div>
+            <div class="recipe-cell"><span>Film Emulation</span><strong>ISO 800 Color Negative</strong></div>
+            <div class="recipe-cell"><span>Light Leak Strength</span><strong>Amber, 38% Opacity</strong></div>
+            <div class="recipe-cell"><span>Corner Falloff</span><strong>-1.8 EV Vignette</strong></div>
+          </div>
+        </div>
+
+        <h2>Why Everything Looks Warmer: Film Stock and Color Shift</h2>
+        <p>Disposable cameras were loaded almost exclusively with fast color negative stock — ISO 400 as a baseline, ISO 800 in models marketed for indoor or flash use — because a fixed aperture and fixed shutter speed camera needs the widest possible exposure latitude to avoid underexposing dim scenes. Negative film handles overexposure far better than digital sensors or slide film: you can overexpose color negative by two or three stops and the highlights compress gracefully instead of clipping to pure white. That forgiving highlight rolloff is why disposable camera photos of sunlit scenes look punchy rather than blown out, even when the fixed exposure was calculated for a much dimmer average scene.</p>
+        <p>Fast color negative stock from this era also carried a visible color bias: cyan-leaning skies, warm-shifted skin tones, and a contrast curve manufacturers tuned deliberately steep so machine-printed drugstore photos looked vivid without any darkroom correction. CPM35's colour matrix reproduces that same S-curve — shadows compressed slightly, midtones pushed toward saturation, highlights rolled off rather than clipped — in the colour matrix stage that runs before the optics shader in the pipeline (widgets/film_view.dart). Grain sits on top of that curve, and it isn't a procedural noise generator: RfCamera scans real film grain, halation, and dust plates from actual exposed and processed rolls, then composites those scanned textures over the color-graded frame so the texture matches how fast negative stock actually resolves detail, not a mathematical approximation of it.</p>
+
+        <h2>Where the Orange Comes From</h2>
+        <p>Light leaks are a manufacturing defect that became an aesthetic. Disposable camera bodies are ultrasonically welded plastic shells, not the machined metal and felt-light-trap construction of a mid-range SLR, and the tolerances around the film door and winding mechanism are loose enough that stray light can creep onto the edge of the film plane, especially when the camera sits in direct sun or gets tossed loose in a beach bag. That light doesn't hit the frame evenly — it enters at an angle through a specific gap, so it shows up as a soft-edged warm streak or bloom concentrated in one or two corners, almost always shifted toward amber or red because the light has to pass through the orange-tinted film base itself before it exposes the emulsion.</p>
+        <p>CPM35 treats this as a compositing layer rather than a random filter. RfCamera keeps a library of light leak plates scanned from real film that actually leaked during processing, and the render pipeline picks and positions a leak from that library, then blends it using an additive mode so brighter frame regions still show through it. The leak's opacity, angle, and corner bias are tuned to match what a loose-tolerance plastic shell actually produces — concentrated at the edge, fading fast toward the center, never covering more than a third of the frame. Because this happens in the same shader pass on both the live preview and the final bake, you see the leak positioned correctly before you press the shutter, not as a surprise after the fact.</p>
+
+        <h2>Shooting CPM35 on Purpose</h2>
+        <p>The fixed 32mm-equivalent focal length and small aperture mean CPM35 wants depth, not shallow focus — everything from about four feet to infinity reads acceptably sharp, so compose the way disposable camera shooters actually did: fill the frame with the whole scene rather than isolating a subject against blur. Beaches, pool decks, and any wide outdoor scene under strong sun give the meniscus lens plenty of light to work with, which keeps the fixed exposure in its comfortable range and lets the warm light leak sit against saturated blue sky without fighting for dynamic range.</p>
+        <p>Direct on-camera flash is the other core use case. The original hardware paired a small strobe with the same fixed aperture, so faces lit by flash in an otherwise dim room came out with hard, slightly overexposed highlights and a fast falloff into dark backgrounds — the specific look of a 90s house party photo. RfCamera's CPM35 body models that falloff into the exposure curve, so shooting indoors under mixed light with the simulated flash active produces that same isolated, slightly harsh subject-against-black-background result rather than an evenly lit modern flash exposure.</p>
+        <p>Avoid backlit portraits where the subject's face falls in shadow against a bright background — the fixed exposure has no way to compensate, and the meniscus lens has no coating sophistication to control the resulting flare, so the face will read as a silhouette. That failure mode is authentic to the original hardware, but it's rarely the shot you're after, so meter mentally: put the brightest part of your scene where the fixed exposure expects daylight, and let the corners do the rest.</p>
+
+        <h2>From Viewfinder to Saved JPEG</h2>
+        <p>Every visual decision described above — the colour matrix, the meniscus-lens shader, the scanned grain and light leak plates, the vignette falloff — runs twice: once per frame on the live viewfinder so you can see the CPM35 look while framing, and once at full resolution when you press the shutter. The second pass doesn't happen on the UI thread. RfCamera hands the full-resolution frame to a background isolate through Dart's compute() function, which runs the entire pipeline again in bake.dart on a separate thread with its own memory heap, then hands back a finished JPEG. That separation is why the interface stays responsive at the moment you'd expect it to freeze: the phone is doing the heaviest math of the whole shot right as you tap the shutter, but it's doing that math somewhere the UI thread never has to wait on.</p>
+        <p>Because it's the same code path for bake, not a simplified preview algorithm swapped for a heavier production one, the photo you saved matches what you framed — no light leak that shifted position, no grain that got denser, no color curve that got recalculated with different rounding. Nothing in this pipeline touches the network either: there's no INTERNET permission in the app manifest, the scanned grain and leak plates ship inside the app bundle, and the finished JPEG lands in your phone's local documents directory. The whole CPM35 simulation, from meniscus distortion to final file, happens on the device in your hand.</p>
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

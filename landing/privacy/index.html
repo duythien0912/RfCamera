@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — RfCamera</title>
+  <meta name="description" content="Privacy Policy for RfCamera: A 100% offline, zero-tracking, permission-minimal analog film camera application." />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/privacy.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --surface: #111114;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #9E9EA8;
+      --orange: #FF7A2F;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      line-height: 1.65;
+      padding: 60px 24px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .back-nav {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--orange);
+      background: rgba(255, 122, 47, 0.12);
+      border: 1px solid rgba(255, 122, 47, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+      width: fit-content;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: #fff;
+    }
+    .effective-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: -12px;
+    }
+    .policy-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 8px;
+    }
+    p, li {
+      color: #D0D0D8;
+      font-size: 15.5px;
+      line-height: 1.65;
+    }
+    ul {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    strong {
+      color: #fff;
+    }
+    .contact-box {
+      background: rgba(255, 122, 47, 0.08);
+      border: 1px solid rgba(255, 122, 47, 0.25);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-top: 8px;
+    }
+    footer {
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-nav">← Back to RfCamera</a>
+
+    <div class="badge mono">LEGAL & PRIVACY</div>
+    <h1>Privacy Policy for RfCamera</h1>
+    <div class="effective-date mono">Effective Date & Last Updated: August 28, 2026</div>
+
+    <div class="policy-section">
+      <h2>1. Overview and Core Philosophy</h2>
+      <p><strong>RfCamera</strong> ("we", "our", or "the App"), developed by <strong>Roycorp / Thien DevLab</strong>, is an offline analog film camera application for Android and iOS. We respect your personal privacy as a fundamental human right. Our application is built from the ground up to be <strong>100% offline, accountless, and permission-minimal</strong>.</p>
+      <p>We do not collect, transmit, sell, or share your personal data, photos, or device identifiers with anyone.</p>
+
+      <h2>2. Information We Do NOT Collect</h2>
+      <p>RfCamera operates without any backend servers, analytics SDKs, or cloud databases. Specifically:</p>
+      <ul>
+        <li><strong>No Personal Information:</strong> We do not require or collect your name, email address, phone number, physical address, or account credentials.</li>
+        <li><strong>No Photo or Video Uploads:</strong> Photos captured with RfCamera are processed directly on your device's GPU and saved strictly into local app storage or your device's photo gallery. No image data is ever transmitted to remote servers.</li>
+        <li><strong>No Analytics or Telemetry:</strong> We do not track in-app behavior, session lengths, button clicks, or user metrics.</li>
+        <li><strong>No Advertising Identifiers (AAID/IDFA):</strong> RfCamera does not use Google Advertising ID, IDFA, or any third-party ad networks.</li>
+        <li><strong>No Location Tracking:</strong> We do not collect or request your GPS, Wi-Fi, or network location.</li>
+      </ul>
+
+      <h2>3. Device Permissions Used and Their Purpose</h2>
+      <p>RfCamera requests only the absolute minimum system permissions required to take and save photographs:</p>
+      <ul>
+        <li><strong>Camera Permission (<code>android.permission.CAMERA</code>):</strong> Required solely to display the live 35mm optical viewfinder on your screen and capture photos when you press the shutter button. Camera feed data is processed in real time in temporary device memory and is never recorded or transmitted elsewhere.</li>
+        <li><strong>Storage / Media Access:</strong> If you choose to export a captured photo to your system Photo Library (Camera Roll), the App requests permission to save the JPEG file to your local device storage.</li>
+        <li><strong>No Internet Permission:</strong> On Android, RfCamera explicitly declares <code>0 INTERNET permissions</code> in its application manifest. The app is incapable of making network calls.</li>
+      </ul>
+
+      <h2>4. Data Retention and Local Storage</h2>
+      <p>All captured photos, custom camera settings (such as selected camera body, aspect ratio, or favorite photo flags) are stored solely on your physical device in local storage. You have complete control over your data: deleting a photo in the App permanently deletes it from your device storage, and uninstalling the App removes all local app data.</p>
+
+      <h2>5. Third-Party Services and SDKs</h2>
+      <p>RfCamera contains <strong>zero third-party advertising SDKs, tracking pixels, or monetization trackers</strong>. We do not integrate with Facebook SDK, Google Analytics, Firebase Analytics, or any data brokers.</p>
+
+      <h2>6. Children's Privacy (COPPA & GDPR-K Compliance)</h2>
+      <p>RfCamera does not collect any personal information from any user, including children under the age of 13 (or under 16 in the European Union). The app is safe for all audiences and does not contain advertisements, in-app purchases, or interactive online chat features.</p>
+
+      <h2>7. Changes to This Privacy Policy</h2>
+      <p>If we update this Privacy Policy in future versions of the App, we will update the "Last Updated" date at the top of this page. Because the App operates entirely offline, the most current policy is always accessible at our public URL: <a href="https://rfcam.roycorp.xyz/privacy.html" style="color: var(--orange);">https://rfcam.roycorp.xyz/privacy.html</a>.</p>
+
+      <h2>8. Contact Information</h2>
+      <p>If you have any questions, feedback, or concerns regarding this Privacy Policy or RfCamera, please contact us directly:</p>
+      <div class="contact-box mono">
+        <strong>Developer:</strong> Thien DevLab / Roycorp<br>
+        <strong>Email:</strong> duythien0914@gmail.com<br>
+        <strong>Website:</strong> https://rfcam.roycorp.xyz/<br>
+        <strong>App:</strong> RfCamera (Package: xyz.roycorp.rfcam)
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 RfCamera &bull; Roycorp. All rights reserved. 100% Offline & Private.</p>
+    </footer>
+  </div>
+</body>
+</html>

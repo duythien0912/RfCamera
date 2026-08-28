@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain — RfCamera Guides</title>
+  <meta name="description" content="A deep dive into mobile computer graphics: how fragment shaders, chromatic aberration, and highlight shoulder curves create genuine analog warmth." />
+  <meta name="keywords" content="glsl film shader, flutter shaders, real-time grain simulation, analog camera pipeline" />
+  <link rel="canonical" href="https://rfcam.roycorp.xyz/blog/how-gpu-shaders-simulate-analog-film-grain.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rfcam.roycorp.xyz/blog/how-gpu-shaders-simulate-analog-film-grain.html" />
+  <meta property="og:title" content="Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain" />
+  <meta property="og:description" content="A deep dive into mobile computer graphics: how fragment shaders, chromatic aberration, and highlight shoulder curves create genuine analog warmth." />
+  <meta property="og:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+  <meta property="og:site_name" content="RfCamera" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain" />
+  <meta name="twitter:description" content="A deep dive into mobile computer graphics: how fragment shaders, chromatic aberration, and highlight shoulder curves create genuine analog warmth." />
+  <meta name="twitter:image" content="https://rfcam.pages.dev/assets/og_image.png" />
+
+  <!-- Schema.org JSON-LD Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain",
+    "description": "A deep dive into mobile computer graphics: how fragment shaders, chromatic aberration, and highlight shoulder curves create genuine analog warmth.",
+    "image": "https://rfcam.pages.dev/assets/og_image.png",
+    "datePublished": "2026-08-28",
+    "author": {
+      "@type": "Organization",
+      "name": "RfCamera Editorial",
+      "url": "https://rfcam.roycorp.xyz"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    
+    :root {
+      --bg: #000000;
+      --surface: #0E0E11;
+      --surface-card: #15151A;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #A0A0AA;
+      --text-dim: #60606A;
+      --orange: #FF7A2F;
+      --orange-bg: rgba(255, 122, 47, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      padding: 40px 20px 80px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .article-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .back-link {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .article-header {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .cat-badge {
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid rgba(255, 122, 47, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.18;
+      color: #FFFFFF;
+    }
+    .lead-p {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+    }
+    .hero-img-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      margin: 12px 0 6px;
+    }
+    .hero-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .img-caption {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .content-body {
+      color: #D4D4DC;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .content-body h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .content-body h3 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 14px;
+    }
+    .content-body p {
+      line-height: 1.75;
+    }
+    .content-body ul, .content-body ol {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .content-body li {
+      line-height: 1.7;
+    }
+    .recipe-callout {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .recipe-callout-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      font-size: 13.5px;
+    }
+    .recipe-cell {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .recipe-cell span {
+      display: block;
+      color: var(--text-dim);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .recipe-cell strong {
+      color: #FFFFFF;
+      font-size: 14px;
+    }
+    .inline-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) {
+      .inline-img-grid { grid-template-columns: 1fr; }
+      .recipe-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+    .inline-img-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .inline-img-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background: var(--surface);
+      color: #fff;
+      font-weight: 800;
+    }
+    td { background: #0A0A0D; }
+    .author-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--orange);
+    }
+    .author-info h4 { font-size: 15px; font-weight: 800; color: #fff; }
+    .author-info p { font-size: 12.5px; color: var(--text-muted); }
+    .cta-banner {
+      background: linear-gradient(180deg, #18181F 0%, #0A0A0D 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 40px;
+    }
+    .cta-banner h3 { font-size: 24px; font-weight: 900; color: #fff; }
+    .cta-banner p { font-size: 14.5px; color: var(--text-muted); max-width: 480px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn-dl {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-dl.primary { background: #fff; color: #000; }
+    .btn-dl.secondary { background: var(--surface-card); color: #fff; border: 1px solid var(--border); }
+    .btn-dl:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+  <div class="article-wrap">
+    <a href="/blog/" class="back-link">← Back to Guides & Stories</a>
+
+    <div class="article-header">
+      <div class="badge-row">
+        <span class="cat-badge mono">Tech & Privacy</span>
+        <span>•</span>
+        <span class="mono">7 min read</span>
+        <span>•</span>
+        <span class="mono">August 28, 2026</span>
+      </div>
+      <h1>Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain</h1>
+    </div>
+
+    <div class="hero-img-box">
+      <img src="../assets/screenshots/03-color-config.png" alt="Under the Hood: How Real-Time GLSL Shaders Simulate 35mm Film Grain" />
+      <div class="img-caption mono">Photo Study: Real-time shader pipeline running in Flutter: optical distortion, chromatic aberration, and live grain.</div>
+    </div>
+
+    <div class="content-body">
+      
+        <p class="lead-p">Most film camera apps shoot a normal digital photo, then drag a colored filter over it afterward, which is why the preview never quite matches the exported photo. RfCamera runs the opposite order: a GLSL fragment shader distorts, aberrates, and grains every frame of the live viewfinder, then replays that exact math to bake the saved JPEG.</p>
+        <h2>The Filter-After-the-Fact Problem</h2>
+        <p>Open a typical "vintage" camera app and you're looking at the phone's stock camera pipeline: the sensor produces a normal digital exposure, auto white balance and tone mapping run through the platform's ISP, and only after that raw-looking frame is captured does a color lookup table (LUT) get laid on top, either live as a cheap preview overlay or, more often, only after you tap the shutter. That ordering creates a mismatch. What you frame and what you get are two different rendering passes, so the grain, halation, and color shift you saw while composing are approximations at best, and at worst appear only in the final export, meaning you're guessing at contrast and color while you shoot.</p>
+        <p>RfCamera's FilmEffect pipeline doesn't work that way. The same GLSL fragment shader that distorts and grains the live viewfinder feed in widgets/film_view.dart is the shader that produces the saved photo — there's no separate "preview LUT" and "export LUT." Every frame drawn to the screen while you're framing a shot has already gone through the colour matrix, the optical distortion pass, and the grain/leak/dust compositing, at up to 60 frames per second. That matters most in edge cases: a backlit window where chromatic aberration fringes the highlights, or a dark hallway where grain clumps visibly in the shadows. On a filter-after-the-fact app you find out how that looked only once the photo is on your camera roll. On RfCamera you saw it, live, through the finder, before you pressed anything.</p>
+        <h2>Colour Matrix Before Optics</h2>
+        <p>The FilmEffect pipeline's first step, before any lens simulation touches the frame, is a colour matrix transform. Each pixel's RGB value is multiplied against a matrix tuned to a specific emulsion's dye response — how a stock like Kodak Gold renders warm midtones and crushed blacks, or how a black-and-white stock compresses color into a narrow tonal band before the grain pass ever runs. This is a per-pixel operation executed inside the fragment shader itself, not a translucent PNG overlay laid on top of the image in a compositing step. The distinction is mechanical: a color overlay dims and tints whatever is underneath uniformly, while a matrix transform in the shader changes the actual channel math per pixel, so a saturated red patch and a pale skin tone shift by different amounts, the way a real film emulsion's dye layers respond differently to different light.</p>
+        <p>Running the colour transform before the optical distortion and chromatic aberration stages also matters for how errors propagate through the pipeline. Barrel distortion bends geometry outward from the center of frame; chromatic aberration nudges red, green, and blue samples apart radially. If tone and color were applied after those geometric passes, edge pixels would carry distortion artifacts into the color grade unevenly. Doing color first means the "film stock" character sits underneath the optics, in the same order a real camera stack works: light passes through colored dye layers in the emulsion, then through the lens's imperfect glass, not the reverse. It's a small ordering decision in shaders/film.frag, but it's the reason the RfCamera look holds together at frame edges instead of falling apart into mismatched color fringes.</p>
+        <h2>shaders/film.frag: Barrel Distortion and Chromatic Aberration</h2>
+        <p>After the colour matrix, shaders/film.frag runs two optical simulations per pixel, both driven by distance from the frame's center. Barrel distortion remaps each pixel's screen coordinate through a radial function: pixels near the center stay roughly in place, while pixels toward the edges get pushed outward, curving straight lines near the frame border the way an uncorrected wide-angle lens would. The shader computes this as a function of normalized distance from the optical center, then samples the source image at the displaced coordinate — a per-pixel texture lookup, not a whole-image warp applied once.</p>
+        <p>Chromatic aberration works on the same radial logic but splits it across color channels. Instead of sampling red, green, and blue from the same source coordinate, the shader offsets each channel's sample point by a slightly different amount along the radius, larger near the edges of frame and negligible near the center. That's the same mechanism that produces color fringing in a real lens with imperfect achromatic correction: blue and red wavelengths focus at slightly different points, so a bright edge — a window frame against a sky, a streetlight against dark asphalt — shows a thin red or cyan fringe.</p>
+        <p>Both effects run as fragment shader operations on the GPU, meaning every one of the roughly 2 million pixels in a preview frame gets this per-pixel math computed in parallel, redone from scratch 60 times a second while widgets/film_view.dart is live on screen. That's what makes it viable to run continuously during framing instead of as a one-time export filter: the GPU's parallel architecture handles the same small function evaluated millions of times per frame far faster than a CPU loop ever could, so distortion and aberration cost is close to free once the shader is compiled and bound.</p>
+        <h2>Grain, Leaks, and Dust Are Scanned Film, Not Procedural Noise</h2>
+        <p>Most digital "film grain" is generated math: a Perlin or simplex noise function evaluated per pixel, sometimes layered at a couple of octaves to fake variation, then blended over the image at some opacity. It looks like static because that's what it is — noise with no relationship to how silver halide crystals actually clump when light exposes them unevenly across a frame.</p>
+        <p>RfCamera's grain, light leak, and dust plates are scans of real film: frames of actual exposed and processed stock, digitized at high resolution and stored as compositing layers rather than generated at runtime. When the FilmEffect pipeline composites grain onto a frame, it's blending in the irregular, non-uniform clumping pattern that a physical negative actually has — brighter grain structure in some regions, tighter in others, asymmetric dust specks and hair fibers exactly where they landed on that physical piece of film during scanning, not evenly distributed the way a noise function would place them. Light leaks work the same way: rather than a gradient fill simulating a leaky camera back, the plate is a scan of an actual leak, with the soft, organic falloff a real light source burning into an emulsion edge produces.</p>
+        <p>On top of the grain/leak/dust composite, the pipeline layers scanlines, vignette falloff, and — for cameras where it's part of the character — a date-stamp overlay, each applied as its own pass so intensity can be tuned per camera profile without re-baking the base plates. The result holds up under close inspection in a way procedural noise doesn't: zoom into a shadow area and the grain has the same irregular, non-repeating texture a scanned negative has, because it is one.</p>
+        <h2>core/bake.dart: One Pipeline, Two Outputs</h2>
+        <p>The hardest part of building a "what you see is what you get" film camera isn't the shader — it's making sure the photo you save goes through the identical math as the frame you were just looking at. RfCamera solves this by not having two rendering paths at all. When you press the shutter, core/bake.dart takes the full-resolution sensor capture and replays the same FilmEffect pipeline that was drawing the live preview: the same colour matrix, the same barrel distortion and chromatic aberration coefficients from shaders/film.frag, the same grain/leak/dust plate compositing, the same vignette and scanline passes, applied in the same order.</p>
+        <p>That replay happens inside a Dart compute() isolate — a separate execution thread spawned specifically for the bake, so the multi-megapixel image processing doesn't block the UI thread and freeze the interface while the app writes the file. The live viewfinder runs the pipeline on the GPU via the fragment shader at preview resolution for real-time framing; the bake step runs the equivalent transform at full sensor resolution in the isolate, then encodes the result to JPEG. Using one pipeline definition for both means there's no second implementation to drift out of sync — no separate "export renderer" that some other camera app might use to cut corners on a full-resolution grain composite for speed. What changes between preview and final photo is resolution and where the computation runs, not the math itself. That's why the framing you composed through the finder — the exact grain density, the exact amount of edge fringing — is what lands in your camera roll.</p>
+        <h2>No Server, No Upload: What Runs Entirely on the Phone</h2>
+        <p>None of this pipeline touches a network connection. RfCamera declares no INTERNET permission in its app manifest, which means the operating system itself blocks the app from opening any outbound connection — not a settings toggle you have to remember to disable, but a permission the app was never granted at install time. There's no account to create, no login screen, and no server-side processing step where a photo gets uploaded, run through a cloud model, and downloaded back with a filter applied; the entire colour matrix, optical shader, and grain compositing chain described above runs on the phone's own GPU and CPU.</p>
+        <p>That has a direct consequence for where your photos live: baked JPEGs are written straight to the app's own documents directory on the device, not to a remote bucket, and the app doesn't request broad storage permissions to reach into your phone's general photo library because it doesn't need to — it only manages the folder it created for itself. This isn't a privacy feature bolted on top of an otherwise networked app; it's a consequence of how the rendering is built. A GPU fragment shader and a compute() isolate are both local execution primitives — there was never a design point where a network call would fit into the pipeline. The tradeoff is one most other "AI-enhanced" film apps don't make: no cloud model means no waiting on a round trip, no per-photo processing cost, and no photo ever leaving the device it was taken on.</p>
+        
+    </div>
+
+    <!-- Author Badge -->
+    <div class="author-card">
+      <img src="../assets/rfcam_icon.png" alt="RfCamera Team" class="author-avatar" />
+      <div class="author-info">
+        <h4>RfCamera Editorial Team</h4>
+        <p>Dedicated to pure analog 35mm film craft, optics, and 100% offline software.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Download CTA -->
+    <div class="cta-banner">
+      <h3>Experience Real 35mm Film in Your Pocket</h3>
+      <p>12 classic analog cameras, live fragment shaders, and mechanical acoustics. 100% offline & free.</p>
+      <div class="btn-row">
+        <a href="https://rfcam.roycorp.xyz/" class="btn-dl primary">Download on App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=xyz.roycorp.rfcam" class="btn-dl secondary">Get on Google Play</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
