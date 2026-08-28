@@ -92,6 +92,7 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
         ShareParams(
           files: [XFile(photo.path)],
           subject: 'RfCamera #${photo.cameraName}',
+          text: 'Shot on #RfCamera 35mm (${photo.cameraName}) · https://rfcam.roycorp.xyz',
           sharePositionOrigin: origin,
         ),
       );
