@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RfCamera — 12 Film Cameras in Your Pocket</title>
+  <meta name="description" content="12 classic analog film cameras in your pocket. Real 35mm viewfinder with live grain. 100% offline, zero accounts, completely free." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --surface: #111114;
+      --surface-hover: #18181C;
+      --border: #222228;
+      --text: #FFFFFF;
+      --text-muted: #8E8E96;
+      --text-dim: #54545C;
+      --orange: #FF7A2F;
+      --stamp: #FF8A3D;
+      --live-green: #30D158;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.4;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Ambient noise ONLY on background */
+    #film-grain-bg {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.06;
+    }
+
+    /* Minimal Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(10, 10, 12, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .nav-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+    }
+
+    .nav-name {
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: -0.03em;
+    }
+
+    .nav-tag {
+      font-size: 10px;
+      color: var(--orange);
+      font-weight: 700;
+      background: rgba(255, 122, 47, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .nav-cta {
+      background: #FFFFFF;
+      color: #000000;
+      font-weight: 800;
+      font-size: 12.5px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .nav-cta:hover {
+      transform: scale(1.03);
+      background: #E8E8E8;
+    }
+
+    /* Page Wrap (Vertically & Horizontally Centered Viewport) */
+    .page-wrap {
+      max-width: 1140px;
+      width: 100%;
+      margin: 0 auto;
+      min-height: calc(100vh - 56px);
+      padding: 68px 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========================================================
+       CENTER-ALIGNED DUAL WORKBENCH (COMPACT PHONE)
+       ======================================================== */
+    .hero-workbench {
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      gap: 60px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    @media (max-width: 960px) {
+      .hero-workbench {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    /* Left Console */
+    .hero-lead-unified {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    /* Top Headline */
+    .hero-top-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-headline {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: #FFFFFF;
+    }
+
+    .hero-headline span {
+      color: var(--orange);
+    }
+
+    @media (max-width: 768px) {
+      .hero-headline {
+        font-size: 34px;
+      }
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      max-width: 520px;
+    }
+
+    /* The 3 Moments (01. SEE, 02. CHOOSE, 03. KEEP) */
+    .moments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 20px;
+    }
+
+    .moment-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .moment-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .moment-item-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .moment-tag {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--orange);
+      background: rgba(255, 122, 47, 0.12);
+      padding: 1px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    .moment-item-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .moment-item-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      padding-left: 2px;
+    }
+
+    /* Download Buttons Deck */
+    .download-deck-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .download-deck {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-dl {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-dl.primary {
+      background: #FFFFFF;
+      color: #000000;
+    }
+    .btn-dl.primary:hover {
+      background: #E5E5E5;
+      transform: translateY(-2px);
+    }
+
+    .btn-dl.secondary {
+      background: var(--surface);
+      color: #FFFFFF;
+      border: 1px solid var(--border);
+    }
+    .btn-dl.secondary:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .btn-dl svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    .btn-text-col {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .btn-sub-label {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    .btn-main-label {
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .hero-qr-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 3px 10px 3px 3px;
+    }
+
+    .qr-thumb {
+      width: 32px;
+      height: 32px;
+      background: #FFFFFF;
+      border-radius: 5px;
+      padding: 2px;
+    }
+
+    .qr-thumb svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .qr-info-text {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    .hero-manifesto-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #9C9CA4;
+    }
+
+    .hero-manifesto-row .dot {
+      width: 3.5px;
+      height: 3.5px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+
+    /* ========================================================
+       RIGHT PHONE FRAME (COMPACT & PROPORTIONATE)
+       ======================================================== */
+    .mockup-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .phone-mockup {
+      position: relative;
+      width: 100%;
+      max-width: 310px;
+      aspect-ratio: 1080 / 2400;
+      background: #08080A;
+      border-radius: 34px;
+      border: 2.5px solid #282832;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      overflow: hidden;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 68px;
+      height: 15px;
+      background: #000;
+      border-radius: 8px;
+      z-index: 30;
+    }
+
+    /* Slider Track */
+    .slider-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide-item {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease;
+      transform: scale(0.98);
+      pointer-events: none;
+    }
+
+    .slide-item.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .slide-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Slider Controls & Captions */
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 310px;
+      padding: 0 4px;
+    }
+
+    .slider-caption {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: 0.03em;
+    }
+
+    .slider-dots {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .slider-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #33333C;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .slider-dot.active {
+      width: 14px;
+      border-radius: 3px;
+      background: var(--orange);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--text-dim);
+      background: #000000;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Grain -->
+  <canvas id="film-grain-bg"></canvas>
+
+  <!-- Minimal Nav -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <img src="assets/rfcam_icon.png" alt="RfCamera" class="nav-logo" onerror="this.style.display='none'" />
+      <span class="nav-name">RfCamera</span>
+      <span class="nav-tag mono">OFFLINE</span>
+    </a>
+    <a href="#download-deck" class="nav-cta">Download App</a>
+  </nav>
+
+  <!-- Main Wrap (Centered Viewport) -->
+  <div class="page-wrap">
+
+    <!-- CENTERED DUAL WORKBENCH (COMPACT MOCKUP) -->
+    <div class="hero-workbench">
+      
+      <!-- Left Column: Unified Headline + 1.2.3 Moments + Download Buttons -->
+      <div class="hero-lead-unified">
+        
+        <!-- Headline & Sub -->
+        <div class="hero-top-text">
+          <h1 class="hero-headline">
+            12 film cameras.<br />
+            <span>In your pocket.</span>
+          </h1>
+          <p class="hero-sub">
+            No accounts. No cloud. Open the app and shoot through a real 35mm rangefinder with live grain and optical delay.
+          </p>
+        </div>
+
+        <!-- 3 Core Moments (01. See, 02. Choose, 03. Keep) -->
+        <div class="moments-list">
+          <!-- 01. SEE -->
+          <div class="moment-item">
+            <div class="moment-item-header">
+              <span class="moment-tag mono">01 • SEE</span>
+              <h2 class="moment-item-title">A real 35mm viewfinder.</h2>
+            </div>
+            <p class="moment-item-desc">
+              Live film grain. Optical shutter latency. What you see is exactly how the film bakes.
+            </p>
+          </div>
+
+          <!-- 02. CHOOSE -->
+          <div class="moment-item">
+            <div class="moment-item-header">
+              <span class="moment-tag mono">02 • CHOOSE</span>
+              <h2 class="moment-item-title">Choose the camera. Not the filter.</h2>
+            </div>
+            <p class="moment-item-desc">
+              12 classic analog bodies. Each with its own film stock, glass character, and shutter sound.
+            </p>
+          </div>
+
+          <!-- 03. KEEP -->
+          <div class="moment-item">
+            <div class="moment-item-header">
+              <span class="moment-tag mono">03 • KEEP</span>
+              <h2 class="moment-item-title">Film stays on your device.</h2>
+            </div>
+            <p class="moment-item-desc">
+              Color profiles & optical aspect ratios. 100% offline, GPU-baked locally, zero cloud.
+            </p>
+          </div>
+        </div>
+
+        <!-- Download Buttons & Manifesto Badges -->
+        <div class="download-deck-wrap" id="download-deck">
+          <div class="download-deck">
+            <a href="#" class="btn-dl primary">
+              <svg viewBox="0 0 24 24">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.65-.79 1.1-1.89.98-2.99-.95.04-2.1.63-2.78 1.42-.59.68-1.12 1.79-.98 2.87 1.06.08 2.14-.54 2.78-1.3"/>
+              </svg>
+              <div class="btn-text-col">
+                <span class="btn-sub-label">Download on</span>
+                <span class="btn-main-label">App Store</span>
+              </div>
+            </a>
+
+            <a href="#" class="btn-dl secondary">
+              <svg viewBox="0 0 24 24">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186a2.368 2.368 0 0 1-.225-.972V2.786c0-.36.08-.69.224-.972zm11.235 11.238l2.585 2.585-12.04 6.88 9.455-9.465zm0-2.104L5.389 1.483 17.43 8.363l-2.586 2.585zm1.485 1.052l3.414 1.95a1.862 1.862 0 0 1 0 3.08l-3.414 1.95-2.327-2.327 2.327-2.653z"/>
+              </svg>
+              <div class="btn-text-col">
+                <span class="btn-sub-label">Get it on</span>
+                <span class="btn-main-label">Google Play</span>
+              </div>
+            </a>
+
+            <div class="hero-qr-badge">
+              <div class="qr-thumb">
+                <svg viewBox="0 0 100 100" fill="#000">
+                  <rect x="10" y="10" width="28" height="28" rx="4"/>
+                  <rect x="16" y="16" width="16" height="16" rx="2" fill="#fff"/>
+                  <rect x="20" y="20" width="8" height="8" rx="1"/>
+                  <rect x="62" y="10" width="28" height="28" rx="4"/>
+                  <rect x="68" y="16" width="16" height="16" rx="2" fill="#fff"/>
+                  <rect x="72" y="20" width="8" height="8" rx="1"/>
+                  <rect x="10" y="62" width="28" height="28" rx="4"/>
+                  <rect x="16" y="68" width="16" height="16" rx="2" fill="#fff"/>
+                  <rect x="20" y="72" width="8" height="8" rx="1"/>
+                  <rect x="44" y="12" width="6" height="6"/>
+                  <rect x="44" y="44" width="12" height="12"/>
+                  <rect x="62" y="64" width="16" height="16"/>
+                </svg>
+              </div>
+              <span class="qr-info-text">Scan to<br/>install</span>
+            </div>
+          </div>
+
+          <div class="hero-manifesto-row">
+            <span>100% Free</span>
+            <span class="dot"></span>
+            <span>Completely Offline</span>
+            <span class="dot"></span>
+            <span>All Cameras Unlocked</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Compact Real Phone Frame & Screenshot Slider -->
+      <div class="mockup-container">
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          
+          <div class="slider-track" id="slider-track">
+            <!-- Screen 1: Camera Viewfinder with Exposure Tray -->
+            <div class="slide-item active" data-caption="35mm Rangefinder Viewfinder">
+              <img src="assets/screenshots/01-camera.png" alt="RfCamera Viewfinder" />
+            </div>
+
+            <!-- Screen 2: Real Camera Selector -->
+            <div class="slide-item" data-caption="12 Classic Camera Bodies">
+              <img src="assets/screenshots/02-selector.png" alt="Camera Selector Tray" />
+            </div>
+
+            <!-- Screen 3: Real Color Config & Ratios -->
+            <div class="slide-item" data-caption="Color Profiles & Framing Ratios">
+              <img src="assets/screenshots/03-color-config.png" alt="Color Configuration" />
+            </div>
+
+            <!-- Screen 4: Real Photo Detail & Album -->
+            <div class="slide-item" data-caption="100% Offline Film Gallery">
+              <img src="assets/screenshots/09-photo-detail.png" alt="Photo Detail" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider Pagination & Caption -->
+        <div class="slider-controls">
+          <span class="slider-caption mono" id="slider-caption">35mm Rangefinder Viewfinder</span>
+          <div class="slider-dots" id="slider-dots">
+            <div class="slider-dot active" data-idx="0"></div>
+            <div class="slider-dot" data-idx="1"></div>
+            <div class="slider-dot" data-idx="2"></div>
+            <div class="slider-dot" data-idx="3"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>RfCamera &bull; Pure offline 35mm analog camera.</div>
+    <div>Free forever for iOS and Android.</div>
+  </footer>
+
+  <!-- Auto-Advancing Real Screenshot Slider Script -->
+  <script>
+    const slides = document.querySelectorAll('.slide-item');
+    const dots = document.querySelectorAll('.slider-dot');
+    const caption = document.getElementById('slider-caption');
+    let currentSlide = 0;
+    let autoSlideTimer = null;
+
+    function goToSlide(idx) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+
+      currentSlide = (idx + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+
+      const capText = slides[currentSlide].getAttribute('data-caption');
+      caption.innerText = capText;
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function startAutoSlide() {
+      if (autoSlideTimer) clearInterval(autoSlideTimer);
+      autoSlideTimer = setInterval(nextSlide, 3200);
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.getAttribute('data-idx'));
+        goToSlide(idx);
+        startAutoSlide();
+      });
+    });
+
+    startAutoSlide();
+
+    // Background Grain (Only renders behind solid surfaces)
+    function renderNoise(id, density) {
+      const c = document.getElementById(id);
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      let w = c.width = 280, h = c.height = 340;
+
+      function step() {
+        const idata = ctx.createImageData(w, h);
+        const buf = new Uint32Array(idata.data.buffer);
+        const len = buf.length;
+        for (let i = 0; i < len; i++) {
+          if (Math.random() < density) {
+            const n = (Math.random() * 255) | 0;
+            buf[i] = (n << 24) | (n << 16) | (n << 8) | n;
+          }
+        }
+        ctx.putImageData(idata, 0, 0);
+        requestAnimationFrame(step);
+      }
+      step();
+    }
+
+    renderNoise('film-grain-bg', 0.25);
+  </script>
+</body>
+</html>
