@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -23,6 +22,7 @@ import '../core/photo.dart';
 import '../core/toast.dart';
 import '../widgets/quick_panel.dart';
 import '../widgets/viewfinder.dart';
+import '../widgets/app_photo_image.dart';
 import 'gallery_screen.dart';
 import 'photo_detail_screen.dart';
 import 'selector_sheet.dart';
@@ -129,10 +129,12 @@ class _CameraScreenState extends State<CameraScreen>
 
   Future<void> _initCamera() async {
     try {
-      final status = await Permission.camera.request();
-      if (!status.isGranted) {
-        if (mounted) setState(() => _permissionDenied = true);
-        return;
+      if (!kIsWeb) {
+        final status = await Permission.camera.request();
+        if (!status.isGranted) {
+          if (mounted) setState(() => _permissionDenied = true);
+          return;
+        }
       }
       if (mounted && _permissionDenied) {
         setState(() => _permissionDenied = false);
@@ -441,17 +443,15 @@ class _CameraScreenState extends State<CameraScreen>
         ),
       );
 
-      final dir = await state.albumDir();
-      final file = File('${dir.path}/${taken.microsecondsSinceEpoch}.jpg');
-      await file.writeAsBytes(baked, flush: true);
-      unawaited(_saveToSystemGallery(file.path));
-
-      final photo = await state.addPhoto(
-        path: file.path,
+      final photo = await state.saveBakedPhoto(
+        baked: baked,
         cam: cam,
         negative: effect.negative,
-        at: taken,
+        taken: taken,
       );
+      if (!kIsWeb) {
+        unawaited(_saveToSystemGallery(photo.path));
+      }
       if (mounted) _flyToThumbnail(photo);
     } catch (_) {
       // A failed frame should never leave the shutter stuck.
@@ -492,7 +492,7 @@ class _CameraScreenState extends State<CameraScreen>
       builder: (context) => _FlyingShot(
         from: from,
         to: to,
-        file: File(photo.path),
+        path: photo.path,
         onDone: () => entry.remove(),
       ),
     );
@@ -586,18 +586,15 @@ class _CameraScreenState extends State<CameraScreen>
         ),
       );
 
-      final dir = await state.albumDir();
-      final file = File('${dir.path}/${taken.microsecondsSinceEpoch}.jpg');
-      await file.writeAsBytes(baked, flush: true);
-      unawaited(_saveToSystemGallery(file.path));
-
-      await state.addPhoto(
-        path: file.path,
+      final photo = await state.saveBakedPhoto(
+        baked: baked,
         cam: cam,
         negative: effect.negative,
-        at: taken,
+        taken: taken,
       );
-
+      if (!kIsWeb) {
+        unawaited(_saveToSystemGallery(photo.path));
+      }
       if (!mounted) return;
       _openGallery();
     } catch (e) {
@@ -1280,8 +1277,8 @@ class _ActionRow extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               child: latest == null
                   ? null
-                  : Image.file(
-                      File(latest.path),
+                  : AppPhotoImage(
+                      path: latest.path,
                       fit: BoxFit.cover,
                       cacheWidth: 200,
                       errorBuilder: (_, e, s) => const SizedBox.shrink(),
@@ -1459,15 +1456,14 @@ class _FlyingShot extends StatefulWidget {
   const _FlyingShot({
     required this.from,
     required this.to,
-    required this.file,
+    required this.path,
     required this.onDone,
   });
 
   final Rect from;
   final Rect to;
-  final File file;
+  final String path;
   final VoidCallback onDone;
-
   @override
   State<_FlyingShot> createState() => _FlyingShotState();
 }
@@ -1498,8 +1494,8 @@ class _FlyingShotState extends State<_FlyingShot>
             opacity: 1 - (t * t * 0.35),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16 + (1 - t) * 12),
-              child: Image.file(
-                widget.file,
+              child: AppPhotoImage(
+                path: widget.path,
                 fit: BoxFit.cover,
                 cacheWidth: 400,
                 errorBuilder: (_, e, s) => const SizedBox.shrink(),

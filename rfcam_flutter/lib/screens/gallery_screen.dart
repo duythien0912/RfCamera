@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:dismissible_page/dismissible_page.dart';
@@ -15,6 +14,7 @@ import '../core/palette.dart';
 import '../core/photo.dart';
 import '../core/toast.dart';
 import '../widgets/camera_art.dart';
+import '../widgets/app_photo_image.dart';
 import 'photo_detail_screen.dart';
 import 'settings_sheet.dart';
 
@@ -414,11 +414,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
                     0,
                   ])
                 : const ColorFilter.mode(Colors.transparent, BlendMode.dst),
-            child: Image.file(
-              File(photo.path),
+            child: AppPhotoImage(
+              path: photo.path,
               fit: BoxFit.cover,
               cacheWidth: 400,
-              gaplessPlayback: true,
               errorBuilder: (_, _, _) => const ColoredBox(color: P.tile),
             ),
           ),

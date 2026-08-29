@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +26,9 @@ class AppState extends ChangeNotifier {
   static const _kAccessories = 'dazz.accessories';
   static const _kMirrorFront = 'dazz.mirror_front';
 
+
+  /// In-memory and data-URI image byte cache for web runtime.
+  static final Map<String, Uint8List> webImageStore = {};
   SharedPreferences? _prefs;
   bool _ready = false;
   bool get ready => _ready;
@@ -116,7 +120,7 @@ class AppState extends ChangeNotifier {
         final photo = CapturedPhoto.fromJson(
           jsonDecode(s) as Map<String, dynamic>,
         );
-        if (File(photo.path).existsSync()) found.add(photo);
+        if (kIsWeb || File(photo.path).existsSync()) found.add(photo);
       } catch (_) {
         // A corrupt row should never take the whole album down.
       }
@@ -332,11 +336,15 @@ class AppState extends ChangeNotifier {
   Future<void> deletePhotos(Iterable<String> ids) async {
     final set = ids.toSet();
     for (final p in _photos.where((p) => set.contains(p.id))) {
-      try {
-        final f = File(p.path);
-        if (f.existsSync()) f.deleteSync();
-      } catch (_) {
-        // Losing the file is fine; the record goes either way.
+      if (kIsWeb) {
+        webImageStore.remove(p.path);
+      } else {
+        try {
+          final f = File(p.path);
+          if (f.existsSync()) f.deleteSync();
+        } catch (_) {
+          // Losing the file is fine; the record goes either way.
+        }
       }
     }
     _photos.removeWhere((p) => set.contains(p.id));
@@ -346,11 +354,38 @@ class AppState extends ChangeNotifier {
 
   /// Where captures are written. Kept inside the app so the album works with
   /// no photo-library permission at all.
-  Future<Directory> albumDir() async {
+  Future<Directory?> albumDir() async {
+    if (kIsWeb) return null;
     final docs = await getApplicationDocumentsDirectory();
     final dir = Directory('${docs.path}/dazz');
     if (!dir.existsSync()) dir.createSync(recursive: true);
     return dir;
+  }
+
+  /// Persists a baked photo to disk (native) or web data URI (web).
+  Future<CapturedPhoto> saveBakedPhoto({
+    required Uint8List baked,
+    required CameraProfile cam,
+    required bool negative,
+    required DateTime taken,
+  }) async {
+    String photoPath;
+    if (kIsWeb) {
+      final base64Str = base64Encode(baked);
+      photoPath = 'data:image/jpeg;base64,$base64Str';
+      webImageStore[photoPath] = baked;
+    } else {
+      final dir = await albumDir();
+      final file = File('${dir!.path}/${taken.microsecondsSinceEpoch}.jpg');
+      await file.writeAsBytes(baked, flush: true);
+      photoPath = file.path;
+    }
+    return addPhoto(
+      path: photoPath,
+      cam: cam,
+      negative: negative,
+      at: taken,
+    );
   }
 
   // --- folders -------------------------------------------------------------

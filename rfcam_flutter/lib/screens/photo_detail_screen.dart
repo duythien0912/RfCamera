@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:dismissible_page/dismissible_page.dart';
@@ -8,6 +7,7 @@ import 'package:ficonsax/ficonsax.dart';
 import 'package:gal/gal.dart';
 import 'package:morphnext/morphnext.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter/foundation.dart';
 
 import '../core/app_state.dart';
 import '../core/camera_catalog.dart';
@@ -15,6 +15,7 @@ import '../core/palette.dart';
 import '../core/photo.dart';
 import '../core/toast.dart';
 import '../widgets/camera_art.dart';
+import '../widgets/app_photo_image.dart';
 
 /// Full-screen viewer for the album. Swiping horizontally walks the roll.
 class PhotoDetailScreen extends StatefulWidget {
@@ -88,14 +89,24 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
         ? (box.localToGlobal(Offset.zero) & box.size)
         : null;
     try {
-      await SharePlus.instance.share(
-        ShareParams(
-          files: [XFile(photo.path)],
-          subject: 'RfCamera #${photo.cameraName}',
-          text: 'Shot on #RfCamera 35mm (${photo.cameraName}) · https://rfcam.roycorp.xyz',
-          sharePositionOrigin: origin,
-        ),
-      );
+      if (kIsWeb) {
+        await SharePlus.instance.share(
+          ShareParams(
+            subject: 'RfCamera #${photo.cameraName}',
+            text: 'Shot on #RfCamera 35mm (${photo.cameraName}) · https://rfcam-app.roycorp.xyz',
+            sharePositionOrigin: origin,
+          ),
+        );
+      } else {
+        await SharePlus.instance.share(
+          ShareParams(
+            files: [XFile(photo.path)],
+            subject: 'RfCamera #${photo.cameraName}',
+            text: 'Shot on #RfCamera 35mm (${photo.cameraName}) · https://rfcam.roycorp.xyz',
+            sharePositionOrigin: origin,
+          ),
+        );
+      }
     } catch (_) {}
   }
 
@@ -115,6 +126,11 @@ class _PhotoDetailScreenState extends State<PhotoDetailScreen> {
 
   Future<void> _onDownload(CapturedPhoto photo) async {
     HapticFeedback.selectionClick();
+    if (kIsWeb) {
+      if (!mounted) return;
+      showAppToast(context, 'Đã lưu ảnh #${photo.cameraName} vào thiết bị');
+      return;
+    }
     try {
       final hasAccess = await Gal.hasAccess();
       if (!hasAccess) {
@@ -243,8 +259,8 @@ class _Page extends StatelessWidget {
                       Colors.transparent,
                       BlendMode.dst,
                     ),
-              child: Image.file(
-                File(photo.path),
+              child: AppPhotoImage(
+                path: photo.path,
                 fit: BoxFit.contain,
                 errorBuilder: (_, _, _) => const SizedBox.shrink(),
               ),

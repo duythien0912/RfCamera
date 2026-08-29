@@ -1245,6 +1245,54 @@
     </div>
   </div>
 
+  <!-- iOS Web App Warning Modal -->
+  <div class="qr-modal-backdrop" id="ios-modal" onclick="handleIosBackdropClick(event)">
+    <div class="qr-modal-card" style="max-width: 420px; text-align: left;">
+      <button class="qr-modal-close" onclick="closeIosModal()" aria-label="Close modal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 8px;">
+        <span class="qr-modal-badge mono" style="margin-bottom: 0;">IOS EXPERIMENTAL &bull; WEB APP</span>
+      </div>
+
+      <h3 class="qr-modal-title" style="margin-bottom: 12px; font-size: 21px; letter-spacing: -0.03em;">Trải nghiệm RfCamera trên iOS</h3>
+
+      <div style="background: rgba(255, 122, 47, 0.08); border: 1px solid rgba(255, 122, 47, 0.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" style="flex-shrink: 0; margin-top: 1px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <div style="font-size: 13px; color: #FFFFFF; line-height: 1.45;">
+            <strong>Bản App Store native đang được Apple phê duyệt.</strong><br/>
+            Bạn có thể khởi chạy ngay phiên bản <strong>Web App đầy đủ 12 máy film</strong> mượt mà trực tiếp trên trình duyệt mà không cần chờ đợi!
+          </div>
+        </div>
+      </div>
+
+      <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px 14px; margin-bottom: 22px; width: 100%; box-sizing: border-box; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+        <div style="font-weight: 700; color: #FFFFFF; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Mẹo dùng mượt như app thật:
+        </div>
+        Mở trên Safari &rarr; nhấn biểu tượng <strong>Chia sẻ (Share)</strong> &rarr; chọn <strong>"Thêm vào MH chính" (Add to Home Screen)</strong> để chạy toàn màn hình không có thanh địa chỉ.
+      </div>
+
+      <div class="qr-modal-actions" style="display: flex; gap: 10px; width: 100%;">
+        <a href="https://rfcam-app.pages.dev" target="_blank" rel="noopener noreferrer" class="btn-qr-play" style="flex: 1.6; text-decoration: none; justify-content: center; background: var(--orange); color: #FFFFFF;" onclick="closeIosModal()">
+          <span>Mở Web App ngay</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <button class="btn-qr-done" style="flex: 0.9;" onclick="closeIosModal()">Đóng</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div class="share-toast" id="share-toast">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -1341,8 +1389,29 @@
       }
     }
 
+    function openIosModal() {
+      const modal = document.getElementById('ios-modal');
+      if (!modal) return;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeIosModal() {
+      const modal = document.getElementById('ios-modal');
+      if (!modal) return;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleIosBackdropClick(e) {
+      if (e.target && e.target.id === 'ios-modal') {
+        closeIosModal();
+      }
+    }
+
     function handleAppStoreClick(e) {
-      showToast('iOS release in review. Opening Google Play Store!');
+      if (e) e.preventDefault();
+      openIosModal();
     }
 
     function copyAppUrl() {
@@ -1362,6 +1431,7 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeQrModal();
+        closeIosModal();
       }
     });
 
