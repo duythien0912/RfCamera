@@ -132,18 +132,21 @@
       gap: 10px;
       text-decoration: none;
       color: #fff;
+      flex-shrink: 0;
     }
 
     .nav-logo {
       width: 26px;
       height: 26px;
       border-radius: 6px;
+      flex-shrink: 0;
     }
 
     .nav-name {
       font-weight: 900;
       font-size: 16px;
       letter-spacing: -0.03em;
+      white-space: nowrap;
     }
 
     .nav-tag {
@@ -153,12 +156,14 @@
       background: rgba(255, 122, 47, 0.12);
       padding: 2px 6px;
       border-radius: 4px;
+      white-space: nowrap;
     }
 
     .nav-right-deck {
       display: flex;
       align-items: center;
       gap: 14px;
+      flex-shrink: 0;
     }
 
     .nav-link-blog {
@@ -170,9 +175,17 @@
       display: flex;
       align-items: center;
       gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .nav-link-blog:hover {
       color: var(--orange);
+    }
+    .blog-text-short {
+      display: none;
+    }
+    .blog-arrow {
+      font-size: 10px;
     }
 
     .btn-nav-share {
@@ -188,6 +201,8 @@
       align-items: center;
       gap: 6px;
       transition: all 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .btn-nav-share:hover {
       background: rgba(255, 255, 255, 0.15);
@@ -203,10 +218,15 @@
       border-radius: 100px;
       text-decoration: none;
       transition: transform 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .nav-cta:hover {
       transform: scale(1.03);
       background: #E8E8E8;
+    }
+    .cta-text-short {
+      display: none;
     }
 
     /* Page Wrap (Vertically & Horizontally Centered Viewport) */
@@ -415,6 +435,14 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 3px 10px 3px 3px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .hero-qr-badge:hover {
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
     }
 
     .qr-thumb {
@@ -441,6 +469,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
       font-size: 11.5px;
       font-weight: 700;
       color: #9C9CA4;
@@ -613,7 +642,7 @@
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
-      padding: 14px 40px;
+      padding: 18px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -625,6 +654,28 @@
       z-index: 1;
     }
 
+    .footer-left {
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+    .footer-link:hover {
+      color: #FFFFFF;
+    }
+
     .footer-blog-link {
       color: var(--orange);
       text-decoration: none;
@@ -634,6 +685,14 @@
     }
     .footer-blog-link:hover {
       opacity: 0.8;
+    }
+
+    .footer-sep {
+      color: var(--border);
+    }
+
+    .footer-note {
+      color: var(--text-dim);
     }
 
     /* Toast */
@@ -661,6 +720,244 @@
     .share-toast.show {
       transform: translateX(-50%) translateY(0);
     }
+
+    /* QR Code Modal */
+    .qr-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .qr-modal-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .qr-modal-card {
+      position: relative;
+      background: #141418;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 28px 24px 24px;
+      max-width: 360px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+      transform: scale(0.94);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .qr-modal-backdrop.active .qr-modal-card {
+      transform: scale(1);
+    }
+
+    .qr-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9C9CA4;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .qr-modal-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+    }
+
+    .qr-modal-badge {
+      font-size: 10px;
+      color: var(--orange);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .qr-modal-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .qr-modal-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 20px;
+      max-width: 280px;
+    }
+
+    .qr-code-frame {
+      background: #FFFFFF;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .qr-code-svg {
+      width: 180px;
+      height: 180px;
+      display: block;
+    }
+
+    .qr-modal-url {
+      font-size: 11.5px;
+      color: var(--orange);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+
+    .qr-modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-qr-copy {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-qr-copy:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-qr-done {
+      flex: 1;
+      background: #FFFFFF;
+      border: none;
+      color: #000000;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-qr-done:hover {
+      background: #E5E5E5;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 16px;
+      }
+      .nav-right-deck {
+        gap: 10px;
+      }
+      .blog-text-full {
+        display: none;
+      }
+      .blog-text-short {
+        display: inline;
+      }
+      .page-wrap {
+        padding: 68px 18px 24px;
+        gap: 20px;
+      }
+      footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+        padding: 22px 16px;
+      }
+      .footer-links {
+        justify-content: center;
+        gap: 8px 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        padding: 0 12px;
+      }
+      .nav-brand {
+        gap: 6px;
+      }
+      .nav-name {
+        font-size: 15px;
+      }
+      .nav-tag {
+        font-size: 9px;
+        padding: 1.5px 5px;
+      }
+      .nav-right-deck {
+        gap: 7px;
+      }
+      .btn-nav-share {
+        padding: 6px 8px;
+      }
+      .btn-nav-share .share-text {
+        display: none;
+      }
+      .cta-text-full {
+        display: none;
+      }
+      .cta-text-short {
+        display: inline;
+      }
+      .nav-cta {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+      .nav-link-blog {
+        font-size: 12px;
+      }
+      .download-deck {
+        gap: 8px;
+      }
+      .btn-dl {
+        padding: 8px 12px;
+      }
+    }
+
+    @media (max-width: 340px) {
+      .nav-tag {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -677,14 +974,18 @@
     </a>
     <div class="nav-right-deck">
       <a href="/blog/" class="nav-link-blog">
-        <span>Blog & Guides</span>
-        <span style="font-size: 10px;">↗</span>
+        <span class="blog-text-full">Blog & Guides</span>
+        <span class="blog-text-short">Blog</span>
+        <span class="blog-arrow" style="font-size: 10px;">↗</span>
       </a>
-      <button class="btn-nav-share" id="btn-share" onclick="shareApp()">
+      <button class="btn-nav-share" id="btn-share" onclick="shareApp()" aria-label="Share RfCamera">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-        <span>Share</span>
+        <span class="share-text">Share</span>
       </button>
-      <a href="#download-deck" class="nav-cta">Download App</a>
+      <a href="#download-deck" class="nav-cta">
+        <span class="cta-text-full">Download App</span>
+        <span class="cta-text-short">Download</span>
+      </a>
     </div>
   </nav>
 
@@ -767,7 +1068,7 @@
               </div>
             </a>
 
-            <div class="hero-qr-badge">
+            <div class="hero-qr-badge" id="btn-qr" onclick="openQrModal()" role="button" tabindex="0" title="Click to view QR Code">
               <div class="qr-thumb">
                 <svg viewBox="0 0 100 100" fill="#000">
                   <rect x="10" y="10" width="28" height="28" rx="4"/>
@@ -875,15 +1176,48 @@
 
   <!-- Footer -->
   <footer>
-    <div>RfCamera &bull; Pure offline 35mm analog camera.</div>
-    <div style="display: flex; align-items: center; gap: 14px;">
-      <a href="/privacy.html" class="footer-blog-link" style="color: var(--text-muted);">Privacy Policy</a>
-      <span>&bull;</span>
+    <div class="footer-left">RfCamera &bull; Pure offline 35mm analog camera.</div>
+    <div class="footer-links">
+      <a href="/privacy.html" class="footer-link">Privacy Policy</a>
+      <span class="footer-sep">&bull;</span>
       <a href="/blog/" class="footer-blog-link">Film Guides & Stories &rarr;</a>
-      <span>&bull;</span>
-      <span>Free forever for iOS and Android.</span>
+      <span class="footer-sep">&bull;</span>
+      <span class="footer-note">Free forever for iOS and Android.</span>
     </div>
   </footer>
+
+  <!-- QR Code Modal -->
+  <div class="qr-modal-backdrop" id="qr-modal" onclick="handleQrBackdropClick(event)">
+    <div class="qr-modal-card" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
+      <button class="qr-modal-close" onclick="closeQrModal()" aria-label="Close QR Modal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      
+      <div class="qr-modal-badge mono">100% OFFLINE &bull; FREE</div>
+      <h3 class="qr-modal-title" id="qr-modal-title">Scan to Install RfCamera</h3>
+      <p class="qr-modal-sub">Scan this code with your phone camera to download and install directly.</p>
+      
+      <div class="qr-code-frame">
+        <svg class="qr-code-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges">
+          <path fill="#ffffff" d="M0 0h33v33H0z"/>
+          <path stroke="#000000" d="M4 4.5h7m2 0h1m1 0h2m3 0h1m1 0h7M4 5.5h1m5 0h1m3 0h2m1 0h1m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h1m5 0h2m2 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h2m3 0h2m1 0h1m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h3m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h3m2 0h4m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h1m1 0h1m1 0h1m1 0h1m1 0h1M4 12.5h1m1 0h5m6 0h2m3 0h5M4 13.5h1m3 0h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h1m3 0h1M4 14.5h3m1 0h5m1 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1M5 15.5h1m1 0h1m2 0h1m1 0h2m3 0h1m1 0h4m1 0h2m1 0h1M4 16.5h1m1 0h2m1 0h3m2 0h1m2 0h1m1 0h1m3 0h2M7 17.5h1m1 0h1m1 0h2m1 0h1m4 0h1m1 0h1m2 0h3M5 18.5h1m1 0h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2M4 19.5h1m1 0h1m1 0h1m1 0h1m2 0h3m1 0h2m1 0h3m2 0h2M4 20.5h2m2 0h2m1 0h1m4 0h2m1 0h1m1 0h2m1 0h1m1 0h2M12 21.5h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1M4 22.5h7m1 0h2m1 0h1m3 0h1m2 0h3m1 0h1m1 0h1M4 23.5h1m5 0h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1M4 24.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h3M4 25.5h1m1 0h3m1 0h1m2 0h2m3 0h1m1 0h1m2 0h3M4 26.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m2 0h3m1 0h1M4 27.5h1m5 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2M4 28.5h7m1 0h2m1 0h1m1 0h2m2 0h1m2 0h1m1 0h2"/>
+        </svg>
+      </div>
+
+      <div class="qr-modal-url mono">rfcam.roycorp.xyz</div>
+
+      <div class="qr-modal-actions">
+        <button class="btn-qr-copy" onclick="copyAppUrl()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 2 2v1"></path></svg>
+          <span>Copy Link</span>
+        </button>
+        <button class="btn-qr-done" onclick="closeQrModal()">Done</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Notification -->
   <div class="share-toast" id="share-toast">
@@ -958,6 +1292,56 @@
       const text = `Shot with ${name} on #RfCamera 35mm (https://rfcam.roycorp.xyz)`;
       navigator.clipboard.writeText(text).then(() => {
         showToast(`Copied "${name}" recipe tag!`);
+      });
+    }
+    // QR Code Modal Functions
+    function openQrModal() {
+      const modal = document.getElementById('qr-modal');
+      if (!modal) return;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeQrModal() {
+      const modal = document.getElementById('qr-modal');
+      if (!modal) return;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleQrBackdropClick(e) {
+      if (e.target && e.target.id === 'qr-modal') {
+        closeQrModal();
+      }
+    }
+
+    function copyAppUrl() {
+      const url = 'https://rfcam.roycorp.xyz/';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('Link copied! Scan with camera to install.');
+        }).catch(() => {
+          showToast('Link: ' + url);
+        });
+      } else {
+        showToast('Link: ' + url);
+      }
+    }
+
+    // Keyboard accessibility for QR modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeQrModal();
+      }
+    });
+
+    const qrBadge = document.getElementById('btn-qr');
+    if (qrBadge) {
+      qrBadge.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openQrModal();
+        }
       });
     }
 
